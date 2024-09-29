@@ -10,7 +10,32 @@
     "lint:prettier:fix": "prettier -c --write \"src/**/*.{css,scss,json,html}\" --end-of-line auto",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "npm run lint --fix --max-warnings=0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "npm run lint:fix",
+      "npm run lint",
+      "git add"
+    ],
+    "src/**/*.{css,scss,html}": [
+      "npm run lint:prettier:fix",
+      "npm run lint:prettier",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
+    }
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -35,10 +60,17 @@
     "@vitejs/plugin-react": "^4.2.1",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-check-file": "^2.8.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "husky": "^9.1.6",
+    "lint-staged": "^15.2.8",
+    "prettier": "^3.3.3",
     "vite": "^5.2.0"
   }
 }
