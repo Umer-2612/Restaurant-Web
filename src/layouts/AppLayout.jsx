@@ -2,12 +2,12 @@ import React from 'react';
 
 // import { useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import { Outlet } from 'react-router-dom';
 
+import Footer from 'components/footer/Footer';
 import Navbar from 'components/navbar/Navbar';
 
 dayjs.extend(duration);
@@ -17,26 +17,11 @@ export default function AppLayout() {
 
   return (
     <Box maxHeight="100vh">
-      <Stack>
-        <Navbar />
+      <Navbar />
+      <Stack gap={{ xs: 5, md: 10 }}>
+        <Outlet />
+        <Footer />
       </Stack>
-      <Grid
-        sx={{
-          display: { xs: 'flex' },
-          transition: (theme) =>
-            theme.transitions.create(['margin-left', 'left'], {
-              easing: theme.transitions.easing.sharp,
-              duration: theme.transitions.duration.leavingScreen,
-            }),
-          // py: 2,
-        }}
-        container
-        justifyContent="center"
-      >
-        <Grid item xs={12}>
-          <Outlet />
-        </Grid>
-      </Grid>
     </Box>
   );
 }

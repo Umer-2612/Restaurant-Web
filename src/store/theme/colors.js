@@ -80,6 +80,7 @@ export const LIGHT = {
     ooc: '#FE813F',
     hover: '#f2f2f2',
     buttonBg: '#FFFCFA',
+    mutedBlack: '#202020',
   },
   primaryColor,
   common,

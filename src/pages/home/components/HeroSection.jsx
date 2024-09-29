@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,8 @@ import { pxToRem } from 'store/theme/typography';
 const HeroSection = () => {
   const navigate = useNavigate();
   return (
-    <Stack
+    <Grid
+      size={12}
       sx={{
         overflow: 'hidden',
         position: 'relative',
@@ -102,7 +104,7 @@ const HeroSection = () => {
           </Stack>
         </Stack>
       </Stack>
-    </Stack>
+    </Grid>
   );
 };
 

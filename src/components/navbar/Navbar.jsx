@@ -15,14 +15,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
-// Tabs constant for easy maintenance
-const TABS = [
-  { title: 'Home', path: '/home' },
-  { title: 'Menu', path: '/menu' },
-  { title: 'Reservation', path: '/reservation' },
-  { title: 'About Us', path: '/about-us' },
-  { title: 'Contact Us', path: '/contact-us' },
-];
+import { TABS } from 'utils/commonData';
 
 // Logo component for reuse
 const Logo = ({ sx }) => (
