@@ -1,10 +1,12 @@
 import React from 'react';
-import Stack from '@mui/material/Stack';
+
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
+
 import ButterChickenImg from 'assets/images/butter-chicken2.jpg';
 import { pxToRem } from 'store/theme/typography';
-import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
   const navigate = useNavigate();

@@ -1,12 +1,13 @@
-import React, { Suspense, lazy } from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import ThemeLoader from './theme-loader/ThemeLoader.jsx';
-import { Provider } from 'react-redux';
-import { store } from 'store/index.js';
+import React, { Suspense } from 'react';
 
-// Lazy load the App component for better performance
-const App = lazy(() => import('./App.jsx'));
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
+import App from './App.jsx';
+import ThemeLoader from './theme-loader/ThemeLoader.jsx';
+
+import { store } from 'store/index.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>

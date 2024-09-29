@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
+
+import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
-import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
-import PTFullLogo from '/src/assets/brand-image/punjabi-touch-cropped.png';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { PropTypes } from 'prop-types';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
 // Tabs constant for easy maintenance
 const TABS = [
@@ -33,6 +36,10 @@ const Logo = ({ sx }) => (
     />
   </Stack>
 );
+
+Logo.propTypes = {
+  sx: PropTypes.object,
+};
 
 // MenuTabs component for the desktop view
 const MenuTabs = ({ navigate, activeMenu = '' }) => (
@@ -69,6 +76,11 @@ const MenuTabs = ({ navigate, activeMenu = '' }) => (
     ))}
   </Stack>
 );
+
+MenuTabs.propTypes = {
+  navigate: PropTypes.func,
+  activeMenu: PropTypes.string,
+};
 
 // MobileMenu component for rendering tabs in a menu for mobile view
 const MobileMenu = ({
@@ -130,6 +142,14 @@ const MobileMenu = ({
     </Menu>
   </Box>
 );
+
+MobileMenu.propTypes = {
+  anchorElNav: PropTypes.any,
+  handleOpenNavMenu: PropTypes.func,
+  handleCloseNavMenu: PropTypes.func,
+  navigate: PropTypes.func,
+  activeMenu: PropTypes.string,
+};
 
 // Main Navbar component
 const Navbar = () => {
