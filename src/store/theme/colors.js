@@ -4,17 +4,17 @@ export const common = {
 };
 
 export const primaryColor = {
-  50: '#fff2ec',
-  100: '#ffd8c3',
-  200: '#ffc5a7',
-  300: '#feab7e',
-  400: '#fe9a65',
-  500: '#fe813f',
-  600: '#e77539',
-  700: '#b45c2d',
-  800: '#8c4723',
-  900: '#6b361a',
-  A100: '#282c3f26',
+  50: '#fde5e5', // Very light red
+  100: '#fab2b2', // Light red
+  200: '#f58f8f', // Light-medium red
+  300: '#f06b6b', // Medium red
+  400: '#eb4848', // Slightly darker red
+  500: '#D40808', // Base red (Your input color)
+  600: '#bb0707', // Darker red
+  700: '#930505', // Even darker red
+  800: '#6b0303', // Very dark red
+  900: '#520202', // Deepest red
+  A100: '#fce5e5', // Transparent-like shade
 };
 export const LIGHT = {
   primary: {
@@ -28,6 +28,9 @@ export const LIGHT = {
     light: '#cdcdcf',
     dark: '#3c3e44',
     contrastText: common.white,
+  },
+  subColor: {
+    main: '#FEBD11',
   },
   error: {
     main: '#FE4040',
@@ -71,7 +74,7 @@ export const LIGHT = {
   },
   other: {
     border: '#D4D4D4',
-    bgColor: '#F6F7FC',
+    bgColor: '#F6F8F8',
     ppc: '#725CDF',
     ggc: '#23C55E',
     ooc: '#FE813F',

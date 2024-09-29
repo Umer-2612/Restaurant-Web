@@ -12,7 +12,7 @@ export function themeTypography() {
   return {
     htmlFontSize,
     // fontSize: fontSizeCalc(fontSize),
-    fontFamily: ['Poppins'].join(','),
+    fontFamily: ['Inter'].join(','),
     h1: {
       fontWeight: 600,
       fontSize: pxToRem(40),

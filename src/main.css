@@ -1,0 +1,61 @@
+@font-face {
+  font-family: Inter;
+  src: url(./fonts/Inter/Inter-Regular.ttf);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Inter', sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+#root,
+body,
+html {
+  height: 100%;
+  background-color: #f6f8f8;
+}
+
+.richtextViewer span,
+.richtextViewer span *,
+.public-DraftEditor-content span,
+.public-DraftEditor-content span * {
+  font-family: inherit;
+}
+.editor {
+  padding: 0 10px;
+}
+.editorContainer {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, 0.23);
+}
+.haveError .public-DraftEditorPlaceholder-inner {
+  color: #ee3b4c;
+}
+.haveError {
+  border-color: #d32f2f;
+}
+.rdw-editor-toolbar {
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+.Editor--hide-placeholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+
+.editor-wrapper .public-DraftEditor-content {
+  min-height: 130px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.DraftEditor-editorContainer .public-DraftStyleDefault-block {
+  margin: 0;
+}
