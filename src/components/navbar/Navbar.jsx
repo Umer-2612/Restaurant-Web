@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 import MenuIcon from '@mui/icons-material/Menu';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import AppBar from '@mui/material/AppBar';
-import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
@@ -11,10 +12,12 @@ import MenuItem from '@mui/material/MenuItem';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { PropTypes } from 'prop-types';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
+import { cartSelector } from 'store/slices/cart';
 import { TABS } from 'utils/commonData';
 
 // Logo component for reuse
@@ -148,8 +151,10 @@ MobileMenu.propTypes = {
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const cartDetails = useSelector(cartSelector);
 
   const [anchorElNav, setAnchorElNav] = useState(null);
+
   const activeMenu = location.pathname;
 
   const handleOpenNavMenu = (event) => {
@@ -216,14 +221,10 @@ const Navbar = () => {
 
             {/* User avatar */}
             <Box sx={{ flexGrow: 0 }}>
-              <IconButton sx={{ p: 0 }}>
-                <Avatar
-                  alt="Ayushya Patel"
-                  src="/static/images/avatar/2.jpg"
-                  sx={{
-                    bgcolor: (theme) => theme.palette.primary.main,
-                  }}
-                />
+              <IconButton color="primary">
+                <Badge badgeContent={cartDetails?.length || 0} color="primary">
+                  <ShoppingBagOutlinedIcon />
+                </Badge>
               </IconButton>
             </Box>
           </Stack>

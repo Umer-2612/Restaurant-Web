@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-// import apiInstance from './apis/createApiInstance';
+import apiInstance from './apis/createApiInstance';
+import cart from './slices/cart';
 import theme from './theme';
 
 const rootReducer = combineReducers({
   theme,
-  //   [apiInstance.reducerPath]: apiInstance.reducer,
+  cart,
+  [apiInstance.reducerPath]: apiInstance.reducer,
 });
 const reducer = (state, action) => {
   if (action.type === 'logout') {
@@ -15,8 +17,8 @@ const reducer = (state, action) => {
 };
 export const store = configureStore({
   reducer,
-  //   middleware: (getDefaultMiddleware) =>
-  //     getDefaultMiddleware({ serializableCheck: false }).concat(
-  //       apiInstance.middleware
-  //     ),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(
+      apiInstance.middleware
+    ),
 });

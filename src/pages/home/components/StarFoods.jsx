@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import { MenuItemLayout } from 'components/common/CommonComponents';
 import { menuItems } from 'utils/data/menuItems';
 
 const StarFoods = () => {
@@ -17,51 +18,8 @@ const StarFoods = () => {
           </Typography>
         </Typography>
         <Grid container spacing={3}>
-          {menuItems?.map((item, index) => {
-            return (
-              <Grid key={index} size={{ xs: 12, sm: 6, lg: 4 }}>
-                <Stack
-                  p={2}
-                  borderRadius={3}
-                  sx={{
-                    'border': (theme) =>
-                      `2px solid ${theme.palette.other.border}`,
-                    '&: hover': {
-                      border: (theme) =>
-                        `2px solid ${theme.palette.primary.main}`,
-                    },
-                  }}
-                >
-                  <Stack
-                    sx={{
-                      width: '100%',
-                      position: 'relative',
-                      paddingBottom: '100%',
-                    }}
-                  >
-                    <img
-                      src={item?.image}
-                      alt={item?.name}
-                      style={{
-                        borderRadius: 12,
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  </Stack>
-                  <Stack p={1} gap={1}>
-                    <Typography variant="subtitle2" fontWeight={700}>
-                      {item?.name}
-                    </Typography>
-                    <Typography variant="body2">{item?.description}</Typography>
-                  </Stack>
-                </Stack>
-              </Grid>
-            );
+          {menuItems?.map((menu, index) => {
+            return <MenuItemLayout key={menu?.title} menu={menu} />;
           })}
         </Grid>
       </Stack>
