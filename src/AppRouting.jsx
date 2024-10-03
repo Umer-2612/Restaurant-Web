@@ -14,6 +14,7 @@ const Menu = lazy(() => import('pages/menu/Menu'));
 const Reservation = lazy(() => import('pages/reservation/Reservation'));
 const AboutUs = lazy(() => import('pages/about-us/AboutUs'));
 const ContactUs = lazy(() => import('pages/contact-us/ContactUs'));
+const Cart = lazy(() => import('pages/cart/Cart'));
 
 export default function AppRouting() {
   const defaultNavigate = <Navigate to="/home" />;
@@ -66,6 +67,16 @@ export default function AppRouting() {
         {
           index: true,
           element: <ContactUs />,
+        },
+      ],
+    },
+    {
+      path: '/cart',
+      element: <AppLayout />,
+      children: [
+        {
+          index: true,
+          element: <Cart />,
         },
       ],
     },

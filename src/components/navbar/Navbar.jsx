@@ -221,7 +221,12 @@ const Navbar = () => {
 
             {/* User avatar */}
             <Box sx={{ flexGrow: 0 }}>
-              <IconButton color="primary">
+              <IconButton
+                color="primary"
+                onClick={() => {
+                  navigate('/cart');
+                }}
+              >
                 <Badge badgeContent={cartDetails?.length || 0} color="primary">
                   <ShoppingBagOutlinedIcon />
                 </Badge>
