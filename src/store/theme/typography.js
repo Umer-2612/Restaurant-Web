@@ -23,6 +23,11 @@ export function themeTypography() {
       fontSize: pxToRem(32),
       lineHeight: pxToRem(48),
     },
+    bh2: {
+      fontWeight: 600,
+      fontSize: pxToRem(32),
+      lineHeight: pxToRem(48),
+    },
     h3: {
       fontWeight: 600,
       fontSize: pxToRem(24),
@@ -56,6 +61,16 @@ export function themeTypography() {
     body4: {
       fontWeight: 400,
       fontSize: pxToRem(14),
+      lineHeight: pxToRem(20),
+    },
+    body5: {
+      fontWeight: 500,
+      fontSize: pxToRem(13),
+      lineHeight: pxToRem(20),
+    },
+    body6: {
+      fontWeight: 400,
+      fontSize: pxToRem(13),
       lineHeight: pxToRem(20),
     },
   };

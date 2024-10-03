@@ -7,6 +7,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 
 // Layouts
 const AppLayout = lazy(() => import('layouts/AppLayout'));
+const HomeLayout = lazy(() => import('layouts/HomeLayout'));
 
 // Components
 const Home = lazy(() => import('pages/home/Home'));
@@ -22,7 +23,7 @@ export default function AppRouting() {
   const routes = [
     {
       path: '/home',
-      element: <AppLayout />,
+      element: <HomeLayout />,
       children: [
         {
           index: true,

@@ -168,7 +168,7 @@ const Navbar = () => {
   return (
     <AppBar
       position="static"
-      sx={{ bgcolor: (theme) => theme.palette.other.bgColor }}
+      sx={{ bgcolor: (theme) => theme.palette.background.paper }}
       elevation={0}
     >
       <Grid

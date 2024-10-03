@@ -30,7 +30,7 @@ export const LIGHT = {
     contrastText: common.white,
   },
   subColor: {
-    main: '#FEBD11',
+    main: '#FFCE00',
   },
   error: {
     main: '#FE4040',
@@ -66,7 +66,7 @@ export const LIGHT = {
   },
   text: {
     primary: '#141415',
-    secondary: '#575960',
+    secondary: '#696969',
     disabled: '#C0C5D8',
   },
   background: {
@@ -74,7 +74,7 @@ export const LIGHT = {
   },
   other: {
     border: '#D4D4D4',
-    bgColor: '#F6F8F8',
+    bgColor: '#f8f8f8',
     ppc: '#725CDF',
     ggc: '#23C55E',
     ooc: '#FE813F',
