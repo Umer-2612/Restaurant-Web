@@ -1,9 +1,18 @@
-import React, { lazy } from 'react';
+import React, { lazy, Suspense, useMemo } from 'react';
 
 // import CircularProgress from '@mui/material/CircularProgress';
 // import Stack from '@mui/material/Stack';
 // import { useSelector } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
 import { Navigate, useRoutes } from 'react-router-dom';
+
+import config from 'config';
+import { AuthProvider, AuthRedirect } from 'context/AuthContext';
+import AuthLayout from 'layouts/AuthLayout';
+import OrderList from 'pages/admin/OrderList';
+import SignIn from 'pages/auth/SignIn';
+import useAuth from 'utils/authUtils';
 
 // Layouts
 const AppLayout = lazy(() => import('layouts/AppLayout'));
@@ -18,7 +27,34 @@ const ContactUs = lazy(() => import('pages/contact-us/ContactUs'));
 const Cart = lazy(() => import('pages/cart/Cart'));
 
 export default function AppRouting() {
-  const defaultNavigate = <Navigate to="/home" />;
+  const auth = useAuth();
+  const defaultNavigate = useMemo(() => {
+    if (auth?.authenticated) {
+      return '/admin';
+    }
+    return '/sign-in';
+  }, [auth?.authenticated]);
+
+  const getRouteWrapper = (component, authRoute = true) => {
+    return (
+      <AuthRedirect authenticatedRoute={authRoute}>
+        <Suspense
+          fallback={
+            <Stack
+              width="100%"
+              height="100vh"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <CircularProgress />
+            </Stack>
+          }
+        >
+          {component}
+        </Suspense>
+      </AuthRedirect>
+    );
+  };
 
   const routes = [
     {
@@ -82,11 +118,35 @@ export default function AppRouting() {
       ],
     },
     {
+      path: '/admin',
+      element: getRouteWrapper(<AuthLayout />),
+      children: [
+        {
+          index: true,
+          element: <OrderList />,
+        },
+      ],
+    },
+    {
+      path: '/sign-in',
+      // element: getRouteWrapper(<SignInLayout />, false),
+      element: getRouteWrapper(<SignIn />, false),
+      // children: [
+      //   {
+      //     path: '/sign-in',
+      //   },
+      //   {
+      //     index: true,
+      //     element: <Navigate to={defaultNavigate} />,
+      //   },
+      // ],
+    },
+    {
       path: '*',
       element: defaultNavigate,
     },
   ];
   const routing = useRoutes(routes);
 
-  return <>{routing}</>;
+  return <AuthProvider>{routing}</AuthProvider>;
 }
