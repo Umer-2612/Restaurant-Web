@@ -14,7 +14,7 @@ const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   lastName: validationSchema.lastName,
   phoneNo: validationSchema.phoneNo,
   email: validationSchema.email,
-  date_of_reservation: validationSchema.date_of_reservation,
+  reservationDate: validationSchema.reservationDate,
   message: validationSchema.message,
   noOfPeople: validationSchema.noOfPeople,
 });
@@ -183,7 +183,7 @@ const Reservation = () => {
         {/* Date Field */}
         <Grid item xs={12} sm={6}>
           <Controller
-            name="date_of_reservation"
+            name="reservationDate"
             control={control}
             defaultValue=""
             render={({ field }) => (
@@ -196,11 +196,9 @@ const Reservation = () => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                error={!!errors.date_of_reservation}
+                error={!!errors.reservationDate}
                 helperText={
-                  errors.date_of_reservation
-                    ? errors.date_of_reservation.message
-                    : ''
+                  errors.reservationDate ? errors.reservationDate.message : ''
                 }
                 InputProps={{
                   style: {

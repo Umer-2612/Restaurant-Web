@@ -14,7 +14,7 @@ export const validationSchema = {
     .required('Number of people is required')
     .positive('Number must be positive')
     .integer('Must be an integer'),
-  date_of_reservation: Yup.date()
+  reservationDate: Yup.date()
     .nullable() // Allow date to be nullable
     .transform((value, originalValue) => (originalValue === '' ? null : value))
     .required('Date is required'), // Keep date as required
