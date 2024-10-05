@@ -6,9 +6,6 @@ const extendedApi = createApiInstance.injectEndpoints({
   endpoints: (build) => ({
     getMenus: build.query({
       query: (query) => `/menu${queryParamsBuilder(query)}`,
-      //   transformResponse: (res) => {
-      //     return res.data;
-      //   },
     }),
     putPostMenu: build.mutation({
       query(body) {

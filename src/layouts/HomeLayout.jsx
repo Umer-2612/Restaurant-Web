@@ -14,7 +14,7 @@ import { modifyCartDetails } from 'store/slices/cart';
 
 dayjs.extend(duration);
 
-export default function AppLayout() {
+export default function HomeLayout() {
   // const isWideScreen = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const dispatch = useDispatch();
 
@@ -36,9 +36,11 @@ export default function AppLayout() {
   }, [dispatch]);
 
   return (
-    <Box maxHeight="100vh">
-      <Stack gap={3}>
+    <Box minHeight="100vh">
+      <Stack position="sticky" top={0} zIndex={2}>
         <Navbar />
+      </Stack>
+      <Stack gap={5}>
         <Outlet />
         <Footer />
       </Stack>
