@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import Footer from 'components/footer/Footer';
+import Navbar from 'components/navbar/Navbar';
 import { modifyCartDetails } from 'store/slices/cart';
 
 dayjs.extend(duration);
@@ -35,7 +36,10 @@ export default function HomeLayout() {
   }, [dispatch]);
 
   return (
-    <Box maxHeight="100vh">
+    <Box minHeight="100vh">
+      <Stack position="sticky" top={0} zIndex={2}>
+        <Navbar />
+      </Stack>
       <Stack gap={5}>
         <Outlet />
         <Footer />
