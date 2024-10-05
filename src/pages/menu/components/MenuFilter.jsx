@@ -1,23 +1,38 @@
 import React from 'react';
 
-import { Stack, Chip } from '@mui/material';
+import { Stack, Chip, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid2';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 
-// Styles for selected and unselected chips
-const chipStyles = {
-  'margin': '5px',
-  'fontWeight': 'bold',
-  '&.MuiChip-clickable': {
-    border: '2px solid #0B3D91',
-  },
-  '&.MuiChip-clickableColorPrimary': {
-    'color': '#fff',
-    'backgroundColor': '#0B3D91',
+const CHIP_STYLE = (theme, searchParams, category) => {
+  return {
+    'px': 1,
+    'background':
+      searchParams.get('category') === category.id
+        ? `linear-gradient(60deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`
+        : theme.palette.background.paper,
+    'color':
+      searchParams.get('category') === category.id
+        ? theme.palette.common.white
+        : theme.palette.text.primary,
+    'transition': 'all 0.2s ease-in-out',
+    'boxShadow':
+      searchParams.get('category') === category.id
+        ? '0px 4px 12px rgba(0, 0, 0, 0.2)'
+        : 'none',
+    'transform':
+      searchParams.get('category') === category.id ? 'scale(1.02)' : 'scale(1)',
     '&:hover': {
-      backgroundColor: '#0A3578',
+      background: `linear-gradient(60deg, ${theme.palette.primary.light}, ${theme.palette.primary.dark})`,
+      color: theme.palette.common.white,
+      boxShadow: '0px 6px 16px rgba(0, 0, 0, 0.25)',
+      transform: 'scale(1.05)',
     },
-  },
+    '&:active': {
+      transform: 'scale(1)',
+    },
+  };
 };
 
 const MenuFilter = ({ categories, onCategoryChange }) => {
@@ -29,20 +44,30 @@ const MenuFilter = ({ categories, onCategoryChange }) => {
   };
 
   return (
-    <Stack direction="row" justifyContent="center" flexWrap="wrap" spacing={2}>
-      {categories.map((category) => (
-        <Chip
-          key={category?.id}
-          label={category?.name}
-          color={
-            searchParams.get('category') === category.id ? 'primary' : 'default'
-          }
-          clickable
-          sx={chipStyles}
-          onClick={() => handleChipClick(category)}
-        />
-      ))}
-    </Stack>
+    <Grid size={12}>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        flexWrap="wrap"
+        gap={2}
+        width="100%"
+      >
+        {categories.map((category) => (
+          <Chip
+            key={category?.id}
+            label={<Typography variant="body2">{category?.name}</Typography>}
+            color={
+              searchParams.get('category') === category.id
+                ? 'primary'
+                : 'default'
+            }
+            clickable
+            sx={(theme) => CHIP_STYLE(theme, searchParams, category)}
+            onClick={() => handleChipClick(category)}
+          />
+        ))}
+      </Stack>
+    </Grid>
   );
 };
 

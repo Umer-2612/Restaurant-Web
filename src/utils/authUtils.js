@@ -12,7 +12,6 @@ export const AuthContext = React.createContext({
 });
 
 function useAuth() {
-  console.log(useContext(AuthContext));
   return useContext(AuthContext);
 }
 

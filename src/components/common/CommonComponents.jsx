@@ -23,28 +23,28 @@ export const MenuItemLayout = ({
   return (
     <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
       <Stack
-        p={2}
         borderRadius={3}
+        overflow="hidden"
+        height="100%"
         sx={{
-          'border': (theme) => `2px solid ${theme.palette.other.border}`,
+          'transition': '0.2s',
           '&: hover': {
-            border: (theme) => `2px solid ${theme.palette.primary.main}`,
+            transform: 'scale(1.02)',
+            boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
           },
         }}
-        height="100%"
       >
         <Stack
           sx={{
             width: '100%',
             position: 'relative',
-            paddingBottom: '100%',
+            paddingBottom: '50%',
           }}
         >
           <img
             src={menu?.image || 'https://picsum.photos/200/300'}
             alt={menu?.itemName}
             style={{
-              borderRadius: 12,
               position: 'absolute',
               top: 0,
               left: 0,
@@ -54,11 +54,21 @@ export const MenuItemLayout = ({
             }}
           />
         </Stack>
-        <Stack p={1} gap={1}>
-          <Typography variant="subtitle2" fontWeight={700}>
+        <Stack
+          p={2}
+          gap={0.5}
+          sx={{
+            border: (theme) => `1px solid ${theme.palette.other.border}`,
+            borderBottomLeftRadius: 12,
+            borderBottomRightRadius: 12,
+          }}
+        >
+          <Typography variant="subtitle2" fontWeight={700} color="text.primary">
             {menu?.itemName}
           </Typography>
-          <Typography variant="body2">{menu?.itemDescription}</Typography>
+          <Typography variant="body3" color="text.secondary">
+            {menu?.itemDescription}
+          </Typography>
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -73,11 +83,6 @@ export const MenuItemLayout = ({
                 <>
                   <IconButton
                     color="primary"
-                    // onClick={() =>
-                    //   updateCartDetails({
-                    //     increaseQuantity: false,
-                    //   })
-                    // }
                     onClick={() => handleMenuModalOpen({ menu })}
                   >
                     <RemoveIcon />

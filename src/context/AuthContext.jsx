@@ -14,7 +14,6 @@ export function AuthProvider({ children }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [auth, setAuth] = useState({ refreshToken: oldRefToken });
-  console.log(setAuth);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -70,8 +69,6 @@ export function AuthProvider({ children }) {
       </Stack>
     );
   }
-
-  console.log(value);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -39,8 +39,6 @@ const Menu = () => {
     category: searchParams.get('category') || '',
   });
 
-  console.log({ isLoading, isError, error });
-
   const { data: categoryData } = useGetCategoriesQuery();
 
   const categories =
@@ -98,13 +96,13 @@ const Menu = () => {
   };
   return (
     <Stack alignItems="center">
-      {categories?.length > 0 && (
-        <MenuFilter
-          categories={categories}
-          onCategoryChange={handleCategoryChange}
-        />
-      )}
-      <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={2} mt={2}>
+      <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={3}>
+        {categories?.length > 0 && (
+          <MenuFilter
+            categories={categories}
+            onCategoryChange={handleCategoryChange}
+          />
+        )}
         {modifiedData?.map((menu) => (
           <MenuItemLayout
             key={menu?._id}

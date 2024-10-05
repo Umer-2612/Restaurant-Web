@@ -22,8 +22,6 @@ const App = () => {
   const [getUserInfo, { isSuccess, isLoading, isError, data }] =
     useLazyGetUserInfoQuery();
 
-  console.log(getUserInfo);
-
   useEffect(() => {
     updateDocumentTitle(location);
   }, [location]);
@@ -37,7 +35,6 @@ const App = () => {
       !isSuccess &&
       !data
     ) {
-      console.log('object');
       getUserInfo();
     }
 

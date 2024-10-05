@@ -23,7 +23,6 @@ const RESERVATION_FORM_VALIDATION = Yup.object().shape({
 const SignIn = () => {
   //   const { showToast } = useToast();
   const auth = useAuth();
-  console.log(auth);
   const dispatch = useDispatch();
 
   const [signInGet, { data, isLoading, isSuccess, isError, error }] =
@@ -51,7 +50,6 @@ const SignIn = () => {
       password: data.password.trim(),
     };
     const response = await signInGet(body);
-    console.log({ response });
     // try {
     //   if (response?.data) {
     //     showToast(response?.data?.message, 'success');
