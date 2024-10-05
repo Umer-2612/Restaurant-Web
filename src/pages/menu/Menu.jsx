@@ -4,12 +4,14 @@ import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import { useSearchParams } from 'react-router-dom';
 
+import MenuFilter from './components/MenuFilter';
 import MenuItemModal from './components/MenuItemModal';
 
 import {
   MenuItemLayout,
   CustomPagination,
 } from 'components/common/CommonComponents';
+import { useGetCategoriesQuery } from 'store/apis/categories';
 import { useGetMenusQuery } from 'store/apis/menu';
 
 const Menu = () => {
@@ -34,9 +36,18 @@ const Menu = () => {
     search: searchParams.get('search')?.trim() || '',
     page: searchParams.get('page') || 1,
     limit: searchParams.get('perPage') || 20,
+    category: searchParams.get('category') || '',
   });
 
   console.log({ isLoading, isError, error });
+
+  const { data: categoryData } = useGetCategoriesQuery();
+
+  const categories =
+    categoryData?.data?.map((category) => ({
+      id: category._id,
+      name: category.name,
+    })) || [];
 
   const page = Math.max(1, Number(searchParams.get('page')) || 1);
   const limit = Math.max(1, Number(searchParams.get('limit')) || 20);
@@ -81,9 +92,19 @@ const Menu = () => {
       : menu;
   });
 
+  const handleCategoryChange = (categoryId) => {
+    searchParams.set('category', categoryId);
+    setSearchParams(searchParams);
+  };
   return (
     <Stack alignItems="center">
-      <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={2}>
+      {categories?.length > 0 && (
+        <MenuFilter
+          categories={categories}
+          onCategoryChange={handleCategoryChange}
+        />
+      )}
+      <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={2} mt={2}>
         {modifiedData?.map((menu) => (
           <MenuItemLayout
             key={menu?._id}
@@ -94,7 +115,7 @@ const Menu = () => {
         <Stack width="100%">
           <CustomPagination
             limitPerPageArray={[20, 40, 60, 80]}
-            total={data?.pagination?.total || 100}
+            total={data?.paginationData?.total || 100}
           />
         </Stack>
       </Grid>
