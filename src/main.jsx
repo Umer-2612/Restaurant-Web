@@ -3,6 +3,7 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import App from './App.jsx';
 import ThemeLoader from './theme-loader/ThemeLoader.jsx';
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ThemeLoader>
       <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
+          <ToastContainer />
           <App />
         </Suspense>
       </BrowserRouter>
