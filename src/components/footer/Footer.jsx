@@ -13,77 +13,172 @@ import { Link } from 'react-router-dom';
 
 import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
-import { TABS } from 'utils/commonData';
+import { QUERIES, TABS } from 'utils/commonData';
 
 const Footer = () => {
   return (
     <Grid
       container
-      minHeight={300}
-      bgcolor={(theme) => theme.palette.other.mutedBlack}
+      minHeight={{ xs: 400, md: 300 }}
+      bgcolor={(theme) => theme.palette.other.bgColor}
       justifyContent="center"
-      px={2}
-      py={4}
+      px={{ xs: 2, sm: 3 }}
+      pt={4}
+      pb={2}
     >
-      <Grid size={{ xs: 12, sm: 11, md: 10 }}>
-        <Stack
-          direction="row"
-          gap={4}
-          justifyContent="space-between"
-          flexWrap="wrap"
-        >
-          <Stack maxWidth={350} gap={2}>
-            <Stack bgcolor="white" width="fit-content" p={2} borderRadius={3}>
+      <Grid size={{ xs: 12, sm: 11, lg: 10 }}>
+        <Stack gap={2}>
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            gap={2}
+            justifyContent="space-between"
+            flexWrap="wrap"
+            alignItems="flex-start"
+          >
+            {/* Logo and Description */}
+            <Stack
+              maxWidth={350}
+              gap={2}
+              alignItems={{ xs: 'center', md: 'flex-start' }}
+            >
               <img
                 src={PTFullLogo}
                 alt="Punjabi Touch logo"
-                height="100%"
-                width="100%"
                 style={{
+                  width: '100%',
+                  height: 'auto',
                   aspectRatio: '789 / 241',
                 }}
                 aria-label="Punjabi Touch Logo"
               />
+              <Typography
+                variant="body4"
+                color="text.secondary"
+                textAlign={{ xs: 'center', md: 'left' }}
+              >
+                We serve more than 100 varieties of Punjabi Indian cuisine that
+                will satiate your taste buds and keep you closer to the
+                tradition and food.
+              </Typography>
             </Stack>
-            <Typography variant="body4" color="white">
-              We serve more than 100 varieties of Punjabi Indian cuisine that
-              will satiate your taste buds and keep you closer to the tradition
-              and food.
-            </Typography>
+
+            {/* Quick Links */}
+            <Stack>
+              <Typography
+                variant="subtitle2"
+                fontWeight={600}
+                color="text.primary"
+                mb={1}
+              >
+                Quick Links
+              </Typography>
+              <List>
+                {TABS?.map((tab) => (
+                  <ListItem key={tab?.title} disablePadding>
+                    <Link
+                      to={tab?.path}
+                      style={{
+                        color: 'inherit',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <ListItemText
+                        primary={tab?.title}
+                        sx={{
+                          color: (theme) => theme.palette.text.secondary,
+                        }}
+                      />
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </Stack>
+
+            {/* Queries */}
+            <Stack>
+              <Typography
+                variant="subtitle2"
+                fontWeight={600}
+                color="text.primary"
+                mb={1}
+              >
+                Queries
+              </Typography>
+              <List>
+                {QUERIES?.map((tab) => (
+                  <ListItem key={tab?.title} disablePadding>
+                    <Link
+                      to={tab?.path}
+                      style={{
+                        color: 'inherit',
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <ListItemText
+                        primary={tab?.title}
+                        sx={{
+                          color: (theme) => theme.palette.text.secondary,
+                        }}
+                      />
+                    </Link>
+                  </ListItem>
+                ))}
+              </List>
+            </Stack>
+
+            {/* CTA Buttons */}
+            <Stack gap={2} color="text.primary">
+              <Typography variant="subtitle2" fontWeight={600}>
+                Catering Booking
+              </Typography>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderRadius: 2,
+                }}
+              >
+                Book Your Event
+              </Button>
+              <Typography variant="subtitle2" fontWeight={600}>
+                Make a Reservation
+              </Typography>
+              <Button
+                variant="outlined"
+                sx={{
+                  borderRadius: 2,
+                  textAlign: 'start',
+                }}
+              >
+                Book Online
+              </Button>
+            </Stack>
+            {/* Google Map */}
+            <Stack width="100%">
+              <iframe
+                loading="lazy"
+                title="Punjabi Touch Indian Restaurant"
+                style={{
+                  width: '100%',
+                  height: '300px',
+                  borderRadius: '8px',
+                  border: 'none',
+                }}
+                src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=T2/356%20Middle%20Rd,%20Greenbank%20QLD%204124,%20Australia+(Punjabi%20Touch%20Indian%20Restaurant)&amp;t=k&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                allowFullScreen
+              ></iframe>
+            </Stack>
           </Stack>
-          <Stack color="white">
-            <Typography variant="subtitle2" fontWeight={600}>
-              Quick Links
+          <Stack
+            p={1}
+            borderRadius={3}
+            bgcolor={(theme) => theme.palette.background.paper}
+            direction="row"
+            justifyContent="center"
+          >
+            <Typography variant="body5" color="text.primary">
+              PUNJABI TOUCH INDIAN MULTI CUISINE RESTAURANT 2024 © ALL RIGHTS
+              RESERVED
             </Typography>
-            <List>
-              {TABS?.map((tab) => (
-                <ListItem key={tab?.title} disablePadding>
-                  <Link
-                    to={tab?.path}
-                    style={{
-                      color: 'white',
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <ListItemText primary={tab?.title} color="white" />
-                  </Link>
-                </ListItem>
-              ))}
-            </List>
-          </Stack>
-          <Stack gap={2} color="white">
-            <Typography variant="subtitle2" fontWeight={600}>
-              CATERING BOOKING
-            </Typography>
-            <Button variant="contained" sx={{ borderRadius: 2 }}>
-              BOOK YOUR EVENT
-            </Button>
-            <Typography variant="subtitle2" fontWeight={600}>
-              MAKE A RESERVATION
-            </Typography>
-            <Button variant="contained" sx={{ borderRadius: 2 }}>
-              BOOK ONLINE
-            </Button>
           </Stack>
         </Stack>
       </Grid>

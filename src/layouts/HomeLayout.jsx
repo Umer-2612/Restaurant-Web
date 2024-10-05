@@ -9,12 +9,11 @@ import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
 import Footer from 'components/footer/Footer';
-import Navbar from 'components/navbar/Navbar';
 import { modifyCartDetails } from 'store/slices/cart';
 
 dayjs.extend(duration);
 
-export default function AppLayout() {
+export default function HomeLayout() {
   // const isWideScreen = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const dispatch = useDispatch();
 
@@ -37,8 +36,7 @@ export default function AppLayout() {
 
   return (
     <Box maxHeight="100vh">
-      <Stack gap={3}>
-        <Navbar />
+      <Stack gap={5}>
         <Outlet />
         <Footer />
       </Stack>

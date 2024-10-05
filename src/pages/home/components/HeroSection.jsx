@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
-import ButterChickenImg from 'assets/images/butter-chicken2.jpg';
+import ButterChickenImg from 'assets/images/butter-chicken.jpg';
 import { pxToRem } from 'store/theme/typography';
 
 const HeroSection = () => {
@@ -18,11 +18,16 @@ const HeroSection = () => {
         overflow: 'hidden',
         position: 'relative',
         aspectRatio: '3 / 2',
-        maxHeight: '85vh',
+        maxHeight: '100vh',
+        background: `url(${ButterChickenImg})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
       }}
     >
       {/* Background Image */}
-      <img
+      {/* <img
         src={ButterChickenImg}
         alt="Butter Chicken"
         style={{
@@ -30,7 +35,7 @@ const HeroSection = () => {
           height: '100%',
           objectFit: 'cover',
         }}
-      />
+      /> */}
 
       {/* Overlay with Content */}
       <Stack

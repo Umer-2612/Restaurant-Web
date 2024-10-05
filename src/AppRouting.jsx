@@ -7,6 +7,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 
 // Layouts
 const AppLayout = lazy(() => import('layouts/AppLayout'));
+const HomeLayout = lazy(() => import('layouts/HomeLayout'));
 
 // Components
 const Home = lazy(() => import('pages/home/Home'));
@@ -14,6 +15,7 @@ const Menu = lazy(() => import('pages/menu/Menu'));
 const Reservation = lazy(() => import('pages/reservation/Reservation'));
 const AboutUs = lazy(() => import('pages/about-us/AboutUs'));
 const ContactUs = lazy(() => import('pages/contact-us/ContactUs'));
+const Cart = lazy(() => import('pages/cart/Cart'));
 
 export default function AppRouting() {
   const defaultNavigate = <Navigate to="/home" />;
@@ -21,7 +23,7 @@ export default function AppRouting() {
   const routes = [
     {
       path: '/home',
-      element: <AppLayout />,
+      element: <HomeLayout />,
       children: [
         {
           index: true,
@@ -66,6 +68,16 @@ export default function AppRouting() {
         {
           index: true,
           element: <ContactUs />,
+        },
+      ],
+    },
+    {
+      path: '/cart',
+      element: <AppLayout />,
+      children: [
+        {
+          index: true,
+          element: <Cart />,
         },
       ],
     },

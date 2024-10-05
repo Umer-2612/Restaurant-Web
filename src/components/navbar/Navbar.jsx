@@ -168,7 +168,7 @@ const Navbar = () => {
   return (
     <AppBar
       position="static"
-      sx={{ bgcolor: (theme) => theme.palette.other.bgColor }}
+      sx={{ bgcolor: (theme) => theme.palette.background.paper }}
       elevation={0}
     >
       <Grid
@@ -221,7 +221,12 @@ const Navbar = () => {
 
             {/* User avatar */}
             <Box sx={{ flexGrow: 0 }}>
-              <IconButton color="primary">
+              <IconButton
+                color="primary"
+                onClick={() => {
+                  navigate('/cart');
+                }}
+              >
                 <Badge badgeContent={cartDetails?.length || 0} color="primary">
                   <ShoppingBagOutlinedIcon />
                 </Badge>
