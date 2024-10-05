@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Grid, TextField } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
+import { Box, Button, Grid } from '@mui/material';
+import dayjs from 'dayjs';
+import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
 import useToast from 'components/common/CustomToastMessage';
+import HookDateField from 'components/common/form-components/HookDateField';
+import HookTextField from 'components/common/form-components/HookTextField';
 import { usePutPostReservationMutation } from 'store/apis/reservation';
 import { validationSchema } from 'utils/validation';
 
@@ -19,11 +22,7 @@ const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   noOfPeople: validationSchema.noOfPeople,
 });
 const Reservation = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit, setValue, trigger } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(RESERVATION_FORM_VALIDATION),
   });
@@ -44,7 +43,9 @@ const Reservation = () => {
       console.log('error');
     }
   };
-
+  const handleChangeDate = (newValue) => {
+    setValue('date', newValue);
+  };
   return (
     <Box
       component="form"
@@ -60,181 +61,79 @@ const Reservation = () => {
       <Grid container spacing={2}>
         {/* First Name Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="firstName"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="First Name"
-                fullWidth
-                variant="outlined"
-                error={!!errors.firstName}
-                helperText={errors.firstName ? errors.firstName.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="First Name*"
+            name="firstName"
+            fullWidth
+            // autoFocuss
           />
         </Grid>
 
         {/* Last Name Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="lastName"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Last Name"
-                fullWidth
-                variant="outlined"
-                error={!!errors.lastName}
-                helperText={errors.lastName ? errors.lastName.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="Last Name*"
+            name="lastName"
+            fullWidth
           />
         </Grid>
 
         {/* Phone Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="phoneNo"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Phone No"
-                fullWidth
-                variant="outlined"
-                error={!!errors.phoneNo}
-                helperText={errors.phoneNo ? errors.phoneNo.message : ''}
-                InputProps={{
-                  maxLength: 10,
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="Phone no*"
+            name="phoneNo"
+            fullWidth
           />
         </Grid>
 
         {/* Email Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="email"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Email"
-                fullWidth
-                variant="outlined"
-                error={!!errors.email}
-                helperText={errors.email ? errors.email.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="Email*"
+            name="email"
+            fullWidth
           />
         </Grid>
 
         {/* Number of People Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="noOfPeople"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Number of People"
-                fullWidth
-                type="number"
-                variant="outlined"
-                error={!!errors.noOfPeople}
-                helperText={errors.noOfPeople ? errors.noOfPeople.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="No of People*"
+            name="noOfPeople"
+            fullWidth
           />
         </Grid>
 
         {/* Date Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
+          <HookDateField
             name="reservationDate"
+            date={dayjs()}
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Date"
-                type="date"
-                fullWidth
-                variant="outlined"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                error={!!errors.reservationDate}
-                helperText={
-                  errors.reservationDate ? errors.reservationDate.message : ''
-                }
-                InputProps={{
-                  style: {
-                    cursor: 'pointer',
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            dateHandler={(date) => {
+              handleChangeDate(date);
+            }}
+            maxDate={dayjs().add(100, 'years')}
+            minDate={dayjs().subtract(20, 'years')}
+            label="Date*"
+            onBlur={() => trigger('date')}
           />
         </Grid>
 
         {/* Message Field */}
         <Grid item xs={12}>
-          <Controller
-            name="message"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Message"
-                multiline
-                rows={4}
-                fullWidth
-                variant="outlined"
-                error={!!errors.message}
-                helperText={errors.message ? errors.message.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
-          />
+            label="Message*"
+            name="message"
+            fullWidth
+          />{' '}
         </Grid>
 
         {/* Submit Button */}

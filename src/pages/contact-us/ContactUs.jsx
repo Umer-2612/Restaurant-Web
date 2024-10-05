@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Grid, TextField } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
+import { Box, Button, Grid } from '@mui/material';
+import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
 import useToast from 'components/common/CustomToastMessage';
+import HookTextField from 'components/common/form-components/HookTextField';
 import { usePutPostContactUsMutation } from 'store/apis/contactUs';
 import { validationSchema } from 'utils/validation';
 
@@ -17,11 +18,7 @@ const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   message: validationSchema.message,
 });
 const ContactUs = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(RESERVATION_FORM_VALIDATION),
   });
@@ -58,125 +55,53 @@ const ContactUs = () => {
       <Grid container spacing={2}>
         {/* First Name Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="firstName"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="First Name"
-                fullWidth
-                variant="outlined"
-                error={!!errors.firstName}
-                helperText={errors.firstName ? errors.firstName.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="First Name*"
+            name="firstName"
+            fullWidth
+            // autoFocuss
           />
         </Grid>
 
         {/* Last Name Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="lastName"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Last Name"
-                fullWidth
-                variant="outlined"
-                error={!!errors.lastName}
-                helperText={errors.lastName ? errors.lastName.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="Last Name*"
+            name="lastName"
+            fullWidth
           />
         </Grid>
 
         {/* Phone Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="phoneNo"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Phone No"
-                fullWidth
-                variant="outlined"
-                error={!!errors.phoneNo}
-                helperText={errors.phoneNo ? errors.phoneNo.message : ''}
-                InputProps={{
-                  maxLength: 10,
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="Phone no*"
+            name="phoneNo"
+            fullWidth
           />
         </Grid>
 
         {/* Email Field */}
         <Grid item xs={12} sm={6}>
-          <Controller
-            name="email"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Email"
-                fullWidth
-                variant="outlined"
-                error={!!errors.email}
-                helperText={errors.email ? errors.email.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
+            label="Email*"
+            name="email"
+            fullWidth
           />
         </Grid>
 
         {/* Message Field */}
         <Grid item xs={12}>
-          <Controller
-            name="message"
+          <HookTextField
             control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Message"
-                multiline
-                rows={4}
-                fullWidth
-                variant="outlined"
-                error={!!errors.message}
-                helperText={errors.message ? errors.message.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
-          />
+            label="Message*"
+            name="message"
+            fullWidth
+          />{' '}
         </Grid>
 
         {/* Submit Button */}

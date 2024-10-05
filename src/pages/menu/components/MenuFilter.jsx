@@ -4,22 +4,6 @@ import { Stack, Chip } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 
-// Styles for selected and unselected chips
-const chipStyles = {
-  'margin': '5px',
-  'fontWeight': 'bold',
-  '&.MuiChip-clickable': {
-    border: '2px solid #0B3D91',
-  },
-  '&.MuiChip-clickableColorPrimary': {
-    'color': '#fff',
-    'backgroundColor': '#0B3D91',
-    '&:hover': {
-      backgroundColor: '#0A3578',
-    },
-  },
-};
-
 const MenuFilter = ({ categories, onCategoryChange }) => {
   const [searchParams] = useSearchParams();
   const handleChipClick = (category) => {
@@ -38,7 +22,6 @@ const MenuFilter = ({ categories, onCategoryChange }) => {
             searchParams.get('category') === category.id ? 'primary' : 'default'
           }
           clickable
-          sx={chipStyles}
           onClick={() => handleChipClick(category)}
         />
       ))}
