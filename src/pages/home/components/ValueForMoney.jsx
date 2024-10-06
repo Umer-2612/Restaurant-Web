@@ -9,7 +9,7 @@ const ValueForMoney = () => {
     <Grid container size={{ xs: 11, md: 10 }}>
       <Stack
         gap={2}
-        bgcolor={(theme) => theme.palette.subColor.main}
+        bgcolor={(theme) => theme.palette.other.bgColor}
         p={2}
         borderRadius={3}
       >
