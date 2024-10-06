@@ -1,26 +1,22 @@
-import { useState } from 'react';
-
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-hot-toast';
 
 export const useToast = () => {
-  const [position] = useState('top-right');
-  const [autoClose] = useState(1000);
-
   const showToast = (message, type = 'success') => {
     console.log('::message', message, type);
     if (type === 'success') {
       toast.success(message, {
-        position,
-        autoClose,
+        position: 'top-right',
+        duration: 1000,
       });
     } else if (type === 'error') {
       toast.error(message, {
-        position,
-        autoClose,
+        position: 'top-right',
+        duration: 1000,
       });
     }
   };
+
   return { showToast };
 };
+
 export default useToast;

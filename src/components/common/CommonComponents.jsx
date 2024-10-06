@@ -61,6 +61,10 @@ export const MenuItemLayout = ({
             border: (theme) => `1px solid ${theme.palette.other.border}`,
             borderBottomLeftRadius: 12,
             borderBottomRightRadius: 12,
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
           }}
         >
           <Typography variant="subtitle2" fontWeight={700} color="text.primary">

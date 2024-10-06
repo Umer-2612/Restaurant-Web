@@ -36,6 +36,9 @@ export const LIGHT = {
     main: '#FE4040',
     light: '#FEEAEA',
   },
+  sectionBackground: {
+    main: '#FFEFC6',
+  },
   warning: {
     main: '#FF6F30',
     light: '#FEF0EA',
