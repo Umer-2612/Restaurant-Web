@@ -32,7 +32,7 @@ const Menu = () => {
     }, 200);
   };
 
-  const { data, isLoading, isSuccess, isError, error } = useGetMenusQuery({
+  const { data, isSuccess } = useGetMenusQuery({
     search: searchParams.get('search')?.trim() || '',
     page: searchParams.get('page') || 1,
     limit: searchParams.get('perPage') || 20,

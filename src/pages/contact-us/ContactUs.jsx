@@ -1,12 +1,23 @@
 import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Button, Grid, TextField } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
+import {
+  Box,
+  Button,
+  Container,
+  createTheme,
+  Grid,
+  ThemeProvider,
+  Typography,
+} from '@mui/material';
+import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
+import { Banner } from 'components/common/Banner';
 import useToast from 'components/common/CustomToastMessage';
+import HookTextField from 'components/common/form-components/HookTextField';
 import { usePutPostContactUsMutation } from 'store/apis/contactUs';
+import { LIGHT } from 'store/theme/colors';
 import { validationSchema } from 'utils/validation';
 
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
@@ -16,12 +27,11 @@ const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   email: validationSchema.email,
   message: validationSchema.message,
 });
+const theme = createTheme({
+  palette: LIGHT,
+});
 const ContactUs = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { control, handleSubmit } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(RESERVATION_FORM_VALIDATION),
   });
@@ -44,162 +54,117 @@ const ContactUs = () => {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        width: '60%',
-        margin: '0 auto',
-        padding: '20px',
-        backgroundColor: (theme) => theme.palette.grey[100],
-        borderRadius: '8px',
-      }}
-    >
-      <Grid container spacing={2}>
-        {/* First Name Field */}
-        <Grid item xs={12} sm={6}>
-          <Controller
-            name="firstName"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="First Name"
-                fullWidth
-                variant="outlined"
-                error={!!errors.firstName}
-                helperText={errors.firstName ? errors.firstName.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
-          />
-        </Grid>
-
-        {/* Last Name Field */}
-        <Grid item xs={12} sm={6}>
-          <Controller
-            name="lastName"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Last Name"
-                fullWidth
-                variant="outlined"
-                error={!!errors.lastName}
-                helperText={errors.lastName ? errors.lastName.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
-          />
-        </Grid>
-
-        {/* Phone Field */}
-        <Grid item xs={12} sm={6}>
-          <Controller
-            name="phoneNo"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Phone No"
-                fullWidth
-                variant="outlined"
-                error={!!errors.phoneNo}
-                helperText={errors.phoneNo ? errors.phoneNo.message : ''}
-                InputProps={{
-                  maxLength: 10,
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
-          />
-        </Grid>
-
-        {/* Email Field */}
-        <Grid item xs={12} sm={6}>
-          <Controller
-            name="email"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Email"
-                fullWidth
-                variant="outlined"
-                error={!!errors.email}
-                helperText={errors.email ? errors.email.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
-          />
-        </Grid>
-
-        {/* Message Field */}
-        <Grid item xs={12}>
-          <Controller
-            name="message"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Message"
-                multiline
-                rows={4}
-                fullWidth
-                variant="outlined"
-                error={!!errors.message}
-                helperText={errors.message ? errors.message.message : ''}
-                InputProps={{
-                  style: {
-                    backgroundColor: (theme) => theme.palette.grey[200],
-                  },
-                }}
-              />
-            )}
-          />
-        </Grid>
-
-        {/* Submit Button */}
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            type="submit"
-            sx={{
-              'display': 'block',
-              'marginLeft': 'auto',
-              'backgroundColor': (theme) => theme.palette.primary.main,
-              '&:hover': {
-                backgroundColor: (theme) => theme.palette.primary.dark,
-              },
-            }}
+    <ThemeProvider theme={theme}>
+      <Banner />
+      <Container>
+        <Box sx={{ textAlign: 'center', mt: 4, px: 2 }}>
+          <Typography
+            variant="h4"
+            sx={{ color: 'red', fontWeight: 'bold' }}
+            textAlign={'left'}
           >
-            Submit
-          </Button>
+            CONTACT US
+          </Typography>
+          <Typography variant="body1" sx={{ mt: 2 }} textAlign={'left'}>
+            Do you want to renew yourself with a lavish meal after a long day
+            that will set your mood? We promise our lavish meal can set your
+            mood and force you to lick your fingers. Enjoy our delicious food &
+            for any more queries, reach out to us. Feel free to contact us!
+          </Typography>
+
+          <Typography variant="body1" sx={{ mt: 4 }} textAlign={'left'}>
+            <Typography>📞 0721421728</Typography>
+            <Typography mt={1}>
+              📧 info@punjabitouchindianrestaurant.com.au
+            </Typography>
+            <Typography mt={1}>📍 T2/356 Middle Road, Greenbank</Typography>
+          </Typography>
+        </Box>
+      </Container>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{
+          width: '60%',
+          margin: '0 auto',
+          padding: '20px',
+          borderRadius: '8px',
+        }}
+      >
+        <Grid container spacing={2}>
+          {/* First Name Field */}
+          <Grid item xs={12} sm={6}>
+            <HookTextField
+              control={control}
+              label="First Name*"
+              name="firstName"
+              fullWidth
+              // autoFocuss
+            />
+          </Grid>
+
+          {/* Last Name Field */}
+          <Grid item xs={12} sm={6}>
+            <HookTextField
+              control={control}
+              label="Last Name*"
+              name="lastName"
+              fullWidth
+            />
+          </Grid>
+
+          {/* Phone Field */}
+          <Grid item xs={12} sm={6}>
+            <HookTextField
+              control={control}
+              label="Phone no*"
+              name="phoneNo"
+              fullWidth
+            />
+          </Grid>
+
+          {/* Email Field */}
+          <Grid item xs={12} sm={6}>
+            <HookTextField
+              control={control}
+              label="Email*"
+              name="email"
+              fullWidth
+            />
+          </Grid>
+
+          {/* Message Field */}
+          <Grid item xs={12}>
+            <HookTextField
+              control={control}
+              label="Message*"
+              name="message"
+              fullWidth
+            />{' '}
+          </Grid>
+
+          {/* Submit Button */}
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              type="submit"
+              sx={{
+                'display': 'block',
+                'marginLeft': 'auto',
+                'backgroundColor': (theme) => theme.palette.primary.main,
+                '&:hover': {
+                  backgroundColor: (theme) => theme.palette.primary.dark,
+                },
+              }}
+            >
+              Submit
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </ThemeProvider>
   );
 };
 
