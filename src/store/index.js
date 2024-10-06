@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import apiInstance from './apis/createApiInstance';
 import cart from './slices/cart';
+import sidebar from './slices/sidebar';
 import user from './slices/user';
 import theme from './theme';
 
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   theme,
   cart,
   user,
+  sidebar,
   [apiInstance.reducerPath]: apiInstance.reducer,
 });
 const reducer = (state, action) => {

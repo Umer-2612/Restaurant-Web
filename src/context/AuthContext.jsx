@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
     dispatch({ type: 'logout' });
     deleteAllCookies();
     setAuth(undefined);
-    navigate('/sign-in');
+    navigate('/admin/sign-in');
     localStorage.removeItem('User');
   };
 
@@ -88,19 +88,14 @@ export function AuthRedirect({ children, authenticatedRoute = true }) {
   // Memoize the redirect path to avoid excessive re-rendering
   const redirectPath = useMemo(() => {
     if (isAuthenticated) {
-      return '/admin';
+      return '/admin/orders';
     }
-    return '/sign-in';
+    return '/admin/sign-in';
   }, [isAuthenticated]);
 
   // Redirect to sign-in if not authenticated and the route is protected
   if (!isAuthenticated && authenticatedRoute) {
-    return <Navigate to="/sign-in" state={{ from: location }} />;
-  }
-
-  // Redirect to sign-in if not authenticated and the route is protected
-  if (isAuthenticated && authenticatedRoute && user?.info?.approved === false) {
-    return <Navigate to="/set-password" state={{ from: location }} />;
+    return <Navigate to="/admin/sign-in" state={{ from: location }} />;
   }
 
   // Redirect to role-based dashboard if authenticated but accessing a public route

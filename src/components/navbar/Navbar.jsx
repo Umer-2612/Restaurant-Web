@@ -21,8 +21,12 @@ import { cartSelector } from 'store/slices/cart';
 import { TABS } from 'utils/commonData';
 
 // Logo component for reuse
-const Logo = ({ sx }) => (
-  <Stack height={70} sx={sx}>
+export const Logo = ({ sx, handleClick }) => (
+  <Stack
+    height={70}
+    sx={{ ...sx, cursor: handleClick ? 'pointer' : 'inherit' }}
+    onClick={handleClick}
+  >
     <img
       src={PTFullLogo}
       alt="Punjabi Touch logo"
@@ -35,6 +39,7 @@ const Logo = ({ sx }) => (
 
 Logo.propTypes = {
   sx: PropTypes.object,
+  handleClick: PropTypes.func,
 };
 
 // MenuTabs component for the desktop view

@@ -50,6 +50,8 @@ const SignIn = () => {
       password: data.password.trim(),
     };
     const response = await signInGet(body);
+    console.log(response);
+    console.log(isLoading, isError, error);
     // try {
     //   if (response?.data) {
     //     showToast(response?.data?.message, 'success');

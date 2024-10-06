@@ -32,6 +32,10 @@ const CHIP_STYLE = (theme, searchParams, category) => {
     '&:active': {
       transform: 'scale(1)',
     },
+    'maxWidth': 150,
+    'whiteSpace': 'nowrap',
+    'textOverflow': 'ellipsis',
+    'overflow': 'hidden', // Make sure overflow is hidden for the ellipsis to work
   };
 };
 
@@ -55,7 +59,11 @@ const MenuFilter = ({ categories, onCategoryChange }) => {
         {categories.map((category) => (
           <Chip
             key={category?.id}
-            label={<Typography variant="body2">{category?.name}</Typography>}
+            label={
+              <Typography variant="body2" noWrap>
+                {category?.name}
+              </Typography>
+            }
             color={
               searchParams.get('category') === category.id
                 ? 'primary'

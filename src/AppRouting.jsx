@@ -1,16 +1,12 @@
 import React, { lazy, Suspense, useMemo } from 'react';
 
-// import CircularProgress from '@mui/material/CircularProgress';
-// import Stack from '@mui/material/Stack';
-// import { useSelector } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import { Navigate, useRoutes } from 'react-router-dom';
 
-import config from 'config';
+// import config from 'config';
 import { AuthProvider, AuthRedirect } from 'context/AuthContext';
 import AuthLayout from 'layouts/AuthLayout';
-import OrderList from 'pages/admin/OrderList';
 import SignIn from 'pages/auth/SignIn';
 import useAuth from 'utils/authUtils';
 
@@ -26,13 +22,16 @@ const AboutUs = lazy(() => import('pages/about-us/AboutUs'));
 const ContactUs = lazy(() => import('pages/contact-us/ContactUs'));
 const Cart = lazy(() => import('pages/cart/Cart'));
 
+// Routing
+const AdminRouting = lazy(() => import('pages/admin/AdminRouting'));
+
 export default function AppRouting() {
   const auth = useAuth();
   const defaultNavigate = useMemo(() => {
     if (auth?.authenticated) {
-      return '/admin';
+      return '/admin/orders';
     }
-    return '/sign-in';
+    return '/admin/sign-in';
   }, [auth?.authenticated]);
 
   const getRouteWrapper = (component, authRoute = true) => {
@@ -119,27 +118,28 @@ export default function AppRouting() {
     },
     {
       path: '/admin',
-      element: getRouteWrapper(<AuthLayout />),
+      // element: getRouteWrapper(<AuthLayout />, false),
       children: [
         {
+          path: '/admin/sign-in',
+          element: getRouteWrapper(<SignIn />, false),
+        },
+        {
+          path: '/admin',
+          element: getRouteWrapper(<AuthLayout />),
+          children: [
+            {
+              index: true,
+              path: '*',
+              element: getRouteWrapper(<AdminRouting />),
+            },
+          ],
+        },
+        {
           index: true,
-          element: <OrderList />,
+          element: <Navigate to={defaultNavigate} />,
         },
       ],
-    },
-    {
-      path: '/sign-in',
-      // element: getRouteWrapper(<SignInLayout />, false),
-      element: getRouteWrapper(<SignIn />, false),
-      // children: [
-      //   {
-      //     path: '/sign-in',
-      //   },
-      //   {
-      //     index: true,
-      //     element: <Navigate to={defaultNavigate} />,
-      //   },
-      // ],
     },
     {
       path: '*',

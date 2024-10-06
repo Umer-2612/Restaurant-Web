@@ -79,7 +79,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 // initialize an empty api service that we'll inject endpoints into later as needed
 export const createApiInstance = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: [],
+  tagTypes: ['UserAPI'],
   endpoints: () => ({}),
 });
 

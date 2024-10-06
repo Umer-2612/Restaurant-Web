@@ -108,3 +108,18 @@ export const removeExtraFields = (obj = {}, removeFields = []) => {
   }
   return data;
 };
+
+export const convertPathNameToKey = (location) => {
+  const { pathname } = location;
+  if (!pathname || pathname === '/') {
+    return false;
+  }
+  const pathNameArr = pathname.split('/');
+  const transformedPath = pathNameArr
+    .filter((segment) => segment !== '')
+    .map((segment) =>
+      segment.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())
+    )
+    .join('');
+  return transformedPath;
+};

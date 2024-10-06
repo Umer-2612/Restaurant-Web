@@ -124,7 +124,10 @@ MenuItemLayout.propTypes = {
   updateCartDetails: PropTypes.func,
 };
 
-export const CustomPagination = ({ limitPerPageArray, total }) => {
+export const CustomPagination = ({
+  limitPerPageArray = [20, 40, 60, 80],
+  total,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const page =
@@ -243,7 +246,7 @@ export const CustomPagination = ({ limitPerPageArray, total }) => {
               );
             }}
           >
-            {limitPerPageArray.map((rowPerPage, index) => (
+            {limitPerPageArray?.map((rowPerPage, index) => (
               <MenuItem
                 key={rowPerPage}
                 value={rowPerPage}
