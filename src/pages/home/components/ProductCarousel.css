@@ -1,0 +1,85 @@
+.carousel .slider-wrapper {
+  padding: 0 20px;
+}
+
+.carousel .carousel-item img {
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  max-height: 250px;
+  object-fit: cover;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.carousel .carousel-item {
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel .control-dots {
+  position: absolute;
+  bottom: -9px; /* Move dots below the images */
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.carousel .control-dots .dot.selected {
+  background-color: #333;
+}
+
+.carousel .legend {
+  display: none; /* Hiding the default legend text */
+}
+
+.carousel .carousel-status {
+  display: none; /* Hide slide count */
+}
+
+.carousel .control-arrow {
+  background-color: transparent; /* Customize arrows if needed */
+  border: none;
+}
+@media screen and (max-width: 1024px) {
+  .carousel .carousel-item img {
+    max-height: 200px; /* Smaller height for medium screens */
+  }
+
+  .carousel .slider-wrapper {
+    padding: 0 15px;
+  }
+
+  .carousel .control-dots {
+    top: 168px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .carousel .carousel-item img {
+    max-height: 150px; /* Smaller height for tablets */
+  }
+
+  .carousel .slider-wrapper {
+    padding: 0 10px;
+  }
+
+  .carousel .control-dots {
+    top: 165px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .carousel .carousel-item img {
+    max-height: 120px; /* Even smaller height for mobile */
+  }
+
+  .carousel .slider-wrapper {
+    padding: 0 5px;
+  }
+
+  .carousel .control-dots {
+    top: 135px;
+  }
+}
