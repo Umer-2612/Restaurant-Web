@@ -4,18 +4,19 @@ export const common = {
 };
 
 export const primaryColor = {
-  50: '#fde5e5', // Very light red
-  100: '#fab2b2', // Light red
-  200: '#f58f8f', // Light-medium red
-  300: '#f06b6b', // Medium red
-  400: '#eb4848', // Slightly darker red
-  500: '#D40808', // Base red (Your input color)
-  600: '#bb0707', // Darker red
-  700: '#930505', // Even darker red
-  800: '#6b0303', // Very dark red
-  900: '#520202', // Deepest red
-  A100: '#fce5e5', // Transparent-like shade
+  50: '#ffe9ea',
+  100: '#f9c7c9',
+  200: '#f3a3a6',
+  300: '#ed7f83',
+  400: '#e75b60',
+  500: '#E63946', // Appetizing Red
+  600: '#cf3337',
+  700: '#b7282c',
+  800: '#9f1d21',
+  900: '#871517',
+  A100: '#fff2f0', // Soft transparency background
 };
+
 export const LIGHT = {
   primary: {
     main: primaryColor[500],

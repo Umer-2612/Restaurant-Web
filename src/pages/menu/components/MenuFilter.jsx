@@ -8,31 +8,29 @@ import { useSearchParams } from 'react-router-dom';
 const CHIP_STYLE = (theme, searchParams, category) => {
   return {
     'px': 1,
+    'border': `1px solid ${searchParams.get('category') === category.id ? theme.palette.other.border : theme.palette.other.border}`,
     'background':
       searchParams.get('category') === category.id
-        ? `linear-gradient(60deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`
-        : theme.palette.background.paper,
+        ? theme.palette.primaryColor[50]
+        : theme.palette.other.bgColor,
     'color':
       searchParams.get('category') === category.id
-        ? theme.palette.common.white
+        ? theme.palette.primary.main
         : theme.palette.text.primary,
     'transition': 'all 0.2s ease-in-out',
-    'boxShadow':
-      searchParams.get('category') === category.id
-        ? '0px 4px 12px rgba(0, 0, 0, 0.2)'
-        : 'none',
+    'borderRadius': 2,
     'transform':
       searchParams.get('category') === category.id ? 'scale(1.02)' : 'scale(1)',
     '&:hover': {
-      background: `linear-gradient(60deg, ${theme.palette.primary.light}, ${theme.palette.primary.dark})`,
-      color: theme.palette.common.white,
-      boxShadow: '0px 6px 16px rgba(0, 0, 0, 0.25)',
-      transform: 'scale(1.05)',
+      background: theme.palette.primaryColor[50],
+      boxShadow:
+        'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px',
+      transform: 'scale(1.02)',
     },
     '&:active': {
       transform: 'scale(1)',
     },
-    'maxWidth': 150,
+    'maxWidth': 200,
     'whiteSpace': 'nowrap',
     'textOverflow': 'ellipsis',
     'overflow': 'hidden', // Make sure overflow is hidden for the ellipsis to work

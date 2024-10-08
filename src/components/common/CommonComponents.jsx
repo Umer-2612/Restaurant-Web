@@ -19,105 +19,135 @@ export const MenuItemLayout = ({
   menu,
   handleMenuModalOpen,
   updateCartDetails,
+  isLastItem = false,
 }) => {
   return (
-    <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+    <Stack
+      overflow="hidden"
+      height="100%"
+      sx={{
+        borderBottom: (theme) =>
+          isLastItem ? 'none' : `1px solid ${theme.palette.other.border}`,
+      }}
+      direction="row"
+      alignItems="center"
+      py={2}
+    >
       <Stack
-        borderRadius={3}
-        overflow="hidden"
-        height="100%"
+        gap={1}
         sx={{
-          'transition': '0.2s',
-          '&: hover': {
-            transform: 'scale(1.02)',
-            boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
-          },
+          borderBottomLeftRadius: 12,
+          borderBottomRightRadius: 12,
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        <Stack
-          sx={{
-            width: '100%',
-            position: 'relative',
-            paddingBottom: '50%',
-          }}
-        >
-          <img
-            src={menu?.image || 'https://picsum.photos/200/300'}
-            alt={menu?.itemName}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
-          />
-        </Stack>
-        <Stack
-          p={2}
-          gap={0.5}
-          sx={{
-            border: (theme) => `1px solid ${theme.palette.other.border}`,
-            borderBottomLeftRadius: 12,
-            borderBottomRightRadius: 12,
-            flexGrow: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}
-        >
+        <Stack>
           <Typography variant="subtitle2" fontWeight={700} color="text.primary">
             {menu?.itemName}
           </Typography>
-          <Typography variant="body3" color="text.secondary">
-            {menu?.itemDescription}
+          <Typography variant="body1" color="text.primary" fontWeight="bold">
+            ${menu?.itemPrice}
           </Typography>
+        </Stack>
+        <Typography variant="body2" color="text.secondary">
+          {menu?.itemDescription}
+        </Typography>
+      </Stack>
+      <Stack
+        position="relative"
+        sx={{
+          height: 160,
+          width: 156,
+          borderRadius: 3,
+        }}
+      >
+        <Stack height={144} width={156} borderRadius={3} overflow="hidden">
+          {!menu?.image && (
+            <img
+              src={menu?.image || 'https://picsum.photos/200/300'}
+              alt={menu?.itemName}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+              }}
+            />
+          )}
+        </Stack>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          position="absolute"
+          bottom={0}
+          left="50%"
+          sx={{
+            transform: 'translate(-50%, 0%)',
+          }}
+        >
           <Stack
             direction="row"
-            justifyContent="space-between"
             alignItems="center"
+            justifyContent="space-between"
+            bgcolor={(theme) => theme.palette.common.white}
+            borderRadius={3}
+            sx={{
+              width: 120,
+              boxShadow:
+                'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px',
+            }}
           >
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              {menu?.cartDetails?.quantity ? (
-                <>
-                  <IconButton
-                    color="primary"
-                    onClick={() => handleMenuModalOpen({ menu })}
-                  >
-                    <RemoveIcon />
-                  </IconButton>
-                  <Typography variant="subtitle2" color="text.primary">
-                    {menu?.cartDetails?.quantity}
-                  </Typography>
-                  <IconButton
-                    color="primary"
-                    onClick={() => handleMenuModalOpen({ menu })}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </>
-              ) : (
-                <Button
-                  onClick={() => handleMenuModalOpen({ menu })}
-                  sx={{ height: 40 }}
-                  variant="contained"
+            {menu?.cartDetails?.quantity ? (
+              <>
+                <IconButton onClick={() => handleMenuModalOpen({ menu })}>
+                  <RemoveIcon
+                    sx={{
+                      color: (theme) => theme.palette.success.main,
+                    }}
+                  />
+                </IconButton>
+                <Typography
+                  variant="subtitle2"
+                  color="success.main"
+                  fontWeight={600}
                 >
-                  Add
-                </Button>
-              )}
-            </Stack>
-            <Typography variant="subtitle2" color="primary" fontWeight="bold">
-              $ {menu?.itemPrice}
-            </Typography>
+                  {menu?.cartDetails?.quantity}
+                </Typography>
+                <IconButton onClick={() => handleMenuModalOpen({ menu })}>
+                  <AddIcon
+                    sx={{
+                      color: (theme) => theme.palette.success.main,
+                    }}
+                  />
+                </IconButton>
+              </>
+            ) : (
+              <Button
+                fullWidth
+                onClick={() => handleMenuModalOpen({ menu })}
+                sx={{
+                  height: 38,
+                  borderRadius: 3,
+                  px: 4,
+                  bgcolor: (theme) => theme.palette.common.white,
+                }}
+                variant="text"
+              >
+                <Typography
+                  variant="subtitle2"
+                  color="success.main"
+                  fontWeight={600}
+                >
+                  ADD
+                </Typography>
+              </Button>
+            )}
           </Stack>
         </Stack>
       </Stack>
-    </Grid>
+    </Stack>
   );
 };
 
@@ -126,6 +156,7 @@ MenuItemLayout.propTypes = {
   handleMenuModalOpen: PropTypes.func,
   cartDetails: PropTypes.object,
   updateCartDetails: PropTypes.func,
+  isLastItem: PropTypes.bool,
 };
 
 export const CustomPagination = ({
