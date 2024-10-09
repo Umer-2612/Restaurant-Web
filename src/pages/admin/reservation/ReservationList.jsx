@@ -37,7 +37,8 @@ const ReservationList = () => {
   );
   const reservationData = data?.data;
 
-  const { reservationStatusUpdate } = useReservationStatusUpdateMutation();
+  const [reservationStatusUpdate, { isLoading: isStatusLoading }] =
+    useReservationStatusUpdateMutation();
 
   const columns = [
     {
@@ -81,6 +82,7 @@ const ReservationList = () => {
         return (
           <Stack direction="row" width="100%" gap={2}>
             <Button
+              disabled={isStatusLoading}
               onClick={() =>
                 reservationStatusUpdate({ _id: row?._id, status: 'Rejected' })
               }
@@ -88,6 +90,7 @@ const ReservationList = () => {
               Reject
             </Button>
             <Button
+              disabled={isStatusLoading}
               sx={{
                 color: (theme) => theme.palette.success.main,
               }}
