@@ -85,6 +85,7 @@ const Menu = () => {
     const itemIndex = storedMenuDetails.findIndex(
       (cartData) => cartData?.menuId === menu?._id
     );
+
     return itemIndex >= 0
       ? { ...menu, cartDetails: storedMenuDetails[itemIndex] }
       : menu;

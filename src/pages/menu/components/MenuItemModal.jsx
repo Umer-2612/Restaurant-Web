@@ -23,18 +23,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
   const { menuDetails } = menuProps || {};
   const dispatch = useDispatch();
-
+  console.log('::menuDetails', menuDetails);
   const [cartDetails, setCartDetails] = useState({
     menuId: menuDetails?._id || null,
     quantity: 1,
+    itemName: menuDetails?.itemName,
+    itemPrice: menuDetails?.itemPrice,
+    itemImagePath: menuDetails?.itemImagePath,
   });
-
+  console.log('::cartDetails', cartDetails);
   useEffect(() => {
     if (menuDetails) {
       setCartDetails(
         menuDetails?.cartDetails || {
           menuId: menuDetails._id,
           quantity: 1,
+          itemName: menuDetails?.itemName,
+          itemPrice: menuDetails?.itemPrice,
+          itemImagePath: menuDetails?.itemImagePath,
         }
       );
     }

@@ -46,6 +46,8 @@
     "@mui/material": "^6.1.1",
     "@mui/x-date-pickers": "^7.19.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@stripe/react-stripe-js": "^2.8.1",
+    "@stripe/stripe-js": "^4.7.0",
     "dayjs": "^1.11.13",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
