@@ -95,7 +95,7 @@ const ReservationList = () => {
                 color: (theme) => theme.palette.success.main,
               }}
               onClick={() =>
-                reservationStatusUpdate({ _id: row?._id, status: 'Approved' })
+                reservationStatusUpdate({ _id: row?._id, status: 'Accepted' })
               }
             >
               Approve

@@ -20,7 +20,7 @@ const reservationApi = createApiInstance.injectEndpoints({
       query({ status, _id }) {
         return {
           url: `/reservation/${_id}`,
-          method: 'POST',
+          method: 'PATCH',
           body: { status },
         };
       },
