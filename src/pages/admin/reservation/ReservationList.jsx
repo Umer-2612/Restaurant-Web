@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
@@ -8,7 +9,10 @@ import { useSearchParams } from 'react-router-dom';
 
 import TableWrapper from 'components/common/TableWapper';
 import TableLayout from 'layouts/TableLayout';
-import { useGetAllReservationQuery } from 'store/apis/reservation';
+import {
+  useGetAllReservationQuery,
+  useReservationStatusUpdateMutation,
+} from 'store/apis/reservation';
 
 const ReservationList = () => {
   const [viewParams] = useSearchParams();
@@ -32,6 +36,8 @@ const ReservationList = () => {
     }
   );
   const reservationData = data?.data;
+
+  const { reservationStatusUpdate } = useReservationStatusUpdateMutation();
 
   const columns = [
     {
@@ -65,6 +71,33 @@ const ReservationList = () => {
           <Typography variant="body1">
             {dayjs(row?.publishedOn).format('ddd, MMM DD - hh:mm A')}
           </Typography>
+        );
+      },
+    },
+    {
+      id: 'action',
+      title: 'Actions',
+      formatter: ({ row }) => {
+        return (
+          <Stack direction="row" width="100%" gap={2}>
+            <Button
+              onClick={() =>
+                reservationStatusUpdate({ _id: row?._id, status: 'Rejected' })
+              }
+            >
+              Reject
+            </Button>
+            <Button
+              sx={{
+                color: (theme) => theme.palette.success.main,
+              }}
+              onClick={() =>
+                reservationStatusUpdate({ _id: row?._id, status: 'Approved' })
+              }
+            >
+              Approve
+            </Button>
+          </Stack>
         );
       },
     },

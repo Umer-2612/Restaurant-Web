@@ -15,7 +15,20 @@ const reservationApi = createApiInstance.injectEndpoints({
         };
       },
     }),
+
+    reservationStatusUpdate: build.mutation({
+      query({ status, _id }) {
+        return {
+          url: `/reservation/${_id}`,
+          method: 'POST',
+          body: { status },
+        };
+      },
+    }),
   }),
 });
-export const { useGetAllReservationQuery, usePutPostReservationMutation } =
-  reservationApi;
+export const {
+  useGetAllReservationQuery,
+  usePutPostReservationMutation,
+  useReservationStatusUpdateMutation,
+} = reservationApi;
