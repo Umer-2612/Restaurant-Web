@@ -16,12 +16,16 @@ import {
   Paper,
   Container,
 } from '@mui/material';
+import { loadStripe } from '@stripe/stripe-js';
 import { useNavigate } from 'react-router-dom'; // Assuming you're using react-router-dom for navigation
+
+import { useCreateCheckoutSessionMutation } from 'store/apis/checkoutApi';
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate(); // Hook to navigate to other pages
-
+  const [createCheckoutSession] = useCreateCheckoutSessionMutation();
   useEffect(() => {
     const storedCartItems =
       JSON.parse(localStorage.getItem('menuDetails')) || [];
@@ -65,8 +69,16 @@ const Cart = () => {
     0
   );
 
-  const handleCheckout = () => {
-    alert('::hi');
+  const handleCheckout = async () => {
+    const stripe = await stripePromise;
+    console.log('::stripePromise', stripe);
+
+    const { data: session } = await createCheckoutSession(cartItems);
+    console.log(session);
+    const result = await stripe.redirectToCheckout({
+      sessionId: session?.sessionId,
+    });
+    console.log(result);
   };
 
   return (

@@ -117,8 +117,10 @@ const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
           >
             <Typography variant="body1">
               ${' '}
-              {Number(menuDetails?.itemPrice || 1) *
-                Number(cartDetails?.quantity || 1)}
+              {(
+                Number(menuDetails?.itemPrice || 1) *
+                Number(cartDetails?.quantity || 1)
+              ).toFixed(2)}
             </Typography>
             <Stack
               direction="row"
