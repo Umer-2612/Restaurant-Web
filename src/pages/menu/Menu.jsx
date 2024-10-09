@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import { useSearchParams } from 'react-router-dom';
@@ -96,34 +97,46 @@ const Menu = () => {
     setSearchParams(searchParams);
   };
   return (
-    <Stack alignItems="center">
-      <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={3}>
-        {categories?.length > 0 && (
-          <MenuFilter
-            categories={categories}
-            onCategoryChange={handleCategoryChange}
-          />
-        )}
-        {modifiedData?.map((menu) => (
-          <MenuItemLayout
-            key={menu?._id}
-            menu={menu}
-            handleMenuModalOpen={handleMenuModalOpen}
-          />
-        ))}
-        <Stack width="100%">
-          <CustomPagination
-            limitPerPageArray={[20, 40, 60, 80]}
-            total={data?.paginationData?.total || 100}
-          />
-        </Stack>
-      </Grid>
-      <MenuItemModal
-        menuProps={menuProps}
-        setMenuProps={setMenuProps}
-        handleMenuModalClose={handleMenuModalClose}
-      />
-    </Stack>
+    <Container>
+      <Stack alignItems="center">
+        <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={3}>
+          {/* MenuFilter Stack */}
+          {categories?.length > 0 && (
+            <MenuFilter
+              categories={categories}
+              onCategoryChange={handleCategoryChange}
+            />
+          )}
+          {/* Scrollable MenuItemLayout Stack */}
+          <Stack
+            width="100%"
+            sx={{
+              overflowY: 'auto', // Allow vertical scrolling
+            }}
+          >
+            {modifiedData?.map((menu, index) => (
+              <MenuItemLayout
+                key={menu?._id}
+                menu={menu}
+                handleMenuModalOpen={handleMenuModalOpen}
+                isLastItem={Number(modifiedData?.length - 1) === Number(index)}
+              />
+            ))}
+          </Stack>
+          <Stack width="100%">
+            <CustomPagination
+              limitPerPageArray={[20, 40, 60, 80]}
+              total={data?.paginationData?.total || 100}
+            />
+          </Stack>
+        </Grid>
+        <MenuItemModal
+          menuProps={menuProps}
+          setMenuProps={setMenuProps}
+          handleMenuModalClose={handleMenuModalClose}
+        />
+      </Stack>
+    </Container>
   );
 };
 
