@@ -137,7 +137,7 @@ export default function AppRouting() {
         },
         {
           index: true,
-          element: <Navigate to={defaultNavigate} />,
+          element: <Navigate to={'/admin/sign-in'} />,
         },
       ],
     },
