@@ -2,9 +2,9 @@ import { createApiInstance } from './createApiInstance';
 
 const categoriesApi = createApiInstance.injectEndpoints({
   endpoints: (build) => ({
-    getOrders: build.query({
+    getAllOrders: build.query({
       query: (query) => '/orders',
     }),
   }),
 });
-export const { useGetOrdersQuery } = categoriesApi;
+export const { useGetAllOrdersQuery } = categoriesApi;
