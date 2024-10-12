@@ -17,10 +17,10 @@ import {
   Container,
 } from '@mui/material';
 import { loadStripe } from '@stripe/stripe-js';
-// import emptyCartImage from 'assets/images/empty_cart.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; // Assuming you're using react-router-dom for navigation
 
+import emptyCartImage from 'assets/images/butter-chicken.jpg';
 import { useCreateCheckoutSessionMutation } from 'store/apis/checkoutApi';
 import { cartSelector, modifyCartDetails } from 'store/slices/cart';
 
@@ -119,7 +119,7 @@ const Cart = () => {
         {cartItems.length === 0 ? (
           <Box sx={{ textAlign: 'center', mt: 5 }}>
             <img
-              src=""
+              src={emptyCartImage}
               alt="No items"
               style={{ width: '300px', marginBottom: '20px' }}
             />
