@@ -66,7 +66,7 @@ export const MenuItemLayout = ({
         <Stack height={144} width={156} borderRadius={3} overflow="hidden">
           {!menu?.image && (
             <img
-              src={menu?.image || 'https://picsum.photos/200/300'}
+              src={menu?.itemImagePath || 'https://picsum.photos/200/300'}
               alt={menu?.itemName}
               style={{
                 width: '100%',
