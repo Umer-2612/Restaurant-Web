@@ -3,21 +3,21 @@ import React from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
-  Button,
+  // Button,
   Container,
-  createTheme,
+  // createTheme,
   Grid,
-  ThemeProvider,
+  // ThemeProvider,
   Typography,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
+import RHFButton from 'components/button/RHFButton';
 import { Banner } from 'components/common/Banner';
 import useToast from 'components/common/CustomToastMessage';
 import HookTextField from 'components/common/form-components/HookTextField';
 import { usePutPostContactUsMutation } from 'store/apis/contactUs';
-import { LIGHT } from 'store/theme/colors';
 import { validationSchema } from 'utils/validation';
 
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
@@ -27,16 +27,14 @@ const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   email: validationSchema.email,
   message: validationSchema.message,
 });
-const theme = createTheme({
-  palette: LIGHT,
-});
+
 const ContactUs = () => {
   const { control, handleSubmit } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(RESERVATION_FORM_VALIDATION),
   });
 
-  const [contactUs] = usePutPostContactUsMutation();
+  const [contactUs, { isLoading }] = usePutPostContactUsMutation();
 
   const { showToast } = useToast();
 
@@ -54,7 +52,7 @@ const ContactUs = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Banner />
       <Container>
         <Box sx={{ textAlign: 'center', mt: 4, px: 2 }}>
@@ -145,26 +143,17 @@ const ContactUs = () => {
 
           {/* Submit Button */}
           <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
+            <RHFButton
+              isLoading={isLoading}
               type="submit"
-              sx={{
-                'display': 'block',
-                'marginLeft': 'auto',
-                'backgroundColor': (theme) => theme.palette.primary.main,
-                '&:hover': {
-                  backgroundColor: (theme) => theme.palette.primary.dark,
-                },
-              }}
-            >
-              Submit
-            </Button>
+              variant="contained"
+              color={'primary'}
+              title={'submit'}
+            />
           </Grid>
         </Grid>
       </Box>
-    </ThemeProvider>
+    </>
   );
 };
 
