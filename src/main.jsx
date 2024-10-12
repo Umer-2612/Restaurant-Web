@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import ReactDOM from 'react-dom/client';
 import { Toaster } from 'react-hot-toast';
@@ -9,16 +9,15 @@ import App from './App.jsx';
 import ThemeLoader from './theme-loader/ThemeLoader.jsx';
 
 import { store } from 'store/index.js';
+import './main.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
   <Provider store={store}>
     <ThemeLoader>
-      <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Toaster />
-          <App />
-        </Suspense>
+      <BrowserRouter basename="/home">
+        <Toaster />
+        <App />
       </BrowserRouter>
     </ThemeLoader>
   </Provider>
