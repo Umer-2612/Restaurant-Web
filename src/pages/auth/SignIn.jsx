@@ -1,35 +1,36 @@
 import React, { useLayoutEffect } from 'react';
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Grid from '@mui/material/Grid2';
 import TextField from '@mui/material/TextField';
-import { Controller, useForm } from 'react-hook-form';
-// import { useToast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useForm, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-
 import { useSignInMutation } from 'store/apis/signIn';
 import { setUserInfo } from 'store/slices/user';
 import useAuth from 'utils/authUtils';
 import { validationSchema } from 'utils/validation';
+import { themeSelector } from 'store/theme';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import logo from '../../assets/brand-image/punjabi-touch-logo.png';
+import Grid from '@mui/material/Grid2';
 
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   email: validationSchema.email,
-  password: validationSchema.lastName,
+  password: validationSchema.password,
 });
 
 const SignIn = () => {
-  //   const { showToast } = useToast();
   const auth = useAuth();
   const dispatch = useDispatch();
+  const theme = useSelector(themeSelector);
 
   const [signInGet, { data, isLoading, isSuccess, isError, error }] =
     useSignInMutation();
 
   useLayoutEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && data) {
       dispatch(setUserInfo(data?.user));
       auth.setAuth(data);
     }
@@ -44,105 +45,170 @@ const SignIn = () => {
     resolver: yupResolver(RESERVATION_FORM_VALIDATION),
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (formData) => {
     const body = {
-      email: data.email.trim(),
-      password: data.password.trim(),
+      email: formData.email.trim(),
+      password: formData.password.trim(),
     };
-    const response = await signInGet(body);
-    console.log(response);
-    console.log(isLoading, isError, error);
-    // try {
-    //   if (response?.data) {
-    //     showToast(response?.data?.message, 'success');
-    //   } else {
-    //     showToast(response?.data?.message, 'error');
-    //   }
-    // } catch (error) {
-    //   console.log('error');
-    // }
+    try {
+      const response = await signInGet(body);
+      console.log(response); // Check the response here
+    } catch (apiError) {
+      console.error('Error during sign-in:', apiError);
+    }
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        width: '60%',
-        margin: '0 auto',
-        padding: '20px',
-        backgroundColor: (theme) => theme.palette.grey[100],
-        borderRadius: '8px',
-      }}
-    >
-      {/* Email Field */}
-      <Grid item xs={12} sm={6}>
-        <Controller
-          name="email"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Email"
-              fullWidth
-              variant="outlined"
-              error={!!errors.email}
-              helperText={errors.email ? errors.email.message : ''}
-              InputProps={{
-                style: {
-                  backgroundColor: (theme) => theme.palette.grey[200],
-                },
-              }}
-            />
-          )}
-        />
+    <Grid container sx={{ minHeight: '100vh', backgroundColor: '#F4F6F8' }}>
+      {/* Left Panel */}
+      <Grid
+        item
+        xs={12}
+        md={6}
+        sx={{
+          background: 'linear-gradient(to bottom right, #FF1744, #FF616F)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          color: '#FFFFFF',
+          textAlign: 'center',
+          padding: 3,
+        }}
+      >
+        <Box>
+          <img
+            src={logo}
+            alt="Company Logo"
+            style={{
+              width: '150px',
+              height: 'auto',
+              marginBottom: theme.spacing(3),
+            }}
+          />
+          <Typography
+            variant="h3"
+            sx={{
+              fontWeight: 600,
+              fontFamily: 'Roboto, sans-serif',
+              color: '#FFFFFF',
+              marginBottom: theme.spacing(2),
+            }}
+          >
+            Welcome Back
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 400,
+              fontFamily: 'Roboto, sans-serif',
+              color: '#FFFFFF',
+              marginBottom: theme.spacing(4),
+              opacity: 0.8,
+            }}
+          >
+            Sign in to continue to your dashboard
+          </Typography>
+        </Box>
       </Grid>
 
-      {/* Last Name Field */}
-      <Grid item xs={12} sm={6}>
-        <Controller
-          name="password"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Password"
-              fullWidth
-              variant="outlined"
-              error={!!errors.lastName}
-              helperText={errors.lastName ? errors.lastName.message : ''}
-              InputProps={{
-                style: {
-                  backgroundColor: (theme) => theme.palette.grey[200],
-                },
-              }}
-            />
-          )}
-        />
-      </Grid>
-
-      {/* Submit Button */}
-      <Grid item xs={12}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          type="submit"
+      {/* Right Panel - Form Section */}
+      <Grid
+        item
+        xs={12}
+        md={6}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          // width: '81%',
+          flexGrow: 1, // Take remaining width
+          padding: theme.spacing(5),
+          backgroundColor: '#FFFFFF',
+        }}
+      >
+        <Paper
+          elevation={3}
           sx={{
-            'display': 'block',
-            'marginLeft': 'auto',
-            'backgroundColor': (theme) => theme.palette.primary.main,
-            '&:hover': {
-              backgroundColor: (theme) => theme.palette.primary.dark,
-            },
+            padding: theme.spacing(4),
+            maxWidth: 400,
+            // width: '100%',
+            borderRadius: '12px',
           }}
         >
-          Submit
-        </Button>
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: 500,
+              textAlign: 'center',
+              marginBottom: theme.spacing(4),
+              fontFamily: 'Roboto, sans-serif',
+            }}
+          >
+            Sign In to Your Account
+          </Typography>
+
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Email"
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.email}
+                  helperText={errors.email ? errors.email.message : ''}
+                  sx={{
+                    marginBottom: theme.spacing(3),
+                  }}
+                />
+              )}
+            />
+
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Password"
+                  variant="outlined"
+                  fullWidth
+                  type="password"
+                  error={!!errors.password}
+                  helperText={errors.password ? errors.password.message : ''}
+                  sx={{
+                    marginBottom: theme.spacing(4),
+                  }}
+                />
+              )}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              sx={{
+                'padding': theme.spacing(1.5),
+                'borderRadius': '8px',
+                'backgroundColor': '#FF1744',
+                'color': '#FFFFFF',
+                'fontWeight': 500,
+                'fontFamily': 'Roboto, sans-serif',
+                'boxShadow': '0px 4px 12px rgba(255, 23, 68, 0.3)',
+                '&:hover': {
+                  backgroundColor: '#D50000',
+                },
+              }}
+            >
+              Sign In
+            </Button>
+          </form>
+        </Paper>
       </Grid>
-    </Box>
+    </Grid>
   );
 };
 
