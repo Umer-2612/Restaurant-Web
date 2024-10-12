@@ -90,12 +90,12 @@ export function AuthRedirect({ children, authenticatedRoute = true }) {
     if (isAuthenticated) {
       return '/admin/orders';
     }
-    return '/admin/sign-in';
+    return '/home';
   }, [isAuthenticated]);
 
   // Redirect to sign-in if not authenticated and the route is protected
   if (!isAuthenticated && authenticatedRoute) {
-    return <Navigate to="/admin/sign-in" state={{ from: location }} />;
+    return <Navigate to="/home" state={{ from: location }} />;
   }
 
   // Redirect to role-based dashboard if authenticated but accessing a public route
