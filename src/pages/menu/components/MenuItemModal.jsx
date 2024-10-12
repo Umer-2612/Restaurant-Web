@@ -22,25 +22,31 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
   const { menuDetails } = menuProps || {};
-  const dispatch = useDispatch();
   console.log('::menuDetails', menuDetails);
+
+  const dispatch = useDispatch();
   const [cartDetails, setCartDetails] = useState({
     menuId: menuDetails?._id || null,
     quantity: 1,
-    itemName: menuDetails?.itemName,
-    itemPrice: menuDetails?.itemPrice,
-    itemImagePath: menuDetails?.itemImagePath,
+    name: menuDetails?.itemName,
+    price: menuDetails?.itemPrice,
+    // itemImagePath: menuDetails?.itemImagePath,
+    categoryName: menuDetails?.category?.name,
+    imagePath:
+      'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg',
   });
-  console.log('::cartDetails', cartDetails);
   useEffect(() => {
     if (menuDetails) {
       setCartDetails(
         menuDetails?.cartDetails || {
           menuId: menuDetails._id,
           quantity: 1,
-          itemName: menuDetails?.itemName,
-          itemPrice: menuDetails?.itemPrice,
-          itemImagePath: menuDetails?.itemImagePath,
+          name: menuDetails?.itemName,
+          price: menuDetails?.itemPrice,
+          // itemImagePath: menuDetails?.itemImagePath,
+          categoryName: menuDetails?.category?.name,
+          imagePath:
+            'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg',
         }
       );
     }
@@ -50,7 +56,7 @@ const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
     setCartDetails((prevDetails) => {
       const newQuantity = increaseQuantity
         ? prevDetails.quantity + 1
-        : Math.max(0, prevDetails.quantity - 1);
+        : Math.max(0, prevDetails?.quantity - 1);
 
       return {
         ...prevDetails,
@@ -136,7 +142,7 @@ const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
                         increaseQuantity: false,
                       })
                     }
-                    // disabled={cartDetails?.quantity === 1}
+                    disabled={cartDetails?.quantity === 1}
                   >
                     <RemoveIcon />
                   </IconButton>

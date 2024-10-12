@@ -1,25 +1,17 @@
 import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Box,
-  Button,
-  Container,
-  createTheme,
-  Grid,
-  ThemeProvider,
-  Typography,
-} from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
+import RHFButton from 'components/button/RHFButton';
 import { Banner } from 'components/common/Banner';
 import useToast from 'components/common/CustomToastMessage';
 import HookDateField from 'components/common/form-components/HookDateField';
 import HookTextField from 'components/common/form-components/HookTextField';
 import { usePutPostReservationMutation } from 'store/apis/reservation';
-import { LIGHT } from 'store/theme/colors';
 import { validationSchema } from 'utils/validation';
 
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
@@ -31,16 +23,14 @@ const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   message: validationSchema.message,
   noOfPeople: validationSchema.noOfPeople,
 });
-const theme = createTheme({
-  palette: LIGHT,
-});
+
 const Reservation = () => {
   const { control, handleSubmit, setValue, trigger } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(RESERVATION_FORM_VALIDATION),
   });
 
-  const [reservation] = usePutPostReservationMutation();
+  const [reservation, { isLoading }] = usePutPostReservationMutation();
 
   const { showToast } = useToast();
 
@@ -61,7 +51,7 @@ const Reservation = () => {
     setValue('reservationDate', newValue);
   };
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Banner />
 
       {/* New Reservation Section */}
@@ -193,26 +183,17 @@ const Reservation = () => {
 
           {/* Submit Button */}
           <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="large"
+            <RHFButton
+              isLoading={isLoading}
               type="submit"
-              sx={{
-                'display': 'block',
-                'marginLeft': 'auto',
-                'backgroundColor': (theme) => theme.palette.primary.main,
-                '&:hover': {
-                  backgroundColor: (theme) => theme.palette.primary.dark,
-                },
-              }}
-            >
-              Submit
-            </Button>
+              variant="contained"
+              color={'primary'}
+              title={'submit'}
+            />
           </Grid>
         </Grid>
       </Box>
-    </ThemeProvider>
+    </>
   );
 };
 
