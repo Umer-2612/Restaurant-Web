@@ -10,6 +10,7 @@ const createThemeVariable = (mode) => {
   return {
     palette: palettes,
     typography: themeTypography,
+    spacing: (factor) => `${0.25 * factor}rem`,
     components: {
       MuiLink: {
         styleOverrides: {
