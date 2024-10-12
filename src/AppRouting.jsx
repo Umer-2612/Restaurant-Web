@@ -31,7 +31,7 @@ export default function AppRouting() {
     if (auth?.authenticated) {
       return '/admin/orders';
     }
-    return '/admin/sign-in';
+    return '/home';
   }, [auth?.authenticated]);
 
   const getRouteWrapper = (component, authRoute = true) => {
@@ -143,7 +143,7 @@ export default function AppRouting() {
     },
     {
       path: '*',
-      element: defaultNavigate,
+      element: <Navigate to={defaultNavigate} />,
     },
   ];
   const routing = useRoutes(routes);
