@@ -64,7 +64,7 @@ export const MenuItemLayout = ({
         }}
       >
         <Stack height={144} width={156} borderRadius={3} overflow="hidden">
-          {!menu?.image && (
+          {menu?.itemImagePath && (
             <img
               src={menu?.itemImagePath || 'https://picsum.photos/200/300'}
               alt={menu?.itemName}
@@ -81,10 +81,12 @@ export const MenuItemLayout = ({
           justifyContent="space-between"
           alignItems="center"
           position="absolute"
-          bottom={0}
+          bottom={menu?.itemImagePath ? 0 : '50%'}
           left="50%"
           sx={{
-            transform: 'translate(-50%, 0%)',
+            transform: menu?.itemImagePath
+              ? 'translate(-50%, 0%)'
+              : 'translate(-50%, 50%)',
           }}
         >
           <Stack
