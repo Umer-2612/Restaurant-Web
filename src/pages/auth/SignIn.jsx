@@ -2,6 +2,7 @@ import React, { useLayoutEffect } from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid2';
 import TextField from '@mui/material/TextField';
 import { Controller, useForm } from 'react-hook-form';
@@ -9,7 +10,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
-import RHFButton from 'components/button/RHFButton';
 import { useSignInMutation } from 'store/apis/signIn';
 import { setUserInfo } from 'store/slices/user';
 import useAuth from 'utils/authUtils';
@@ -125,13 +125,22 @@ const SignIn = () => {
 
       {/* Submit Button */}
       <Grid item xs={12}>
-        <RHFButton
-          isLoading={isLoading}
-          type="submit"
+        <Button
           variant="contained"
-          color={'primary'}
-          title={'submit'}
-        />
+          color="primary"
+          size="large"
+          type="submit"
+          sx={{
+            'display': 'block',
+            'marginLeft': 'auto',
+            'backgroundColor': (theme) => theme.palette.primary.main,
+            '&:hover': {
+              backgroundColor: (theme) => theme.palette.primary.dark,
+            },
+          }}
+        >
+          Submit
+        </Button>
       </Grid>
     </Box>
   );

@@ -157,7 +157,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const cartDetails = useSelector(cartSelector);
-  console.log('::navBar', cartDetails);
+
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const activeMenu = location.pathname;

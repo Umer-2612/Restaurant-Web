@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,30 +17,20 @@ import {
   Container,
 } from '@mui/material';
 import { loadStripe } from '@stripe/stripe-js';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; // Assuming you're using react-router-dom for navigation
 
-import emptyCartImage from 'assets/images/empty_cart.svg';
-import RHFButton from 'components/button/RHFButton';
 import { useCreateCheckoutSessionMutation } from 'store/apis/checkoutApi';
-import { cartSelector, modifyCartDetails } from 'store/slices/cart';
-
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const Cart = () => {
-  // const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate(); // Hook to navigate to other pages
-  const [createCheckoutSession, { isLoading }] =
-    useCreateCheckoutSessionMutation();
-  const dispatch = useDispatch();
-  const cartItems = useSelector(cartSelector) || [];
-  console.log('cartItems', cartItems);
-
+  const [createCheckoutSession] = useCreateCheckoutSessionMutation();
   useEffect(() => {
     const storedCartItems =
       JSON.parse(localStorage.getItem('menuDetails')) || [];
-    dispatch(modifyCartDetails(storedCartItems));
-  }, [dispatch]);
+    setCartItems(storedCartItems);
+  }, []);
 
   const updateQuantity = (menuId, increment) => {
     const updatedItems = cartItems
@@ -59,14 +49,14 @@ const Cart = () => {
       })
       .filter((item) => item !== null);
 
+    setCartItems(updatedItems);
     localStorage.setItem('menuDetails', JSON.stringify(updatedItems));
-    dispatch(modifyCartDetails(updatedItems)); // Update Redux cart state
   };
 
   const removeItem = (menuId) => {
     const updatedItems = cartItems.filter((item) => item.menuId !== menuId);
+    setCartItems(updatedItems);
     localStorage.setItem('menuDetails', JSON.stringify(updatedItems));
-    dispatch(modifyCartDetails(updatedItems)); // Update Redux cart state
   };
 
   const totalQuantity = cartItems.reduce(
@@ -75,26 +65,15 @@ const Cart = () => {
   );
 
   const totalPrice = cartItems.reduce(
-    (total, item) => total + item?.price * item.quantity,
+    (total, item) => total + item.itemPrice * item.quantity,
     0
   );
 
   const handleCheckout = async () => {
     const stripe = await stripePromise;
     console.log('::stripePromise', stripe);
-    const payload = {
-      items: cartItems.map((item) => ({
-        menuId: item.menuId,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        imagePath: item.imagePath,
-      })),
-      totalPrice: totalPrice,
-    };
-    console.log('::payload', payload);
 
-    const { data: session } = await createCheckoutSession(payload);
+    const { data: session } = await createCheckoutSession(cartItems);
     console.log(session);
     const result = await stripe.redirectToCheckout({
       sessionId: session?.sessionId,
@@ -121,7 +100,7 @@ const Cart = () => {
         {cartItems.length === 0 ? (
           <Box sx={{ textAlign: 'center', mt: 5 }}>
             <img
-              src={emptyCartImage}
+              src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/2xempty_cart_yfxml0" // Replace with your custom image URL
               alt="No items"
               style={{ width: '300px', marginBottom: '20px' }}
             />
@@ -198,18 +177,18 @@ const Cart = () => {
                           objectFit: 'cover',
                           borderRadius: '8px',
                         }}
-                        image={item?.imagePath}
-                        alt={item?.itemName}
+                        image="https://punjabitouchindianrestaurant.com.au/wp-content/uploads/2023/10/one-pan-paneer-and-spinach-tikka-masala-150801-1-1568x1045.webp" // Replace with actual image URL
+                        alt={item.itemName}
                       />
                       <Box sx={{ flex: 1, ml: 2 }}>
                         <Typography variant="h6" sx={{ fontWeight: '500' }}>
-                          {item?.name}
+                          {item.itemName}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
-                          {item?.categoryName}
+                          Category: Vegetable
                         </Typography>
                         <Typography variant="h6" sx={{ color: 'red' }}>
-                          ${item?.price}
+                          ${item.itemPrice}
                         </Typography>
                       </Box>
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -220,7 +199,7 @@ const Cart = () => {
                         </IconButton>
 
                         <Typography variant="h6" sx={{ mx: 1 }}>
-                          {item?.quantity}
+                          {item.quantity}
                         </Typography>
                         <IconButton
                           onClick={() => updateQuantity(item?.menuId, true)}
@@ -229,12 +208,12 @@ const Cart = () => {
                         </IconButton>
                       </Box>
                       <Typography variant="h6" sx={{ ml: 2 }}>
-                        ${(item?.price * item.quantity).toFixed(2)}
+                        ${(item.itemPrice * item.quantity).toFixed(2)}
                       </Typography>
                       <IconButton
                         color="error"
                         sx={{ ml: 2 }}
-                        onClick={() => removeItem(item?.menuId)}
+                        onClick={() => removeItem(item.menuId)}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -269,7 +248,7 @@ const Cart = () => {
                       ${totalPrice?.toFixed(2)}
                     </strong>
                   </Typography>
-                  {/* <Button
+                  <Button
                     variant="contained"
                     color="primary"
                     size="large"
@@ -278,14 +257,7 @@ const Cart = () => {
                     onClick={handleCheckout}
                   >
                     Proceed to Payment
-                  </Button> */}
-                  <RHFButton
-                    isLoading={isLoading}
-                    variant="contained"
-                    color={'primary'}
-                    onClick={handleCheckout}
-                    title={'Proceed to Payment'}
-                  />
+                  </Button>
                 </CardContent>
               </Card>
             </Grid>
