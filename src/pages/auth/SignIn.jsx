@@ -15,6 +15,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import logo from '../../assets/brand-image/punjabi-touch-logo.png';
 import Grid from '@mui/material/Grid';
+import { toast } from 'react-hot-toast';
 
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   email: validationSchema.email,
@@ -52,8 +53,20 @@ const SignIn = () => {
     };
     try {
       const response = await signInGet(body);
+
+      // Assuming your API sends back a success response that you can check
+      if (response.success) {
+        toast.success('Sign-in successful.');
+      } else {
+        toast.error(
+          response?.error?.data?.message || 'Sign-in failed. Please try again.'
+        );
+      }
+
       console.log(response); // Check the response here
     } catch (apiError) {
+      // Handle error during sign-in
+      toast.error('Error during sign-in. Please try again.');
       console.error('Error during sign-in:', apiError);
     }
   };
