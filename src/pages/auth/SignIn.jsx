@@ -14,7 +14,7 @@ import { themeSelector } from 'store/theme';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import logo from '../../assets/brand-image/punjabi-touch-logo.png';
-import Grid from '@mui/material/Grid2';
+import Grid from '@mui/material/Grid';
 
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   email: validationSchema.email,
@@ -76,18 +76,18 @@ const SignIn = () => {
           padding: 3,
         }}
       >
-        <Box>
+        <Box sx={{ width: { xs: '50%', sm: '40%', md: '30%' } }}>
           <img
             src={logo}
             alt="Company Logo"
             style={{
-              width: '150px',
+              width: '100%',
               height: 'auto',
               marginBottom: theme.spacing(3),
             }}
           />
           <Typography
-            variant="h3"
+            variant="h4"
             sx={{
               fontWeight: 600,
               fontFamily: 'Roboto, sans-serif',
@@ -121,8 +121,6 @@ const SignIn = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          // width: '81%',
-          flexGrow: 1, // Take remaining width
           padding: theme.spacing(5),
           backgroundColor: '#FFFFFF',
         }}
@@ -131,9 +129,9 @@ const SignIn = () => {
           elevation={3}
           sx={{
             padding: theme.spacing(4),
-            maxWidth: 400,
-            // width: '100%',
+            maxWidth: '90%',
             borderRadius: '12px',
+            width: { xs: '100%', sm: '400px' },
           }}
         >
           <Typography
