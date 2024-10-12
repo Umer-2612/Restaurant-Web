@@ -66,7 +66,7 @@ const SignIn = () => {
         xs={12}
         md={6}
         sx={{
-          background: 'linear-gradient(to bottom right, #FF1744, #FF616F)',
+          background: 'linear-gradient(to bottom right, #000000, #FF616F)',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
