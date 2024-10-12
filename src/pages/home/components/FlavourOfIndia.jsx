@@ -1,22 +1,10 @@
 import React from 'react';
 
+import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
-import {
-  Box,
-  Container,
-  createTheme,
-  Grid,
-  ThemeProvider,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Container, Grid, Typography, useMediaQuery } from '@mui/material';
 
-import { LIGHT } from 'store/theme/colors';
-
-const theme = createTheme({
-  palette: LIGHT,
-});
-
+import tandooriPaneerTikka from 'assets/images/tandoori_paneer_tikka_restaurant_style.jpg';
 const FlavourOfIndia = () => {
   const Content = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.common.white,
@@ -25,14 +13,15 @@ const FlavourOfIndia = () => {
       padding: theme.spacing(2),
     },
   }));
+  const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Container>
         <Grid container spacing={4} mt={2}>
           <Grid item xs={12} md={4}>
             <img
-              src="https://punjabitouchindianrestaurant.com.au/wp-content/uploads/2023/10/tandoori_paneer_tikka_restaurant_style-1024x1024.jpg"
+              src={tandooriPaneerTikka}
               alt="Punjabi food"
               style={{
                 width: '100%',
@@ -77,7 +66,7 @@ const FlavourOfIndia = () => {
           </Grid>
         </Grid>
       </Container>
-    </ThemeProvider>
+    </>
   );
 };
 

@@ -1,14 +1,12 @@
 import React from 'react';
 
+import { useTheme } from '@emotion/react';
 import { Container, Grid, Typography, Box, useMediaQuery } from '@mui/material';
-import { styled, ThemeProvider, createTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
+import butterChicken from 'assets/images/butter.webp';
+import tandooriPaneerTikka from 'assets/images/tandoori_paneer_tikka_restaurant_style.jpg';
 import { Banner } from 'components/common/Banner';
-import { LIGHT } from 'store/theme/colors';
-
-const theme = createTheme({
-  palette: LIGHT,
-});
 
 const Content = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.white,
@@ -35,10 +33,11 @@ const SectionContent = styled(Box)(({ theme }) => ({
 }));
 
 const AboutUs = () => {
+  const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Banner />
       {/* Section 1 */}
       <Container>
@@ -74,7 +73,7 @@ const AboutUs = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <img
-              src="https://punjabitouchindianrestaurant.com.au/wp-content/uploads/2023/10/butter.webp"
+              src={butterChicken}
               alt="Punjabi food"
               style={{
                 width: '100%',
@@ -122,7 +121,7 @@ const AboutUs = () => {
         <Grid container spacing={4} mt={2}>
           <Grid item xs={12} md={4}>
             <img
-              src="https://punjabitouchindianrestaurant.com.au/wp-content/uploads/2023/10/butter.webp"
+              src={tandooriPaneerTikka}
               alt="Punjabi food"
               style={{
                 width: '100%',
@@ -191,7 +190,7 @@ const AboutUs = () => {
           </Typography>
         </SectionContent>
       </SectionContainer>
-    </ThemeProvider>
+    </>
   );
 };
 

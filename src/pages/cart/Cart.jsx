@@ -5,7 +5,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardMedia,
@@ -15,10 +14,13 @@ import {
   Typography,
   Paper,
   Container,
+  Button,
 } from '@mui/material';
 import { loadStripe } from '@stripe/stripe-js';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'; // Assuming you're using react-router-dom for navigation
+import { useNavigate } from 'react-router-dom';
+
+import CustomForm from './CustomForm'; // Reusable form component
 
 import emptyCartImage from 'assets/images/butter-chicken.jpg';
 import { useCreateCheckoutSessionMutation } from 'store/apis/checkoutApi';
@@ -27,12 +29,10 @@ import { cartSelector, modifyCartDetails } from 'store/slices/cart';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 const Cart = () => {
-  // const [cartItems, setCartItems] = useState([]);
-  const navigate = useNavigate(); // Hook to navigate to other pages
+  const navigate = useNavigate();
   const [createCheckoutSession] = useCreateCheckoutSessionMutation();
   const dispatch = useDispatch();
   const cartItems = useSelector(cartSelector) || [];
-  console.log('cartItems', cartItems);
 
   useEffect(() => {
     const storedCartItems =
@@ -48,39 +48,42 @@ const Cart = () => {
           if (newQuantity === 0) {
             return null;
           }
-          return {
-            ...item,
-            quantity: newQuantity,
-          };
+          return { ...item, quantity: newQuantity };
         }
         return item;
       })
       .filter((item) => item !== null);
 
     localStorage.setItem('menuDetails', JSON.stringify(updatedItems));
-    dispatch(modifyCartDetails(updatedItems)); // Update Redux cart state
+    dispatch(modifyCartDetails(updatedItems));
   };
 
   const removeItem = (menuId) => {
     const updatedItems = cartItems.filter((item) => item.menuId !== menuId);
     localStorage.setItem('menuDetails', JSON.stringify(updatedItems));
-    dispatch(modifyCartDetails(updatedItems)); // Update Redux cart state
+    dispatch(modifyCartDetails(updatedItems));
   };
 
   const totalQuantity = cartItems.reduce(
     (total, item) => total + item.quantity,
     0
   );
-
   const totalPrice = cartItems.reduce(
     (total, item) => total + item?.price * item.quantity,
     0
   );
 
-  const handleCheckout = async () => {
+  const handleCheckout = async (formData) => {
+    console.log('::FormData', formData);
     const stripe = await stripePromise;
-    console.log('::stripePromise', stripe);
+
     const payload = {
+      user: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phoneNo: formData.phoneNo,
+        email: formData.email,
+      },
       items: cartItems.map((item) => ({
         menuId: item.menuId,
         name: item.name,
@@ -90,32 +93,19 @@ const Cart = () => {
       })),
       totalPrice: totalPrice,
     };
-    console.log('::payload', payload);
 
     const { data: session } = await createCheckoutSession(payload);
-    console.log(session);
-    const result = await stripe.redirectToCheckout({
-      sessionId: session?.sessionId,
-    });
-    console.log(result);
+    await stripe.redirectToCheckout({ sessionId: session?.sessionId });
   };
 
   return (
     <Container>
       <Box>
-        <Typography
-          variant="h4"
-          sx={{
-            mb: 3,
-            color: (theme) => theme.palette.primary.main,
-            fontFamily: 'Poppins Sans-serif',
-            fontWeight: 'bold',
-          }}
-        >
+        <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold' }}>
           Shopping Cart
         </Typography>
 
-        {/* Display this if cart is empty */}
+        {/* Display empty cart message */}
         {cartItems.length === 0 ? (
           <Box sx={{ textAlign: 'center', mt: 5 }}>
             <img
@@ -130,7 +120,7 @@ const Cart = () => {
               variant="contained"
               color="primary"
               size="large"
-              onClick={() => navigate('/menu')} // Navigate to the menu page
+              onClick={() => navigate('/menu')}
             >
               Go to Menu
             </Button>
@@ -138,31 +128,22 @@ const Cart = () => {
         ) : (
           <Grid container spacing={3}>
             {/* Cart Items Section */}
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12}>
               <Card
                 elevation={0}
                 sx={{
                   p: 3,
-                  borderRadius: 2,
-                  boxShadow:
-                    'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px',
+                  mb: 3,
+                  boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
                 }}
               >
-                <Typography
-                  variant="h5"
-                  sx={{
-                    mb: 3,
-                    color: (theme) => theme.palette.primary.main,
-                    fontFamily: 'Poppins Sans-serif',
-                    fontWeight: '600',
-                  }}
-                >
+                <Typography variant="h5" sx={{ fontWeight: 600 }}>
                   Your Cart Items
                 </Typography>
                 <Divider sx={{ mb: 2 }} />
                 <Box
                   sx={{
-                    'maxHeight': 400,
+                    'maxHeight': 150,
                     'overflowY': 'auto',
                     'pr': 2,
                     '&::-webkit-scrollbar': { width: 8 },
@@ -182,10 +163,8 @@ const Cart = () => {
                         mb: 2,
                         alignItems: 'center',
                         borderRadius: 2,
-                        transition:
-                          'transform 0.3s ease-in-out, box-shadow 0.3s',
                         borderBottom: '1px solid',
-                        borderColor: 'other.border',
+                        borderColor: 'grey.200',
                       }}
                     >
                       <CardMedia
@@ -200,7 +179,7 @@ const Cart = () => {
                         alt={item?.itemName}
                       />
                       <Box sx={{ flex: 1, ml: 2 }}>
-                        <Typography variant="h6" sx={{ fontWeight: '500' }}>
+                        <Typography variant="h6" sx={{ fontWeight: 500 }}>
                           {item?.name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary">
@@ -216,7 +195,6 @@ const Cart = () => {
                         >
                           <RemoveIcon />
                         </IconButton>
-
                         <Typography variant="h6" sx={{ mx: 1 }}>
                           {item?.quantity}
                         </Typography>
@@ -242,15 +220,14 @@ const Cart = () => {
               </Card>
             </Grid>
 
-            {/* Summary Section */}
+            {/* Form and Order Summary Section */}
             <Grid item xs={12} md={4}>
               <Card
                 elevation={0}
                 sx={{
                   p: 3,
                   borderRadius: 2,
-                  boxShadow:
-                    'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px',
+                  boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
                 }}
               >
                 <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>
@@ -267,24 +244,22 @@ const Cart = () => {
                       ${totalPrice?.toFixed(2)}
                     </strong>
                   </Typography>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    fullWidth
-                    sx={{ borderRadius: 2 }}
-                    onClick={handleCheckout}
-                  >
-                    Proceed to Payment
-                  </Button>
-                  {/* <RHFButton
-                    isLoading={isLoading}
-                    variant="contained"
-                    color={'primary'}
-                    onClick={handleCheckout}
-                    title={'Proceed to Payment'}
-                  /> */}
                 </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <Card
+                elevation={0}
+                sx={{
+                  p: 3,
+                  borderRadius: 2,
+                  boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
+                }}
+              >
+                <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 3 }}>
+                  Enter Your Details
+                </Typography>
+                <CustomForm handleCheckout={handleCheckout} />
               </Card>
             </Grid>
           </Grid>

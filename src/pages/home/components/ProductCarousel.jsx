@@ -3,8 +3,12 @@ import React, { useEffect, useState } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Container, Typography } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
-import './ProductCarousel.css'; // Import custom CSS for styling
 
+import './ProductCarousel.css'; // Import custom CSS for styling
+import alooParatha from 'assets/images/Aloo parantha.jpeg';
+import daalMakhni from 'assets/images/Daal makhni.jpeg';
+import mangoCurry from 'assets/images/Mango curry.jpeg';
+import Vindaloo from 'assets/images/Vindaloo.jpeg';
 const ProductCarousel = () => {
   const [centerSlidePercentage, setCenterSlidePercentage] = useState(33); // Default for large screens
 
@@ -53,28 +57,16 @@ const ProductCarousel = () => {
           stopOnHover={true}
         >
           <div className="carousel-item">
-            <img
-              src="https://punjabitouchindianrestaurant.com.au/wp-content/uploads/2023/10/Dal-Makhani-New-3-1568x1046.jpg"
-              alt="Product 1"
-            />
+            <img src={mangoCurry} alt="Product 1" />
           </div>
           <div className="carousel-item">
-            <img
-              src="https://punjabitouchindianrestaurant.com.au/wp-content/uploads/2023/10/one-pan-paneer-and-spinach-tikka-masala-150801-1-1568x1045.webp"
-              alt="Product 2"
-            />
+            <img src={alooParatha} alt="Product 2" />
           </div>
           <div className="carousel-item">
-            <img
-              src="https://punjabitouchindianrestaurant.com.au/wp-content/uploads/2023/10/butter-chicken-with-raita-161685-1.jpg"
-              alt="Product 3"
-            />
+            <img src={Vindaloo} alt="Product 3" />
           </div>
           <div className="carousel-item">
-            <img
-              src="https://punjabitouchindianrestaurant.com.au/wp-content/uploads/2023/10/Dal-Makhani-New-3-1568x1046.jpg"
-              alt="Product 4"
-            />
+            <img src={daalMakhni} alt="Product 4" />
           </div>
         </Carousel>
       </div>

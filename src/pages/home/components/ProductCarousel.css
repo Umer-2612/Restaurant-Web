@@ -72,7 +72,7 @@
 
 @media screen and (max-width: 480px) {
   .carousel .carousel-item img {
-    max-height: 120px; /* Even smaller height for mobile */
+    max-height: 164px; /* Even smaller height for mobile */
   }
 
   .carousel .slider-wrapper {
@@ -80,6 +80,6 @@
   }
 
   .carousel .control-dots {
-    top: 135px;
+    top: 180px;
   }
 }
