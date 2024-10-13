@@ -54,9 +54,26 @@ const Menu = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      let storedMenuDetails = [];
+      try {
+        storedMenuDetails =
+          JSON.parse(localStorage.getItem('menuDetails')) || [];
+      } catch (error) {
+        console.error('Error parsing localStorage data:', error);
+      }
+      const modifiedData = data?.data?.map((menu) => {
+        const itemIndex = storedMenuDetails.findIndex(
+          (cartData) => cartData?.menuId === menu?._id
+        );
+
+        return itemIndex >= 0
+          ? { ...menu, cartDetails: storedMenuDetails[itemIndex] }
+          : menu;
+      });
       if (page === 1) {
         // On the first page or new category load, reset the items
-        setMenuItems(data?.data || []);
+        // Retrieve cart details from localStorage
+        setMenuItems(modifiedData || []);
       } else if (data?.data?.length === 0) {
         // No more data to load
         setHasMore(false);
@@ -64,7 +81,7 @@ const Menu = () => {
         // For page > 1, append new items, but avoid re-appending old data
         setMenuItems((prevItems) => {
           // Avoid duplication: Append only if the items are not already in the list
-          const newItems = data.data.filter(
+          const newItems = modifiedData.filter(
             (item) =>
               !prevItems.some((existingItem) => existingItem._id === item._id)
           );
@@ -72,7 +89,7 @@ const Menu = () => {
         });
       }
     }
-  }, [data, isSuccess, page]);
+  }, [data?.data, isSuccess, page]);
 
   useEffect(() => {
     const fetchMoreData = () => {
