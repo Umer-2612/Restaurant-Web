@@ -74,7 +74,6 @@ const Cart = () => {
   );
 
   const handleCheckout = async (formData) => {
-    console.log('::FormData', formData);
     const stripe = await stripePromise;
 
     const payload = {
@@ -108,11 +107,6 @@ const Cart = () => {
         {/* Display empty cart message */}
         {cartItems.length === 0 ? (
           <Box sx={{ textAlign: 'center', mt: 5 }}>
-            {/* <img
-              src={EmptyCartImage}
-              alt="No items"
-              style={{ width: '300px', marginBottom: '20px' }}
-            /> */}
             <EmptyCartImage style={{ width: '300px', marginBottom: '20px' }} />
             <Typography variant="h6" sx={{ mb: 2 }}>
               Your cart is empty!

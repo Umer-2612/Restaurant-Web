@@ -22,7 +22,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
   const { menuDetails } = menuProps || {};
-  console.log('::menuDetails', menuDetails);
 
   const dispatch = useDispatch();
   const [cartDetails, setCartDetails] = useState({
