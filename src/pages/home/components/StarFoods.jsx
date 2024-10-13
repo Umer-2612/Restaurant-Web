@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
@@ -10,7 +11,8 @@ import Typography from '@mui/material/Typography';
 import { PropTypes } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
-import { menuItems } from 'utils/data/menuItems';
+import MenuItemModal from 'pages/menu/components/MenuItemModal';
+import { useGetMenusQuery } from 'store/apis/menu';
 
 const MenuItemLayout = ({ menu, handleMenuModalOpen, updateCartDetails }) => {
   return (
@@ -35,7 +37,7 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen, updateCartDetails }) => {
           }}
         >
           <img
-            src={menu?.image || 'https://picsum.photos/200/300'}
+            src={menu?.itemImagePath}
             alt={menu?.itemName}
             style={{
               position: 'absolute',
@@ -120,9 +122,49 @@ MenuItemLayout.propTypes = {
 };
 
 const StarFoods = () => {
+  const [menuProps, setMenuProps] = useState({
+    menuDetails: null,
+    isMenuOpen: false,
+  });
   const navigate = useNavigate();
+
+  const { data } = useGetMenusQuery({
+    page: 1,
+    limit: 6,
+  });
+
+  // Retrieve cart details from localStorage
+  let storedMenuDetails = [];
+  try {
+    storedMenuDetails = JSON.parse(localStorage.getItem('menuDetails')) || [];
+  } catch (error) {
+    console.error('Error parsing localStorage data:', error);
+  }
+
+  // Add cart details to menu items
+  const modifiedData = data?.data?.map((menu) => {
+    const itemIndex = storedMenuDetails.findIndex(
+      (cartData) => cartData?.menuId === menu?._id
+    );
+
+    return itemIndex >= 0
+      ? { ...menu, cartDetails: storedMenuDetails[itemIndex] }
+      : menu;
+  });
+
+  const handleMenuModalOpen = ({ menu }) => {
+    setMenuProps({ menuDetails: menu, isMenuOpen: true });
+  };
+
+  const handleMenuModalClose = () => {
+    setMenuProps({ ...menuProps, isMenuOpen: false });
+    setTimeout(() => {
+      setMenuProps({ menuDetails: null, isMenuOpen: false });
+    }, 200);
+  };
+
   return (
-    <Grid size={{ xs: 11, md: 10 }}>
+    <Container>
       <Stack gap={2}>
         <Typography variant="bh2" fontWeight={600} textAlign="center">
           Our Most Popular{' '}
@@ -136,8 +178,16 @@ const StarFoods = () => {
           </Typography>
         </Typography>
         <Grid container spacing={3}>
-          {menuItems?.map((menu, index) => {
-            return <MenuItemLayout key={index} menu={menu} />;
+          {modifiedData?.map((menu, index) => {
+            return (
+              <MenuItemLayout
+                key={index}
+                menu={menu}
+                menuProps={menuProps}
+                handleMenuModalOpen={handleMenuModalOpen}
+                isLastItem={Number(modifiedData?.length - 1) === Number(index)}
+              />
+            );
           })}
         </Grid>
         <Stack direction="row" justifyContent="center" width="100%">
@@ -149,7 +199,12 @@ const StarFoods = () => {
           </Button>
         </Stack>
       </Stack>
-    </Grid>
+      <MenuItemModal
+        menuProps={menuProps}
+        setMenuProps={setMenuProps}
+        handleMenuModalClose={handleMenuModalClose}
+      />
+    </Container>
   );
 };
 

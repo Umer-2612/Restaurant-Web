@@ -1,5 +1,5 @@
 .carousel .slider-wrapper {
-  padding: 0 20px;
+  padding: 0;
 }
 
 .carousel .carousel-item img {
@@ -12,7 +12,8 @@
 }
 
 .carousel .carousel-item {
-  padding: 18px;
+  padding: 0;
+  margin: 0 18px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;

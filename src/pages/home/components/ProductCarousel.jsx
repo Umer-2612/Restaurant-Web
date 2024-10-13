@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Container, Typography } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 
 import './ProductCarousel.css'; // Import custom CSS for styling
@@ -34,7 +34,7 @@ const ProductCarousel = () => {
   }, []);
   return (
     <Container>
-      <div className="carousel-wrapper">
+      <Stack gap={2}>
         <Typography
           variant="h3"
           sx={{ color: 'red', fontWeight: 'bold' }}
@@ -69,7 +69,7 @@ const ProductCarousel = () => {
             <img src={daalMakhni} alt="Product 4" />
           </div>
         </Carousel>
-      </div>
+      </Stack>
     </Container>
   );
 };

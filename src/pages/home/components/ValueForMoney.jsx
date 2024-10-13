@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Grid from '@mui/material/Grid2';
+import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 const ValueForMoney = () => {
   return (
-    <Grid container size={{ xs: 11, md: 10 }}>
+    <Container>
       <Stack
         gap={2}
         bgcolor={(theme) => theme.palette.other.bgColor}
@@ -30,7 +30,7 @@ const ValueForMoney = () => {
           our delicious Punjabi dishes.
         </Typography>
       </Stack>
-    </Grid>
+    </Container>
   );
 };
 

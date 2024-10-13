@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
@@ -18,7 +18,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
 import { cartSelector } from 'store/slices/cart';
-import { TABS } from 'utils/commonData';
+import { NAV_TABS as TABS } from 'utils/commonData';
 
 // Logo component for reuse
 export const Logo = ({ sx, handleClick }) => (
@@ -170,6 +170,10 @@ const Navbar = () => {
     setAnchorElNav(null);
   };
 
+  const handleClick = useCallback(() => {
+    navigate('/home');
+  }, [navigate]);
+
   return (
     <AppBar
       position="static"
@@ -200,6 +204,7 @@ const Navbar = () => {
                 display: { xs: 'none', md: 'flex' },
                 aspectRatio: '789 / 241',
               }}
+              handleClick={handleClick}
             />
 
             {/* Menu button for mobile display */}

@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import { Navigate, useRoutes } from 'react-router-dom';
 
 // import config from 'config';
+import ScrollToTop from 'components/common/ScrollToTop';
 import { AuthProvider, AuthRedirect } from 'context/AuthContext';
 import AuthLayout from 'layouts/AuthLayout';
 import SignIn from 'pages/auth/SignIn';
@@ -148,5 +149,12 @@ export default function AppRouting() {
   ];
   const routing = useRoutes(routes);
 
-  return <AuthProvider>{routing}</AuthProvider>;
+  return (
+    <AuthProvider>
+      <>
+        <ScrollToTop />
+        {routing}
+      </>
+    </AuthProvider>
+  );
 }

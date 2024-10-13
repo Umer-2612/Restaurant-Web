@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Grid from '@mui/material/Grid2';
+import Stack from '@mui/material/Stack';
 
 import FlavourOfIndia from './components/FlavourOfIndia';
 import HeroSection from './components/HeroSection';
@@ -10,13 +10,13 @@ import ValueForMoney from './components/ValueForMoney';
 
 const Home = () => {
   return (
-    <Grid container gap={5} justifyContent="center">
+    <Stack gap={5}>
       <HeroSection />
       <StarFoods />
       <ValueForMoney />
       <ProductCarousel />
       <FlavourOfIndia />
-    </Grid>
+    </Stack>
   );
 };
 

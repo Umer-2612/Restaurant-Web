@@ -1,21 +1,24 @@
 import React, { useLayoutEffect } from 'react';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import { useForm, Controller } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
+
+import logo from '../../assets/brand-image/punjabi-touch-logo.png';
+
 import { useSignInMutation } from 'store/apis/signIn';
 import { setUserInfo } from 'store/slices/user';
+import { themeSelector } from 'store/theme';
 import useAuth from 'utils/authUtils';
 import { validationSchema } from 'utils/validation';
-import { themeSelector } from 'store/theme';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import logo from '../../assets/brand-image/punjabi-touch-logo.png';
-import Grid from '@mui/material/Grid';
-import { toast } from 'react-hot-toast';
 
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   email: validationSchema.email,
