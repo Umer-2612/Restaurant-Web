@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import { Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
-import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { PropTypes } from 'prop-types';
@@ -14,100 +12,79 @@ import { useNavigate } from 'react-router-dom';
 import MenuItemModal from 'pages/menu/components/MenuItemModal';
 import { useGetMenusQuery } from 'store/apis/menu';
 
-const MenuItemLayout = ({ menu, handleMenuModalOpen, updateCartDetails }) => {
+const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
   return (
-    <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
+    <Grid item size={{ xs: 12, sm: 6, md: 3 }} sx={{ padding: '20px' }}>
       <Stack
-        borderRadius={3}
-        overflow="hidden"
-        height="100%"
         sx={{
-          'transition': '0.2s',
-          '&: hover': {
-            transform: 'scale(1.02)',
-            boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+          'position': 'relative',
+          'borderRadius': '16px',
+          'overflow': 'hidden',
+          'cursor': 'pointer',
+          '&:hover .menu-image': {
+            transform: 'scale(1.1)',
           },
         }}
+        onClick={() => handleMenuModalOpen({ menu })}
       >
-        <Stack
+        <Box
           sx={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            zIndex: 1,
+          }}
+        />
+        <img
+          src={
+            menu?.itemImagePath
+              ? menu?.itemImagePath
+              : 'https://tobsurat.com/images/s1.jpg'
+          }
+          alt={menu?.itemName}
+          style={{
             width: '100%',
-            position: 'relative',
-            paddingBottom: '50%',
+            // height: '100%',
+            maxHeight: '180px',
+            objectFit: 'cover',
+            transition: 'transform 0.5s ease',
           }}
-        >
-          <img
-            src={menu?.itemImagePath}
-            alt={menu?.itemName}
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-            }}
-          />
-        </Stack>
-        <Stack
-          p={2}
-          gap={0.5}
+          className="menu-image"
+        />
+        <Box
           sx={{
-            border: (theme) => `1px solid ${theme.palette.other.border}`,
-            borderBottomLeftRadius: 12,
-            borderBottomRightRadius: 12,
+            position: 'absolute',
+            top: '1rem',
+            left: '1rem',
+            right: '1rem',
+            bottom: '1rem',
+            border: '3px solid white',
+            zIndex: 3,
+          }}
+        />
+        <Stack
+          sx={{
+            textAlign: 'center',
+            position: 'absolute',
+            top: '50%',
+            left: 0,
+            width: '100%',
+            transform: 'translateY(-50%)',
+            zIndex: 4,
           }}
         >
-          <Typography variant="subtitle2" fontWeight={700} color="text.primary">
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            fontFamily="Avro serif"
+            sx={{ color: '#fff' }}
+          >
             {menu?.itemName}
           </Typography>
-          <Typography variant="body3" color="text.secondary">
-            {menu?.itemDescription}
-          </Typography>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              {menu?.cartDetails?.quantity ? (
-                <>
-                  <IconButton
-                    color="primary"
-                    onClick={() => handleMenuModalOpen({ menu })}
-                  >
-                    <RemoveIcon />
-                  </IconButton>
-                  <Typography variant="subtitle2" color="text.primary">
-                    {menu?.cartDetails?.quantity}
-                  </Typography>
-                  <IconButton
-                    color="primary"
-                    onClick={() => handleMenuModalOpen({ menu })}
-                  >
-                    <AddIcon />
-                  </IconButton>
-                </>
-              ) : (
-                <Button
-                  onClick={() => handleMenuModalOpen({ menu })}
-                  variant="outlined"
-                  sx={{
-                    borderRadius: 2,
-                  }}
-                >
-                  Add
-                </Button>
-              )}
-            </Stack>
-            <Typography variant="subtitle2" color="primary" fontWeight="bold">
-              $ {menu?.itemPrice}
-            </Typography>
-          </Stack>
+          <Button sx={{ color: '#fff', fontSize: '1rem' }}>Order Now</Button>
         </Stack>
       </Stack>
     </Grid>
@@ -115,10 +92,8 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen, updateCartDetails }) => {
 };
 
 MenuItemLayout.propTypes = {
-  menu: PropTypes.object,
-  handleMenuModalOpen: PropTypes.func,
-  cartDetails: PropTypes.object,
-  updateCartDetails: PropTypes.func,
+  menu: PropTypes.object.isRequired,
+  handleMenuModalOpen: PropTypes.func.isRequired,
 };
 
 const StarFoods = () => {
@@ -127,13 +102,8 @@ const StarFoods = () => {
     isMenuOpen: false,
   });
   const navigate = useNavigate();
+  const { data } = useGetMenusQuery({ page: 1, limit: 8 });
 
-  const { data } = useGetMenusQuery({
-    page: 1,
-    limit: 6,
-  });
-
-  // Retrieve cart details from localStorage
   let storedMenuDetails = [];
   try {
     storedMenuDetails = JSON.parse(localStorage.getItem('menuDetails')) || [];
@@ -141,12 +111,10 @@ const StarFoods = () => {
     console.error('Error parsing localStorage data:', error);
   }
 
-  // Add cart details to menu items
   const modifiedData = data?.data?.map((menu) => {
     const itemIndex = storedMenuDetails.findIndex(
       (cartData) => cartData?.menuId === menu?._id
     );
-
     return itemIndex >= 0
       ? { ...menu, cartDetails: storedMenuDetails[itemIndex] }
       : menu;
@@ -165,34 +133,30 @@ const StarFoods = () => {
 
   return (
     <Container>
-      <Stack gap={2}>
-        <Typography variant="bh2" fontWeight={600} textAlign="center">
+      <Stack gap={2} alignItems="center">
+        <Typography variant="h4" fontWeight="bold">
           Our Most Popular{' '}
           <Typography
-            variant="h2"
-            fontWeight={600}
+            variant="h4"
+            fontWeight="bold"
             component="span"
             color="primary"
           >
             Delicious Food
           </Typography>
         </Typography>
-        <Grid container spacing={3}>
-          {modifiedData?.map((menu, index) => {
-            return (
-              <MenuItemLayout
-                key={index}
-                menu={menu}
-                menuProps={menuProps}
-                handleMenuModalOpen={handleMenuModalOpen}
-                isLastItem={Number(modifiedData?.length - 1) === Number(index)}
-              />
-            );
-          })}
+        <Grid container spacing={2}>
+          {modifiedData?.map((menu, index) => (
+            <MenuItemLayout
+              key={index}
+              menu={menu}
+              handleMenuModalOpen={handleMenuModalOpen}
+            />
+          ))}
         </Grid>
-        <Stack direction="row" justifyContent="center" width="100%">
+        <Stack direction="row" justifyContent="center" width="100%" mt={3}>
           <Button
-            sx={{ borderRadius: 50, px: 2 }}
+            sx={{ borderRadius: 50, px: 4 }}
             onClick={() => navigate('/menu')}
           >
             View More

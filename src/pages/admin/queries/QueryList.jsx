@@ -33,7 +33,6 @@ const QueryList = () => {
     }
   );
   const queryData = data?.data;
-  console.log(queryData);
 
   const columns = [
     {

@@ -21,8 +21,9 @@ const Menu = lazy(() => import('pages/menu/Menu'));
 const Reservation = lazy(() => import('pages/reservation/Reservation'));
 const AboutUs = lazy(() => import('pages/about-us/AboutUs'));
 const ContactUs = lazy(() => import('pages/contact-us/ContactUs'));
+const Faqs = lazy(() => import('pages/faqs/Faqs.jsx'));
 const Cart = lazy(() => import('pages/cart/Cart'));
-
+const FeedBackPage = lazy(() => import('pages/feedback/FeedBackPage.jsx'));
 // Routing
 const AdminRouting = lazy(() => import('pages/admin/AdminRouting'));
 
@@ -98,6 +99,16 @@ export default function AppRouting() {
       ],
     },
     {
+      path: '/faqs',
+      element: <AppLayout />,
+      children: [
+        {
+          index: true,
+          element: <Faqs />,
+        },
+      ],
+    },
+    {
       path: '/contact-us',
       element: <AppLayout />,
       children: [
@@ -114,6 +125,16 @@ export default function AppRouting() {
         {
           index: true,
           element: <Cart />,
+        },
+      ],
+    },
+    {
+      path: '/feedback',
+      element: <AppLayout />,
+      children: [
+        {
+          index: true,
+          element: <FeedBackPage />,
         },
       ],
     },

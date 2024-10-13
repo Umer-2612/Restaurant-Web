@@ -37,7 +37,7 @@ const Menu = () => {
     }, 200);
   };
 
-  const { data, isSuccess } = useGetMenusQuery({
+  const { data, isSuccess, isLoading, isFetching } = useGetMenusQuery({
     search: searchParams.get('search')?.trim() || '',
     page: page,
     limit: 20,
@@ -119,6 +119,8 @@ const Menu = () => {
                 menu={menu}
                 handleMenuModalOpen={handleMenuModalOpen}
                 isLastItem={Number(menuItems?.length - 1) === Number(index)}
+                isLoading={isLoading}
+                isFetching={isFetching}
               />
             ))}
             {hasMore && (

@@ -1,8 +1,12 @@
 import React from 'react';
 
 import { useTheme } from '@emotion/react';
-import { Container, Grid, Typography, Box, useMediaQuery } from '@mui/material';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid2'; // Import Grid from MUI
 import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import butterChicken from 'assets/images/butter.webp';
 import tandooriPaneerTikka from 'assets/images/tandoori_paneer_tikka_restaurant_style.jpg';
@@ -10,6 +14,7 @@ import { Banner } from 'components/common/Banner';
 
 const Content = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.white,
+
   padding: theme.spacing(4),
   [theme.breakpoints.down('md')]: {
     padding: theme.spacing(2),
@@ -17,7 +22,7 @@ const Content = styled(Box)(({ theme }) => ({
 }));
 
 const SectionContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.sectionBackground.main,
+  backgroundColor: theme.palette.other.bgColor,
   padding: theme.spacing(4),
   textAlign: 'center',
   color: '#000',
@@ -42,7 +47,16 @@ const AboutUs = () => {
       {/* Section 1 */}
       <Container>
         <Grid container spacing={4} mt={2}>
-          <Grid item xs={12} md={8}>
+          <Grid
+            item
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            size={{
+              xs: 12,
+              md: 8,
+            }}
+          >
             <Content>
               <Typography
                 variant="h3"
@@ -51,7 +65,7 @@ const AboutUs = () => {
                   color: (theme) => theme.palette.primary.main,
                   fontFamily: 'Poppins Sans-serif',
                   fontWeight: '600',
-                  fontSize: isSmallScreen ? '1.75rem' : '2.5rem', // Adjust font size for smaller screens
+                  fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
                 }}
               >
                 Enjoy The Desi-Themed Ambiance in Punjabi Touched Indian
@@ -71,13 +85,19 @@ const AboutUs = () => {
               </Typography>
             </Content>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid
+            item
+            size={{
+              xs: 12,
+              md: 4,
+            }}
+          >
             <img
               src={butterChicken}
               alt="Punjabi food"
               style={{
                 width: '100%',
-                height: 'auto', // Ensures image scales properly
+                height: 'auto',
                 borderRadius: '8px',
               }}
             />
@@ -94,7 +114,7 @@ const AboutUs = () => {
             color: (theme) => theme.palette.primary.main,
             fontFamily: 'Poppins Sans-serif',
             fontWeight: '600',
-            fontSize: isSmallScreen ? '1.75rem' : '2.5rem', // Adjust font size for smaller screens
+            fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
           }}
         >
           Discover our Indian food that makes you drool.
@@ -119,18 +139,33 @@ const AboutUs = () => {
       {/* Section 3 */}
       <Container>
         <Grid container spacing={4} mt={2}>
-          <Grid item xs={12} md={4}>
+          <Grid
+            item
+            size={{
+              xs: 12,
+              md: 4,
+            }}
+          >
             <img
               src={tandooriPaneerTikka}
               alt="Punjabi food"
               style={{
                 width: '100%',
-                height: 'auto', // Ensure the image scales properly
+                height: 'auto',
                 borderRadius: '8px',
               }}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid
+            item
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            size={{
+              xs: 12,
+              md: 8,
+            }}
+          >
             <Content>
               <Typography
                 variant="h3"
@@ -139,7 +174,7 @@ const AboutUs = () => {
                   color: (theme) => theme.palette.primary.main,
                   fontFamily: 'Poppins Sans-serif',
                   fontWeight: '600',
-                  fontSize: isSmallScreen ? '1.75rem' : '2.5rem', // Adjust font size for smaller screens
+                  fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
                 }}
               >
                 Experience the richness of flavours with us!
@@ -165,7 +200,7 @@ const AboutUs = () => {
         mt={2}
         sx={{
           background:
-            'linear-gradient(180deg, #FFE0B2 0%, #FFF5D7 50%, #FFFFFF 100%)',
+            'linear-gradient(180deg, #f8f8f8 0%, #f8f8f5 50%, #FFFFFF 100%)',
           padding: '20px 0',
         }}
       >

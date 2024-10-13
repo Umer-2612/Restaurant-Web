@@ -9,13 +9,14 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
 import { QUERIES, TABS } from 'utils/commonData';
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <Grid
       container
@@ -136,6 +137,7 @@ const Footer = () => {
                 sx={{
                   borderRadius: 2,
                 }}
+                onClick={() => navigate('/reservation')}
               >
                 Book Your Event
               </Button>
@@ -148,6 +150,7 @@ const Footer = () => {
                   borderRadius: 2,
                   textAlign: 'start',
                 }}
+                onClick={() => navigate('/menu')}
               >
                 Book Online
               </Button>

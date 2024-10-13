@@ -16,6 +16,6 @@ export const TABS = [
 ];
 
 export const QUERIES = [
-  { title: 'FAQs', path: '/faq' },
+  { title: 'FAQs', path: '/faqs' },
   { title: 'Contact Us', path: '/contact-us' },
 ];

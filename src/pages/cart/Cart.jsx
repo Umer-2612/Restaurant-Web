@@ -1,28 +1,27 @@
 import React, { useEffect } from 'react';
 
+// Separate imports for each MUI component
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveIcon from '@mui/icons-material/Remove';
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  Divider,
-  Grid,
-  IconButton,
-  Typography,
-  Paper,
-  Container,
-  Button,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { loadStripe } from '@stripe/stripe-js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import CustomForm from './CustomForm'; // Reusable form component
 
-import emptyCartImage from 'assets/images/butter-chicken.jpg';
+import EmptyCartImage from 'assets/images/barbecue.svg';
 import { useCreateCheckoutSessionMutation } from 'store/apis/checkoutApi';
 import { cartSelector, modifyCartDetails } from 'store/slices/cart';
 
@@ -74,7 +73,6 @@ const Cart = () => {
   );
 
   const handleCheckout = async (formData) => {
-    console.log('::FormData', formData);
     const stripe = await stripePromise;
 
     const payload = {
@@ -107,11 +105,12 @@ const Cart = () => {
 
         {/* Display empty cart message */}
         {cartItems.length === 0 ? (
-          <Box sx={{ textAlign: 'center', mt: 5 }}>
-            <img
-              src={emptyCartImage}
-              alt="No items"
-              style={{ width: '300px', marginBottom: '20px' }}
+          <Box sx={{ textAlign: 'center' }}>
+            <EmptyCartImage
+              style={{
+                width: '250px',
+                height: '350px',
+              }}
             />
             <Typography variant="h6" sx={{ mb: 2 }}>
               Your cart is empty!

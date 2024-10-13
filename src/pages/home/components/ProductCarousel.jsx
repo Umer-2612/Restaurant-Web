@@ -35,11 +35,7 @@ const ProductCarousel = () => {
   return (
     <Container>
       <Stack gap={2}>
-        <Typography
-          variant="h3"
-          sx={{ color: 'red', fontWeight: 'bold' }}
-          textAlign={'left'}
-        >
+        <Typography variant="bh2" color="primary">
           PRODUCTS
         </Typography>
         <Carousel

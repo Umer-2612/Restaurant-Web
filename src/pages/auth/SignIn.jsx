@@ -30,8 +30,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const theme = useSelector(themeSelector);
 
-  const [signInGet, { data, isLoading, isSuccess, isError, error }] =
-    useSignInMutation();
+  const [signInGet, { data, isSuccess }] = useSignInMutation();
 
   useLayoutEffect(() => {
     if (isSuccess && data) {
