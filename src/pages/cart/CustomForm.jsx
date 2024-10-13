@@ -102,7 +102,7 @@ const CustomForm = ({ handleCheckout, isLoading = false }) => {
         </Grid2>
 
         {/* Submit Button */}
-        <Grid2 item xs={12}>
+        <Grid2 item size={{ display: 'flex', justifyContent: 'center' }}>
           <RHFButton
             isLoading={isLoading}
             variant="contained"
@@ -117,8 +117,8 @@ const CustomForm = ({ handleCheckout, isLoading = false }) => {
 };
 
 CustomForm.propTypes = {
-  handleCheckout: PropTypes.func.isRequired, // Ensures handleCheckout is a required function
-  isLoading: PropTypes.bool, // Ensures isLoading is a boolean, not required (defaults to false)
+  handleCheckout: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default CustomForm;

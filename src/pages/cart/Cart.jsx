@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
 
 import CustomForm from './CustomForm'; // Reusable form component
 
-import emptyCartImage from 'assets/images/butter-chicken.jpg';
+import EmptyCartImage from 'assets/images/barbecue.svg';
 import { useCreateCheckoutSessionMutation } from 'store/apis/checkoutApi';
 import { cartSelector, modifyCartDetails } from 'store/slices/cart';
 
@@ -108,11 +108,12 @@ const Cart = () => {
         {/* Display empty cart message */}
         {cartItems.length === 0 ? (
           <Box sx={{ textAlign: 'center', mt: 5 }}>
-            <img
-              src={emptyCartImage}
+            {/* <img
+              src={EmptyCartImage}
               alt="No items"
               style={{ width: '300px', marginBottom: '20px' }}
-            />
+            /> */}
+            <EmptyCartImage style={{ width: '300px', marginBottom: '20px' }} />
             <Typography variant="h6" sx={{ mb: 2 }}>
               Your cart is empty!
             </Typography>
