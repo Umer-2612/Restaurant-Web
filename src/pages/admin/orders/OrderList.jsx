@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { PropTypes } from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 
+import NoRecordsFound from 'components/common/NoRecordsFound';
 import TableWrapper from 'components/common/TableWapper';
 import TableLayout from 'layouts/TableLayout';
 import { useGetAllOrdersQuery } from 'store/apis/orders';
@@ -68,23 +69,24 @@ const OrderList = () => {
 
   return (
     <Stack rowGap={2}>
-      <Stack>
-        {data && data?.data?.length === 0 ? (
-          'No Records Found'
-        ) : (
-          <TableLayout>
-            <TableWrapper
-              rows={orderData}
-              total={data?.paginationData?.total}
-              columns={columns}
-              loading={isLoading}
-              isFetching={isFetching}
-              isSuccess={isSuccess}
-              hidePagination={!data?.paginationData?.total}
-            />
-          </TableLayout>
-        )}
+      <Stack pl={4}>
+        <Typography variant="h3">Order List</Typography>
       </Stack>
+      <TableLayout>
+        {data && data?.data?.length === 0 ? (
+          <NoRecordsFound />
+        ) : (
+          <TableWrapper
+            rows={orderData}
+            total={data?.paginationData?.total}
+            columns={columns}
+            loading={isLoading}
+            isFetching={isFetching}
+            isSuccess={isSuccess}
+            hidePagination={!data?.paginationData?.total}
+          />
+        )}
+      </TableLayout>
     </Stack>
   );
 };

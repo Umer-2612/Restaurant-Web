@@ -1,15 +1,11 @@
 import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Box,
-  // Button,
-  Container,
-  // createTheme,
-  Grid,
-  // ThemeProvider,
-  Typography,
-} from '@mui/material';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid2';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
@@ -55,104 +51,100 @@ const ContactUs = () => {
     <>
       <Banner />
       <Container>
-        <Box sx={{ textAlign: 'center', mt: 4, px: 2 }}>
-          <Typography
-            variant="h4"
-            sx={{ color: 'red', fontWeight: 'bold' }}
-            textAlign={'left'}
-          >
-            CONTACT US
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 2 }} textAlign={'left'}>
-            Do you want to renew yourself with a lavish meal after a long day
-            that will set your mood? We promise our lavish meal can set your
-            mood and force you to lick your fingers. Enjoy our delicious food &
-            for any more queries, reach out to us. Feel free to contact us!
-          </Typography>
-
-          <Typography variant="body1" sx={{ mt: 4 }} textAlign={'left'}>
-            <Typography>📞 0721421728</Typography>
-            <Typography mt={1}>
-              📧 info@punjabitouchindianrestaurant.com.au
+        <Stack gap={4}>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography
+              variant="h4"
+              sx={{ color: 'red', fontWeight: 'bold' }}
+              textAlign={'left'}
+            >
+              CONTACT US
             </Typography>
-            <Typography mt={1}>📍 T2/356 Middle Road, Greenbank</Typography>
-          </Typography>
-        </Box>
+            <Typography variant="body1" sx={{ mt: 2 }} textAlign={'left'}>
+              Do you want to renew yourself with a lavish meal after a long day
+              that will set your mood? We promise our lavish meal can set your
+              mood and force you to lick your fingers. Enjoy our delicious food
+              & for any more queries, reach out to us. Feel free to contact us!
+            </Typography>
+
+            <Typography variant="body1" sx={{ mt: 4 }} textAlign={'left'}>
+              <Typography>📞 0721421728</Typography>
+              <Typography mt={1}>
+                📧 info@punjabitouchindianrestaurant.com.au
+              </Typography>
+              <Typography mt={1}>📍 T2/356 Middle Road, Greenbank</Typography>
+            </Typography>
+          </Box>
+          <Grid
+            container
+            spacing={3}
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            {/* First Name Field */}
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <HookTextField
+                control={control}
+                label="First Name*"
+                name="firstName"
+                fullWidth
+                // autoFocuss
+              />
+            </Grid>
+
+            {/* Last Name Field */}
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <HookTextField
+                control={control}
+                label="Last Name*"
+                name="lastName"
+                fullWidth
+              />
+            </Grid>
+
+            {/* Phone Field */}
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <HookTextField
+                control={control}
+                label="Phone no*"
+                name="phoneNo"
+                fullWidth
+              />
+            </Grid>
+
+            {/* Email Field */}
+            <Grid item size={{ xs: 12, sm: 6 }}>
+              <HookTextField
+                control={control}
+                label="Email*"
+                name="email"
+                fullWidth
+              />
+            </Grid>
+
+            {/* Message Field */}
+            <Grid item size={12}>
+              <HookTextField
+                control={control}
+                label="Message*"
+                name="message"
+                fullWidth
+              />
+            </Grid>
+
+            {/* Submit Button */}
+            <Grid item size={12} justifyContent="end" display="flex">
+              <RHFButton
+                isLoading={isLoading}
+                type="submit"
+                variant="contained"
+                color={'primary'}
+                title={'submit'}
+              />
+            </Grid>
+          </Grid>
+        </Stack>
       </Container>
-      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{
-          width: '60%',
-          margin: '0 auto',
-          padding: '20px',
-          borderRadius: '8px',
-        }}
-      >
-        <Grid container spacing={2}>
-          {/* First Name Field */}
-          <Grid item xs={12} sm={6}>
-            <HookTextField
-              control={control}
-              label="First Name*"
-              name="firstName"
-              fullWidth
-              // autoFocuss
-            />
-          </Grid>
-
-          {/* Last Name Field */}
-          <Grid item xs={12} sm={6}>
-            <HookTextField
-              control={control}
-              label="Last Name*"
-              name="lastName"
-              fullWidth
-            />
-          </Grid>
-
-          {/* Phone Field */}
-          <Grid item xs={12} sm={6}>
-            <HookTextField
-              control={control}
-              label="Phone no*"
-              name="phoneNo"
-              fullWidth
-            />
-          </Grid>
-
-          {/* Email Field */}
-          <Grid item xs={12} sm={6}>
-            <HookTextField
-              control={control}
-              label="Email*"
-              name="email"
-              fullWidth
-            />
-          </Grid>
-
-          {/* Message Field */}
-          <Grid item xs={12}>
-            <HookTextField
-              control={control}
-              label="Message*"
-              name="message"
-              fullWidth
-            />{' '}
-          </Grid>
-
-          {/* Submit Button */}
-          <Grid item xs={12}>
-            <RHFButton
-              isLoading={isLoading}
-              type="submit"
-              variant="contained"
-              color={'primary'}
-              title={'submit'}
-            />
-          </Grid>
-        </Grid>
-      </Box>
     </>
   );
 };

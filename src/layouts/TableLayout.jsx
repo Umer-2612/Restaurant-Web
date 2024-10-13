@@ -19,9 +19,11 @@ export default function TableLayout({ children }) {
           display="flex"
           width="100%"
           sx={{
-            borderRadius: 3,
+            borderRadius: 4,
             height: 'inherit',
             overflow: 'auto',
+            p: 2,
+            bgcolor: (theme) => theme.palette.other.bgColor,
           }}
         >
           {children}

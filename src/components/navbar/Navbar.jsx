@@ -46,7 +46,7 @@ Logo.propTypes = {
 const MenuTabs = ({ navigate, activeMenu = '' }) => (
   <Stack
     direction="row"
-    gap={4}
+    gap={{ xs: 5, md: 10 }}
     sx={{
       flexGrow: 1,
       display: { xs: 'none', md: 'flex' },

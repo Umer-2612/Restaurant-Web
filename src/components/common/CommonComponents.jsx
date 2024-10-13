@@ -201,6 +201,11 @@ export const CustomPagination = ({
       direction="row"
       p={2}
       width="100%"
+      sx={{
+        background: (theme) => theme.palette.background.paper,
+        borderBottomLeftRadius: 12,
+        borderBottomRightRadius: 12,
+      }}
     >
       <Grid sm="auto" display="flex" justifyContent="center">
         <Stack direction="row" alignItems="center" gap={1.5}>

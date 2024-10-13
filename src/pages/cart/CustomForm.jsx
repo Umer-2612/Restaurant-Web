@@ -102,7 +102,7 @@ const CustomForm = ({ handleCheckout, isLoading = false }) => {
         </Grid2>
 
         {/* Submit Button */}
-        <Grid2 item xs={12}>
+        <Grid2 item size={12} display="flex" justifyContent="end">
           <RHFButton
             isLoading={isLoading}
             variant="contained"

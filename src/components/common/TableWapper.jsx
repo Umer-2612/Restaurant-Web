@@ -280,7 +280,11 @@ function TableWrapper({
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody
+            sx={{
+              background: (theme) => theme.palette.background.paper,
+            }}
+          >
             {loading || isFetching ? (
               <RenderTableSkeleton columns={columns} />
             ) : rows?.length ? (
