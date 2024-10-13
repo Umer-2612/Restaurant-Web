@@ -1,13 +1,12 @@
 import styled from '@emotion/styled';
 import { Box } from '@mui/material';
 
-import backGroundImage from 'assets/images/banner_image.png';
+import backGroundImage from 'assets/images/bgimage.jpeg';
 
 export const Banner = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.dark,
   color: theme.palette.common.white,
   textAlign: 'center',
-  height: '300px',
   maxWidth: '100%',
   backgroundImage: `url(${backGroundImage})`,
   backgroundSize: 'cover',
@@ -15,10 +14,11 @@ export const Banner = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+  aspectRatio: '15 / 4',
   [theme.breakpoints.down('md')]: {
-    height: '200px',
+    aspectRatio: '12 / 3',
   },
   [theme.breakpoints.down('sm')]: {
-    height: '150px',
+    aspectRatio: '4 / 3',
   },
 }));

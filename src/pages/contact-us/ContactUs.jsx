@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
@@ -51,8 +50,8 @@ const ContactUs = () => {
     <>
       <Banner />
       <Container>
-        <Stack gap={4}>
-          <Box sx={{ textAlign: 'center' }}>
+        <Stack gap={8} mt={8}>
+          <Stack gap={3} sx={{ textAlign: 'center' }}>
             <Typography
               variant="h4"
               sx={{ color: 'red', fontWeight: 'bold' }}
@@ -69,15 +68,15 @@ const ContactUs = () => {
 
             <Typography variant="body1" sx={{ mt: 4 }} textAlign={'left'}>
               <Typography>📞 0721421728</Typography>
-              <Typography mt={1}>
+              <Typography mt={2}>
                 📧 info@punjabitouchindianrestaurant.com.au
               </Typography>
-              <Typography mt={1}>📍 T2/356 Middle Road, Greenbank</Typography>
+              <Typography mt={2}>📍 T2/356 Middle Road, Greenbank</Typography>
             </Typography>
-          </Box>
+          </Stack>
           <Grid
             container
-            spacing={3}
+            spacing={4}
             component="form"
             onSubmit={handleSubmit(onSubmit)}
           >
