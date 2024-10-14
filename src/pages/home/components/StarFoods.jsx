@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { PropTypes } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
+import classsicCurries from 'assets/images/classic_curries.jpg';
 import MenuItemModal from 'pages/menu/components/MenuItemModal';
 import { useGetMenusQuery } from 'store/apis/menu';
 
@@ -39,15 +40,11 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
           }}
         />
         <img
-          src={
-            menu?.itemImagePath
-              ? menu?.itemImagePath
-              : 'https://tobsurat.com/images/s1.jpg'
-          }
+          // src={menu?.itemImagePath ? menu?.itemImagePath : classsicCurries}
+          src={classsicCurries}
           alt={menu?.itemName}
           style={{
             width: '100%',
-            // height: '100%',
             maxHeight: '180px',
             objectFit: 'cover',
             transition: 'transform 0.5s ease',

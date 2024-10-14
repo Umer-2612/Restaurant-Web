@@ -1,0 +1,27 @@
+.carousel .slide {
+  background: none !important;
+}
+
+.carousel .control-arrow {
+  opacity: 1;
+  z-index: 1;
+  background: transparent;
+  border: none;
+}
+
+.carousel .control-prev.control-arrow::before,
+.carousel .control-next.control-arrow::before {
+  border: none;
+  background: none;
+}
+
+.carousel .control-prev.control-arrow {
+  left: -20px;
+}
+
+.carousel .control-next.control-arrow {
+  right: -20px;
+}
+.carousel .slide {
+  user-select: none;
+}

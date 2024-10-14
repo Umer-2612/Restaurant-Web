@@ -2,10 +2,11 @@ import React from 'react';
 
 import Stack from '@mui/material/Stack';
 
-import FlavourOfIndia from './components/FlavourOfIndia';
+// import FlavourOfIndia from './components/FlavourOfIndia';
 import HeroSection from './components/HeroSection';
-import ProductCarousel from './components/ProductCarousel';
+// import ProductCarousel from './components/ProductCarousel';
 import StarFoods from './components/StarFoods';
+import TestimonialsCarousel from './components/TestimonialsCarousel';
 import ValueForMoney from './components/ValueForMoney';
 
 const Home = () => {
@@ -14,8 +15,9 @@ const Home = () => {
       <HeroSection />
       <StarFoods />
       <ValueForMoney />
-      <ProductCarousel />
-      <FlavourOfIndia />
+      {/* <ProductCarousel /> */}
+      <TestimonialsCarousel />
+      {/* <FlavourOfIndia /> */}
     </Stack>
   );
 };

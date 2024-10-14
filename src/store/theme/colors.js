@@ -73,6 +73,7 @@ export const LIGHT = {
     secondary: '#696969',
     disabled: '#C0C5D8',
   },
+
   background: {
     paper: common.white,
   },
@@ -85,6 +86,8 @@ export const LIGHT = {
     hover: '#f2f2f2',
     buttonBg: '#FFFCFA',
     mutedBlack: '#202020',
+    carouselText: '#b42a2b',
+    carouselName: '#595758',
   },
   primaryColor,
   common,
