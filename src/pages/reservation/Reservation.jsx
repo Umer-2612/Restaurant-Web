@@ -61,47 +61,90 @@ const Reservation = () => {
       {/* New Reservation Section */}
       <Container>
         <Stack gap={8} mt={8}>
-          <Stack gap={3} sx={{ textAlign: 'center' }}>
+          <Stack
+            gap={3}
+            sx={{
+              textAlign: 'center',
+              p: 4,
+              background: 'linear-gradient(135deg, #ffe9ea, #FFEFC6)',
+              borderRadius: 6,
+            }}
+          >
             <Typography
               variant="h4"
-              sx={{ color: 'red', fontWeight: 'bold' }}
-              textAlign={'left'}
+              sx={{
+                color: 'text.primary',
+                fontWeight: 'bold',
+                letterSpacing: '0.1em',
+                textAlign: 'left',
+              }}
             >
               RESERVATION
             </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }} textAlign={'left'}>
+
+            <Typography
+              variant="body1"
+              sx={{
+                mt: 2,
+                textAlign: 'left',
+                color: 'text.primary',
+                lineHeight: '1.6',
+              }}
+            >
               Do you want to taste our soulful food? Try our authentic flavours
-              of cuisines, which are loaded with the tradition, culture and
-              Warmth of Indian history. Reserve your table now!
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }} textAlign={'left'}>
-              Booking your table in advance will help you get rid of last-minute
-              hassle. You don’t need to wait for long hours to taste our
-              tempting food when you have booked your table. Your order will
-              arrive at your table in no time! Discover the world of Culinary
-              delight with our specially designed menu.
-            </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }} textAlign={'left'}>
-              Our team features a selection of unique & delicious options for
-              snacks, lunch & dinner. We want to keep you closer to the
-              delicious meals that make you drool and melt your heart. We invite
-              you with all our love to taste the difference. Reserve your table
-              now with just one single tap!
+              of cuisines, loaded with tradition, culture, and the warmth of
+              Indian history. Reserve your table now!
             </Typography>
 
-            <Typography variant="body1" sx={{ mt: 4 }} textAlign={'left'}>
+            <Typography
+              variant="body1"
+              sx={{
+                mt: 2,
+                textAlign: 'left',
+                color: 'text.primary',
+                lineHeight: '1.6',
+              }}
+            >
+              Booking your table in advance helps you avoid last-minute hassle.
+              No long waits when you&apos;ve booked ahead. Experience culinary
+              delight with our specially designed menu.
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                mt: 2,
+                textAlign: 'left',
+                color: 'text.primary',
+                lineHeight: '1.6',
+              }}
+            >
+              Our team curates unique and delicious options for snacks, lunch,
+              and dinner. Let our meals bring you closer to home-cooked
+              deliciousness. Reserve your table now with one simple tap!
+            </Typography>
+
+            <Stack
+              direction="column"
+              spacing={2}
+              sx={{
+                mt: 4,
+                textAlign: 'left',
+                color: 'text.primary',
+              }}
+            >
               <Typography>📞 0721421728</Typography>
-              <Typography mt={2}>
+              <Typography>
                 📧 info@punjabitouchindianrestaurant.com.au
               </Typography>
-              <Typography mt={2}>📍 T2/356 Middle Road, Greenbank</Typography>
-            </Typography>
+              <Typography>📍 T2/356 Middle Road, Greenbank</Typography>
+            </Stack>
           </Stack>
           <Grid
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             container
-            spacing={4}
+            spacing={5}
           >
             {/* First Name Field */}
             <Grid item size={{ xs: 12, sm: 6 }}>
@@ -151,6 +194,9 @@ const Reservation = () => {
                 type="number"
                 label="No of People*"
                 name="noOfPeople"
+                inputProps={{
+                  min: 1,
+                }}
                 fullWidth
               />
             </Grid>

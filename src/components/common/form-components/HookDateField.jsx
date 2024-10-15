@@ -42,6 +42,7 @@ const TEXT_FIELD_SX = {
   },
   'borderRadius': 1,
   '.MuiOutlinedInput-notchedOutline': {
+    borderRadius: 3,
     borderColor: (theme) => theme.palette.background.border,
   },
   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {
@@ -58,7 +59,7 @@ const TEXT_FIELD_SX = {
     color: (theme) => theme.palette.text.selectIcon,
   },
   '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-    borderColor: (theme) => theme.palette.primary.main,
+    borderColor: (theme) => theme.palette.text.primary,
   },
   '& input[type="time"]::-webkit-calendar-picker-indicator': {
     filter:
