@@ -8,13 +8,13 @@ import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
+import contact from 'assets/images/bgimage.jpeg';
 import RHFButton from 'components/button/RHFButton';
 import { Banner, BannerText } from 'components/common/Banner';
 import useToast from 'components/common/CustomToastMessage';
 import HookTextField from 'components/common/form-components/HookTextField';
 import { usePutPostContactUsMutation } from 'store/apis/contactUs';
 import { validationSchema } from 'utils/validation';
-
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   firstName: validationSchema.firstName,
   lastName: validationSchema.lastName,
@@ -48,7 +48,7 @@ const ContactUs = () => {
 
   return (
     <>
-      <Banner>
+      <Banner image={contact}>
         <BannerText>Contact Us</BannerText>
       </Banner>
       <Container>

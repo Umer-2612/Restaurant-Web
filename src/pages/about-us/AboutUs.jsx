@@ -8,8 +8,9 @@ import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import butterChicken from 'assets/images/butter.webp';
-import tandooriPaneerTikka from 'assets/images/tandoori_paneer_tikka_restaurant_style.jpg';
+import Ambiance from 'assets/images/ambiance.jpg';
+import aboutUs from 'assets/images/bgimage.jpeg';
+import richnessOfFlavours from 'assets/images/Daal makhni.jpeg';
 import { Banner, BannerText } from 'components/common/Banner';
 
 const Content = styled(Box)(({ theme }) => ({
@@ -43,7 +44,7 @@ const AboutUs = () => {
 
   return (
     <>
-      <Banner>
+      <Banner image={aboutUs}>
         <BannerText>About Us</BannerText>
       </Banner>
       {/* Section 1 */}
@@ -94,7 +95,7 @@ const AboutUs = () => {
             }}
           >
             <img
-              src={butterChicken}
+              src={Ambiance}
               alt="Punjabi food"
               style={{
                 width: '100%',
@@ -147,7 +148,7 @@ const AboutUs = () => {
             }}
           >
             <img
-              src={tandooriPaneerTikka}
+              src={richnessOfFlavours}
               alt="Punjabi food"
               style={{
                 width: '100%',

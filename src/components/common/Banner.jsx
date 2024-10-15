@@ -2,21 +2,19 @@ import styled from '@emotion/styled';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import backGroundImage from 'assets/images/bgimage.jpeg';
-
-export const Banner = styled(Box)(({ theme }) => ({
+export const Banner = styled(Box)(({ theme, image }) => ({
   'position': 'relative', // Make it the context for absolute positioning
   'backgroundColor': theme.palette.primary.dark,
   'color': theme.palette.common.white,
   'textAlign': 'center',
   'maxWidth': '100%',
-  'backgroundImage': `url(${backGroundImage})`,
+  'backgroundImage': `url(${image})`,
   'backgroundSize': 'cover',
   'backgroundPosition': 'center',
   'display': 'flex',
   'alignItems': 'center',
   'justifyContent': 'center',
-  'aspectRatio': '15 / 4',
+  'aspectRatio': '12 / 4',
   'overflow': 'hidden',
 
   // Overlay
