@@ -123,3 +123,12 @@ export const convertPathNameToKey = (location) => {
     .join('');
   return transformedPath;
 };
+export const fnPressNumberKeyWithHyphen = (e) => {
+  if (
+    (e.charCode !== 46 || e.target.value.includes('.') || e.key === '.') &&
+    !((e.charCode >= 48 && e.charCode <= 57) || e.charCode === 45)
+  ) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+};

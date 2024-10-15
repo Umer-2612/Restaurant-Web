@@ -16,6 +16,7 @@ import useToast from 'components/common/CustomToastMessage';
 import HookDateField from 'components/common/form-components/HookDateField';
 import HookTextField from 'components/common/form-components/HookTextField';
 import { usePutPostReservationMutation } from 'store/apis/reservation';
+import { fnPressNumberKeyWithHyphen } from 'utils/commonFunctions';
 import { validationSchema } from 'utils/validation';
 const RESERVATION_FORM_VALIDATION = Yup.object().shape({
   firstName: validationSchema.firstName,
@@ -28,7 +29,7 @@ const RESERVATION_FORM_VALIDATION = Yup.object().shape({
 });
 
 const Reservation = () => {
-  const { control, handleSubmit, setValue, trigger } = useForm({
+  const { control, handleSubmit, setValue, trigger, reset } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(RESERVATION_FORM_VALIDATION),
   });
@@ -43,6 +44,7 @@ const Reservation = () => {
       console.log(response?.error?.data?.message);
       if (response?.data) {
         showToast(response?.data?.message, 'success');
+        reset();
       } else {
         showToast(response?.error?.data?.message, 'error');
       }
@@ -53,6 +55,7 @@ const Reservation = () => {
   const handleChangeDate = (newValue) => {
     setValue('reservationDate', newValue);
   };
+
   return (
     <>
       <Banner image={backGroundImage}>
@@ -128,9 +131,10 @@ const Reservation = () => {
             <Grid item size={{ xs: 12, sm: 6 }}>
               <HookTextField
                 control={control}
-                label="Phone no*"
+                label="Phone No*"
                 name="phoneNo"
                 fullWidth
+                onKeyPress={fnPressNumberKeyWithHyphen}
               />
             </Grid>
 
@@ -148,10 +152,10 @@ const Reservation = () => {
             <Grid item size={{ xs: 12, sm: 6 }}>
               <HookTextField
                 control={control}
-                type="number"
                 label="No of People*"
                 name="noOfPeople"
                 fullWidth
+                onKeyPress={fnPressNumberKeyWithHyphen}
               />
             </Grid>
 
