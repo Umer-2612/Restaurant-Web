@@ -107,7 +107,6 @@ const TestimonialsCarousel = () => {
                 color: (theme) => theme.palette.other.carouselText,
                 maxWidth: '70%',
                 fontWeight: '800',
-                fontFamily: 'serif',
               }}
             >
               “ {testimonial.text} ”

@@ -58,7 +58,6 @@ const FlavourOfIndia = () => {
               gutterBottom
               sx={{
                 color: theme.palette.primary.main,
-                fontFamily: 'Poppins Sans-serif',
                 fontWeight: '600',
                 fontSize: isSmallScreen ? '1.75rem' : '2rem', // Adjust font size for smaller screens
               }}

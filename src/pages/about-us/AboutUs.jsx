@@ -65,7 +65,6 @@ const AboutUs = () => {
                 gutterBottom
                 sx={{
                   color: (theme) => theme.palette.primary.main,
-                  fontFamily: 'Poppins Sans-serif',
                   fontWeight: '600',
                   fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
                 }}
@@ -114,7 +113,6 @@ const AboutUs = () => {
           gutterBottom
           sx={{
             color: (theme) => theme.palette.primary.main,
-            fontFamily: 'Poppins Sans-serif',
             fontWeight: '600',
             fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
           }}
@@ -174,7 +172,6 @@ const AboutUs = () => {
                 gutterBottom
                 sx={{
                   color: (theme) => theme.palette.primary.main,
-                  fontFamily: 'Poppins Sans-serif',
                   fontWeight: '600',
                   fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
                 }}
@@ -211,7 +208,6 @@ const AboutUs = () => {
           gutterBottom
           sx={{
             color: (theme) => theme.palette.primary.main,
-            fontFamily: 'Poppins Sans-serif',
             fontWeight: '600',
           }}
         >

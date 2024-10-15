@@ -105,7 +105,6 @@ const SignIn = () => {
             variant="h4"
             sx={{
               fontWeight: 600,
-              fontFamily: 'Roboto, sans-serif',
               color: '#FFFFFF',
               marginBottom: theme.spacing(2),
             }}
@@ -116,7 +115,6 @@ const SignIn = () => {
             variant="h6"
             sx={{
               fontWeight: 400,
-              fontFamily: 'Roboto, sans-serif',
               color: '#FFFFFF',
               marginBottom: theme.spacing(4),
               opacity: 0.8,
@@ -155,7 +153,6 @@ const SignIn = () => {
               fontWeight: 500,
               textAlign: 'center',
               marginBottom: theme.spacing(4),
-              fontFamily: 'Roboto, sans-serif',
             }}
           >
             Sign In to Your Account
@@ -209,7 +206,6 @@ const SignIn = () => {
                 'backgroundColor': '#FF1744',
                 'color': '#FFFFFF',
                 'fontWeight': 500,
-                'fontFamily': 'Roboto, sans-serif',
                 'boxShadow': '0px 4px 12px rgba(255, 23, 68, 0.3)',
                 '&:hover': {
                   backgroundColor: '#D50000',
