@@ -21,6 +21,28 @@ html {
   background-color: #ffffff;
 }
 
+.MuiTableCell-root {
+  border: none;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  border-bottom: 5px solid rgba(137, 143, 163, 0.2);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  border-left: 5px solid rgba(137, 143, 163, 0.2);
+}
+
+.apexcharts-legend-text {
+  font-family: 'Poppins', sans-serif !important;
+}
+
 .richtextViewer span,
 .richtextViewer span *,
 .public-DraftEditor-content span,

@@ -177,7 +177,10 @@ const Navbar = () => {
   return (
     <AppBar
       position="static"
-      sx={{ bgcolor: (theme) => theme.palette.background.paper }}
+      sx={{
+        bgcolor: (theme) => theme.palette.background.paper,
+        boxShadow: '0 15px 40px -20px rgba(40,44,63,.15)',
+      }}
       elevation={0}
     >
       <Grid
