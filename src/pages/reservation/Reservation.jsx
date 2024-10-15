@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
 import RHFButton from 'components/button/RHFButton';
-import { Banner } from 'components/common/Banner';
+import { Banner, BannerText } from 'components/common/Banner';
 import useToast from 'components/common/CustomToastMessage';
 import HookDateField from 'components/common/form-components/HookDateField';
 import HookTextField from 'components/common/form-components/HookTextField';
@@ -55,7 +55,9 @@ const Reservation = () => {
   };
   return (
     <>
-      <Banner />
+      <Banner>
+        <BannerText>Reserve your Table</BannerText>
+      </Banner>
       {/* New Reservation Section */}
       <Container>
         <Stack gap={8} mt={8}>

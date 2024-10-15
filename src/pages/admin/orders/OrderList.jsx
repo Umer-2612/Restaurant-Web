@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
+import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
-import { PropTypes } from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
+
+import CartDetailsModal from './components/CartDetailsModal';
 
 import NoRecordsFound from 'components/common/NoRecordsFound';
 import TableWrapper from 'components/common/TableWapper';
@@ -13,6 +16,10 @@ import { useGetAllOrdersQuery } from 'store/apis/orders';
 
 const OrderList = () => {
   const [viewParams] = useSearchParams();
+  const [menuProps, setMenuProps] = useState({
+    cartDetails: null,
+    isMenuOpen: false,
+  });
 
   // Get Members List
   const { data, isLoading, isFetching, isSuccess } = useGetAllOrdersQuery(
@@ -41,7 +48,7 @@ const OrderList = () => {
       formatter: ({ row }) => {
         return (
           <Typography variant="body1">
-            {row?.firstName} {row.lastName}
+            {row?.customerDetails?.firstName} {row?.customerDetails?.lastName}
           </Typography>
         );
       },
@@ -49,10 +56,16 @@ const OrderList = () => {
     {
       id: 'email',
       title: 'Email',
+      formatter: ({ row }) => {
+        return <>{row?.customerDetails?.email}</>;
+      },
     },
     {
       id: 'contact',
       title: 'Contact Number',
+      formatter: ({ row }) => {
+        return <>{row?.customerDetails?.phone}</>;
+      },
     },
     {
       id: 'createdAt',
@@ -60,12 +73,35 @@ const OrderList = () => {
       formatter: ({ row }) => {
         return (
           <Typography variant="body1">
-            {dayjs(row?.createdAt).format('ddd, MMM DD - hh:mm A')}
+            {dayjs(row?.customerDetails?.orderedAt).format(
+              'ddd, MMM DD - hh:mm A'
+            )}
           </Typography>
         );
       },
     },
+    {
+      id: 'actions',
+      formatter: ({ row }) => {
+        return (
+          <IconButton onClick={() => handleMenuModalOpen({ cart: row?.cart })}>
+            <VisibilityOutlined />
+          </IconButton>
+        );
+      },
+    },
   ];
+
+  const handleMenuModalOpen = ({ cart }) => {
+    setMenuProps({ cartDetails: cart, isMenuOpen: true });
+  };
+
+  const handleMenuModalClose = () => {
+    setMenuProps({ ...menuProps, isMenuOpen: false });
+    setTimeout(() => {
+      setMenuProps({ cartDetails: null, isMenuOpen: false });
+    }, 200);
+  };
 
   return (
     <Stack rowGap={2}>
@@ -87,12 +123,12 @@ const OrderList = () => {
           />
         )}
       </TableLayout>
+      <CartDetailsModal
+        menuProps={menuProps}
+        handleMenuModalClose={handleMenuModalClose}
+      />
     </Stack>
   );
 };
 
 export default OrderList;
-
-OrderList.propTypes = {
-  isEditable: PropTypes.bool,
-};

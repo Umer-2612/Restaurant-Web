@@ -94,6 +94,7 @@ const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
       open={menuProps?.isMenuOpen}
       TransitionComponent={Transition}
       keepMounted
+      disableScrollLock
       onClose={handleMenuModalClose}
       aria-describedby="alert-dialog-slide-description"
       PaperProps={{

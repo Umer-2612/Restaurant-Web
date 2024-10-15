@@ -10,7 +10,7 @@ const ValueForMoney = () => {
       <Stack
         gap={2}
         bgcolor={(theme) => theme.palette.other.bgColor}
-        p={2}
+        p={5}
         borderRadius={3}
       >
         <Typography variant="bh2" color="primary">

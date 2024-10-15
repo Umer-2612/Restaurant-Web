@@ -10,7 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import butterChicken from 'assets/images/butter.webp';
 import tandooriPaneerTikka from 'assets/images/tandoori_paneer_tikka_restaurant_style.jpg';
-import { Banner } from 'components/common/Banner';
+import { Banner, BannerText } from 'components/common/Banner';
 
 const Content = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.white,
@@ -43,7 +43,9 @@ const AboutUs = () => {
 
   return (
     <>
-      <Banner />
+      <Banner>
+        <BannerText>About Us</BannerText>
+      </Banner>
       {/* Section 1 */}
       <Container>
         <Grid container spacing={4} mt={2}>

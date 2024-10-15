@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 
 import RHFButton from 'components/button/RHFButton';
-import { Banner } from 'components/common/Banner';
+import { Banner, BannerText } from 'components/common/Banner';
 import useToast from 'components/common/CustomToastMessage';
 import HookTextField from 'components/common/form-components/HookTextField';
 import { usePutPostContactUsMutation } from 'store/apis/contactUs';
@@ -48,7 +48,9 @@ const ContactUs = () => {
 
   return (
     <>
-      <Banner />
+      <Banner>
+        <BannerText>Contact Us</BannerText>
+      </Banner>
       <Container>
         <Stack gap={8} mt={8}>
           <Stack gap={3} sx={{ textAlign: 'center' }}>

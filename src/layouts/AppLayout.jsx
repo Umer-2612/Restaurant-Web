@@ -37,8 +37,8 @@ export default function AppLayout() {
 
   return (
     <Box maxHeight="100vh">
-      <Stack gap={3}>
-        <Navbar />
+      <Navbar />
+      <Stack gap={5}>
         <Outlet />
         <Footer />
       </Stack>

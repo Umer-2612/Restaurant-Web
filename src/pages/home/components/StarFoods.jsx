@@ -15,7 +15,7 @@ import { useGetMenusQuery } from 'store/apis/menu';
 
 const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
   return (
-    <Grid item size={{ xs: 12, sm: 6, md: 3 }} sx={{ padding: '20px' }}>
+    <Grid item size={{ xs: 12, sm: 6, md: 4 }}>
       <Stack
         sx={{
           'position': 'relative',
@@ -35,13 +35,13 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
             zIndex: 1,
           }}
         />
         <img
-          // src={menu?.itemImagePath ? menu?.itemImagePath : classsicCurries}
-          src={classsicCurries}
+          src={menu?.itemImagePath ? menu?.itemImagePath : classsicCurries}
+          // src={classsicCurries}
           alt={menu?.itemName}
           style={{
             width: '100%',
@@ -73,12 +73,7 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
             zIndex: 4,
           }}
         >
-          <Typography
-            variant="h6"
-            fontWeight="bold"
-            fontFamily="Avro serif"
-            sx={{ color: '#fff' }}
-          >
+          <Typography variant="h6" fontWeight="bold" sx={{ color: '#fff' }}>
             {menu?.itemName}
           </Typography>
           <Button sx={{ color: '#fff', fontSize: '1rem' }}>Order Now</Button>
@@ -99,7 +94,7 @@ const StarFoods = () => {
     isMenuOpen: false,
   });
   const navigate = useNavigate();
-  const { data } = useGetMenusQuery({ page: 1, limit: 8 });
+  const { data } = useGetMenusQuery({ page: 1, limit: 6 });
 
   let storedMenuDetails = [];
   try {
@@ -130,7 +125,7 @@ const StarFoods = () => {
 
   return (
     <Container>
-      <Stack gap={2} alignItems="center">
+      <Stack gap={4} alignItems="center">
         <Typography variant="h4" fontWeight="bold">
           Our Most Popular{' '}
           <Typography
@@ -142,7 +137,7 @@ const StarFoods = () => {
             Delicious Food
           </Typography>
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={5}>
           {modifiedData?.map((menu, index) => (
             <MenuItemLayout
               key={index}
@@ -151,10 +146,11 @@ const StarFoods = () => {
             />
           ))}
         </Grid>
-        <Stack direction="row" justifyContent="center" width="100%" mt={3}>
+        <Stack direction="row" justifyContent="center" width="100%">
           <Button
             sx={{ borderRadius: 50, px: 4 }}
             onClick={() => navigate('/menu')}
+            variant="outlined"
           >
             View More
           </Button>

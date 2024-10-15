@@ -2,13 +2,20 @@ import React from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 // import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Pagination from '@mui/material/Pagination';
+import Select from '@mui/material/Select';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
+import { useSearchParams } from 'react-router-dom';
 
 export const MenuItemLayout = ({
   menu,
@@ -41,7 +48,7 @@ export const MenuItemLayout = ({
         }}
       >
         <Stack>
-          {isLoading || isFetching ? (
+          {isLoading ? (
             <Skeleton variant="text" width="60%" height={28} />
           ) : (
             <Typography
@@ -52,7 +59,7 @@ export const MenuItemLayout = ({
               {menu?.itemName}
             </Typography>
           )}
-          {isLoading || isFetching ? (
+          {isLoading ? (
             <Skeleton variant="text" width="40%" height={24} />
           ) : (
             <Typography variant="body1" color="text.primary" fontWeight="bold">
@@ -60,7 +67,7 @@ export const MenuItemLayout = ({
             </Typography>
           )}
         </Stack>
-        {isLoading || isFetching ? (
+        {isLoading ? (
           <Skeleton variant="text" width="80%" height={20} />
         ) : (
           <Typography variant="body2" color="text.secondary">
@@ -77,7 +84,7 @@ export const MenuItemLayout = ({
         }}
       >
         <Stack height={144} width={156} borderRadius={3} overflow="hidden">
-          {isLoading || isFetching ? (
+          {isLoading ? (
             <Skeleton variant="rectangular" width="100%" height="100%" />
           ) : (
             menu?.itemImagePath && (
@@ -143,7 +150,7 @@ export const MenuItemLayout = ({
                     />
                   </IconButton>
                 </>
-              ) : isLoading || isFetching ? (
+              ) : isLoading ? (
                 <Skeleton
                   variant="rectangular"
                   width="100%"
@@ -187,4 +194,217 @@ MenuItemLayout.propTypes = {
   isLastItem: PropTypes.bool,
   isLoading: PropTypes.bool,
   isFetching: PropTypes.bool,
+};
+
+export const CustomPagination = ({
+  limitPerPageArray = [20, 40, 60, 80],
+  total,
+}) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const page =
+    isNaN(Number(searchParams.get('page'))) || searchParams.get('page') <= 0
+      ? 1
+      : searchParams.get('page');
+  const perPage =
+    isNaN(Number(searchParams.get('perPage'))) ||
+    searchParams.get('perPage') <= 0
+      ? 20
+      : searchParams.get('perPage');
+  const handleChangeRowsPerPage = React.useCallback(
+    (newRowsPerPage) => {
+      searchParams.set('perPage', newRowsPerPage);
+      searchParams.set('page', 1);
+
+      setSearchParams(searchParams, { replace: true });
+    },
+    [setSearchParams, searchParams]
+  );
+  const handlePageChange = React.useCallback(
+    (page) => {
+      searchParams.set('page', page);
+      setSearchParams(searchParams, { replace: true });
+    },
+    [setSearchParams, searchParams]
+  );
+
+  return (
+    <Grid
+      container
+      justifyContent={'space-between'}
+      alignItems="center"
+      direction="row"
+      p={2}
+      width="100%"
+      sx={{
+        background: (theme) => theme.palette.background.paper,
+        borderBottomLeftRadius: 12,
+        borderBottomRightRadius: 12,
+      }}
+    >
+      <Grid sm="auto" display="flex" justifyContent="center">
+        <Stack direction="row" alignItems="center" gap={1.5}>
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.text.secondary,
+            }}
+            variant="body1"
+          >
+            Row Per Page
+          </Typography>
+          <Select
+            displayEmpty
+            value={perPage}
+            onChange={(e) => handleChangeRowsPerPage(e.target.value)}
+            input={<OutlinedInput />}
+            sx={{
+              'height': 32,
+              'backgroundColor': (theme) => theme.palette.other.bgColor,
+              '.MuiOutlinedInput-notchedOutline': {
+                border: 0,
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                border: 0,
+              },
+              '& .MuiSelect-icon': {
+                color: (theme) => theme.palette.text.primary,
+                transition: '0.2s',
+              },
+              ':hover .MuiOutlinedInput-notchedOutline': {
+                border: 0,
+              },
+              'borderRadius': 2,
+              'overflow': 'hidden',
+              'color': (theme) => theme.palette.text.body,
+            }}
+            MenuProps={{
+              PaperProps: {
+                sx: {
+                  marginTop: '10px',
+                  backgroundColor: (theme) => theme.palette.background.select,
+                  paddingBottom: 0,
+                  borderRadius: 2,
+                },
+              },
+              anchorOrigin: {
+                vertical: 'bottom',
+                horizontal: 'left',
+              },
+              transformOrigin: {
+                vertical: 'top',
+                horizontal: 'left',
+              },
+
+              sx: {
+                '&& .Mui-selected': {
+                  backgroundColor: (theme) => theme.palette.primary.main,
+                  color: (theme) => theme.palette.common.white,
+                },
+
+                '.MuiSvgIcon-root ': {
+                  fill: (theme) => theme.palette.text.primary,
+                },
+                'fontSize': '14px',
+              },
+            }}
+            IconComponent={ExpandMoreRoundedIcon}
+            size="small"
+            renderValue={(selected) => {
+              return (
+                <Stack direction="row" justifyContent={'center'} gap={1}>
+                  <Typography
+                    sx={{
+                      color: (theme) => theme.palette.text.secondary,
+                    }}
+                  >
+                    {selected}
+                  </Typography>
+                </Stack>
+              );
+            }}
+          >
+            {limitPerPageArray?.map((rowPerPage, index) => (
+              <MenuItem
+                key={rowPerPage}
+                value={rowPerPage}
+                sx={(theme) => ({
+                  borderBottom:
+                    limitPerPageArray.length !== index + 1 &&
+                    `1px solid ${theme.palette.other.border}`,
+                })}
+              >
+                {rowPerPage}
+              </MenuItem>
+            ))}
+          </Select>
+          <Typography
+            sx={{
+              color: (theme) => theme.palette.text.secondary,
+            }}
+            variant="body1"
+          >
+            {`${Number(page) * Number(perPage) - Number(perPage) + 1}-${
+              total <= Number(page) * Number(perPage)
+                ? total
+                : Number(page) * Number(perPage)
+            } of ${total}`}
+          </Typography>
+        </Stack>
+      </Grid>
+
+      <Grid
+        mt={{
+          xs: 2,
+          sm: 0,
+        }}
+        sm="auto"
+        display="flex"
+        justifyContent="center"
+      >
+        <Pagination
+          shape="rounded"
+          color="primary"
+          page={Number(page)}
+          count={!total ? 1 : Math.ceil(Number(total) / perPage)}
+          sx={{
+            '& .MuiPaginationItem-root': {
+              'color': (theme) => theme.palette.text.secondary,
+              'background': (theme) => theme.palette.other.bgColor,
+              '&.Mui-selected': {
+                background: (theme) => theme.palette.other.ooc,
+                color: (theme) => theme.palette.secondary.contrastText,
+              },
+              'borderRadius': 1,
+              'fontSize': '16px',
+              'fontWeight': 600,
+              'paddingTop': '3px',
+            },
+            '.MuiPaginationItem-root.Mui-selected': {
+              color: (theme) => theme.palette.common.white,
+            },
+            '.MuiSvgIcon-root ': {
+              fill: (theme) => theme.palette.text.secondary,
+            },
+            '.MuiPaginationItem-previousNext': {
+              color: (theme) => theme.palette.text.secondary,
+            },
+          }}
+          onChange={(e, newPage) => {
+            if (Number(page) !== Number(newPage)) {
+              handlePageChange(newPage);
+            }
+          }}
+        />
+      </Grid>
+    </Grid>
+  );
+};
+
+CustomPagination.propTypes = {
+  handleChangeRowsPerPage: PropTypes.func,
+  handlePageChange: PropTypes.func,
+  perPage: PropTypes.number,
+  page: PropTypes.number,
+  limitPerPageArray: PropTypes.array,
+  total: PropTypes.number,
 };

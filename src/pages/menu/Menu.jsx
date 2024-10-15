@@ -24,6 +24,14 @@ const Menu = () => {
   const [hasMore, setHasMore] = useState(true);
   // Append new data on infinite scroll
   const [menuItems, setMenuItems] = useState([]);
+  const [storedMenuDetails, setStoredMenuDetails] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('menuDetails')) || [];
+    } catch (error) {
+      console.error('Error parsing localStorage data:', error);
+      return [];
+    }
+  });
   const containerRef = useRef();
 
   const handleMenuModalOpen = ({ menu }) => {
@@ -35,6 +43,14 @@ const Menu = () => {
     setTimeout(() => {
       setMenuProps({ menuDetails: null, isMenuOpen: false });
     }, 200);
+    setStoredMenuDetails(() => {
+      try {
+        return JSON.parse(localStorage.getItem('menuDetails')) || [];
+      } catch (error) {
+        console.error('Error parsing localStorage data:', error);
+        return [];
+      }
+    });
   };
 
   const { data, isSuccess, isLoading, isFetching } = useGetMenusQuery({
@@ -54,13 +70,6 @@ const Menu = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      let storedMenuDetails = [];
-      try {
-        storedMenuDetails =
-          JSON.parse(localStorage.getItem('menuDetails')) || [];
-      } catch (error) {
-        console.error('Error parsing localStorage data:', error);
-      }
       const modifiedData = data?.data?.map((menu) => {
         const itemIndex = storedMenuDetails.findIndex(
           (cartData) => cartData?.menuId === menu?._id
@@ -89,7 +98,7 @@ const Menu = () => {
         });
       }
     }
-  }, [data?.data, isSuccess, page]);
+  }, [data?.data, isSuccess, page, storedMenuDetails]);
 
   useEffect(() => {
     const fetchMoreData = () => {
@@ -118,17 +127,15 @@ const Menu = () => {
   };
 
   return (
-    <Container>
+    <Container sx={{ mt: 5 }}>
       <Stack alignItems="center" ref={containerRef}>
         <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={3}>
-          {/* MenuFilter Stack */}
           {categories?.length > 0 && (
             <MenuFilter
               categories={categories}
               onCategoryChange={handleCategoryChange}
             />
           )}
-          {/* Scrollable MenuItemLayout Stack */}
           <Stack width="100%">
             {menuItems?.map((menu, index) => (
               <MenuItemLayout

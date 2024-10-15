@@ -10,13 +10,15 @@ import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { Banner } from 'components/common/Banner';
+import { Banner, BannerText } from 'components/common/Banner';
 import { LIGHT } from 'store/theme/colors';
 
 const Faqs = () => {
   return (
     <>
-      <Banner />
+      <Banner>
+        <BannerText>Faqs</BannerText>
+      </Banner>
       <Container>
         <Stack gap={4}>
           <Box sx={{ textAlign: 'center' }} p={4}>
