@@ -11,7 +11,7 @@ import ValueForMoney from './components/ValueForMoney';
 
 const Home = () => {
   return (
-    <Stack gap={5}>
+    <Stack gap={20}>
       <HeroSection />
       <StarFoods />
       <ValueForMoney />

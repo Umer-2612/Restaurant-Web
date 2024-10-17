@@ -58,13 +58,14 @@ const ContactUs = () => {
             sx={{
               textAlign: 'center',
               p: 4,
-              background: 'linear-gradient(135deg, #ffe9ea, #FFEFC6)',
+              background: (theme) =>
+                `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
               borderRadius: 6,
             }}
           >
             <Typography
-              variant="h4"
-              sx={{ color: 'text.primary', fontWeight: 'bold' }}
+              variant="bh3"
+              sx={{ color: 'text.primary' }}
               textAlign={'left'}
             >
               CONTACT US
@@ -155,8 +156,7 @@ const ContactUs = () => {
                 isLoading={isLoading}
                 type="submit"
                 variant="contained"
-                color={'primary'}
-                title={'submit'}
+                title={'Submit'}
               />
             </Grid>
           </Grid>

@@ -33,6 +33,12 @@ export function themeTypography() {
       fontSize: pxToRem(24),
       lineHeight: pxToRem(36),
     },
+    bh3: {
+      fontWeight: 800,
+      fontSize: pxToRem(34),
+      lineHeight: pxToRem(36),
+      letterSpacing: '0.1rem',
+    },
     subtitle1: {
       fontWeight: 500,
       fontSize: pxToRem(24),

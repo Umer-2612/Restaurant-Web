@@ -66,16 +66,15 @@ const Reservation = () => {
             sx={{
               textAlign: 'center',
               p: 4,
-              background: 'linear-gradient(135deg, #ffe9ea, #FFEFC6)',
+              background: (theme) =>
+                `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
               borderRadius: 6,
+              color: 'text.primary',
             }}
           >
             <Typography
-              variant="h4"
+              variant="bh3"
               sx={{
-                color: 'text.primary',
-                fontWeight: 'bold',
-                letterSpacing: '0.1em',
                 textAlign: 'left',
               }}
             >
@@ -87,8 +86,6 @@ const Reservation = () => {
               sx={{
                 mt: 2,
                 textAlign: 'left',
-                color: 'text.primary',
-                lineHeight: '1.6',
               }}
             >
               Do you want to taste our soulful food? Try our authentic flavours
@@ -101,8 +98,6 @@ const Reservation = () => {
               sx={{
                 mt: 2,
                 textAlign: 'left',
-                color: 'text.primary',
-                lineHeight: '1.6',
               }}
             >
               Booking your table in advance helps you avoid last-minute hassle.
@@ -115,8 +110,6 @@ const Reservation = () => {
               sx={{
                 mt: 2,
                 textAlign: 'left',
-                color: 'text.primary',
-                lineHeight: '1.6',
               }}
             >
               Our team curates unique and delicious options for snacks, lunch,
@@ -130,7 +123,6 @@ const Reservation = () => {
               sx={{
                 mt: 4,
                 textAlign: 'left',
-                color: 'text.primary',
               }}
             >
               <Typography>📞 0721421728</Typography>
@@ -233,8 +225,7 @@ const Reservation = () => {
                 isLoading={isLoading}
                 type="submit"
                 variant="contained"
-                color={'primary'}
-                title={'submit'}
+                title={'Submit'}
               />
             </Grid>
           </Grid>
