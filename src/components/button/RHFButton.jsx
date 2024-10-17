@@ -25,6 +25,7 @@ const RHFButton = ({
           backgroundColor: (theme) =>
             !noDisableStyle && variant !== 'text' && theme.palette.grey[300],
         },
+        'borderRadius': 2,
       }}
       {...other}
       disabled={isLoading || disabled}

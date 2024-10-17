@@ -1,0 +1,23 @@
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  #print-section {
+    display: block;
+    color: black;
+    padding: 20px;
+  }
+
+  /* Hide buttons and any other UI elements not needed in print */
+  button {
+    display: none;
+  }
+
+  img {
+    width: 60px; /* Ensure images are the right size for printing */
+    height: 60px;
+  }
+}

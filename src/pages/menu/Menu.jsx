@@ -10,7 +10,10 @@ import { useSearchParams } from 'react-router-dom';
 import MenuFilter from './components/MenuFilter';
 import MenuItemModal from './components/MenuItemModal';
 
-import { MenuItemLayout } from 'components/common/CommonComponents';
+import {
+  MenuItemLayout,
+  RenderMenuSkeleton,
+} from 'components/common/CommonComponents';
 import { useGetCategoriesQuery } from 'store/apis/categories';
 import { useGetMenusQuery } from 'store/apis/menu';
 
@@ -24,6 +27,7 @@ const Menu = () => {
   const [hasMore, setHasMore] = useState(true);
   // Append new data on infinite scroll
   const [menuItems, setMenuItems] = useState([]);
+  const [isCategoryChanged, setIsCategoryChanged] = useState(false);
   const [storedMenuDetails, setStoredMenuDetails] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem('menuDetails')) || [];
@@ -80,16 +84,11 @@ const Menu = () => {
           : menu;
       });
       if (page === 1) {
-        // On the first page or new category load, reset the items
-        // Retrieve cart details from localStorage
         setMenuItems(modifiedData || []);
       } else if (data?.data?.length === 0) {
-        // No more data to load
         setHasMore(false);
       } else {
-        // For page > 1, append new items, but avoid re-appending old data
         setMenuItems((prevItems) => {
-          // Avoid duplication: Append only if the items are not already in the list
           const newItems = modifiedData.filter(
             (item) =>
               !prevItems.some((existingItem) => existingItem._id === item._id)
@@ -118,12 +117,19 @@ const Menu = () => {
     };
   }, [hasMore]);
 
+  useEffect(() => {
+    if (isCategoryChanged && !isFetching) {
+      return setIsCategoryChanged(false);
+    }
+  }, [isCategoryChanged, isFetching]);
+
   const handleCategoryChange = (categoryId) => {
     searchParams.set('category', categoryId);
     setSearchParams(searchParams);
-    setPage(1); // Reset to the first page
-    setMenuItems([]); // Clear previous menu items
-    setHasMore(true); // Reset "hasMore" for new data
+    setPage(1);
+    setMenuItems([]);
+    setHasMore(true);
+    setIsCategoryChanged(true);
   };
 
   return (
@@ -137,16 +143,20 @@ const Menu = () => {
             />
           )}
           <Stack width="100%">
-            {menuItems?.map((menu, index) => (
-              <MenuItemLayout
-                key={menu?._id}
-                menu={menu}
-                handleMenuModalOpen={handleMenuModalOpen}
-                isLastItem={Number(menuItems?.length - 1) === Number(index)}
-                isLoading={isLoading}
-                isFetching={isFetching}
-              />
-            ))}
+            {isLoading || isCategoryChanged
+              ? Array.from({ length: 8 }).map((_, cellIndex) => (
+                  <RenderMenuSkeleton key={cellIndex} />
+                ))
+              : menuItems?.map((menu, index) => (
+                  <MenuItemLayout
+                    key={menu?._id}
+                    menu={menu}
+                    handleMenuModalOpen={handleMenuModalOpen}
+                    isLastItem={Number(menuItems?.length - 1) === Number(index)}
+                    isLoading={isLoading}
+                    isFetching={isFetching}
+                  />
+                ))}
             {hasMore && (
               <Stack
                 justifyContent="center"

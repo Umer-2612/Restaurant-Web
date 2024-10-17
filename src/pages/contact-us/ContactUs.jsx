@@ -55,22 +55,38 @@ const ContactUs = () => {
       </Banner>
       <Container>
         <Stack gap={8} mt={8}>
-          <Stack gap={3} sx={{ textAlign: 'center' }}>
+          <Stack
+            gap={3}
+            sx={{
+              textAlign: 'center',
+              p: 4,
+              background: 'linear-gradient(135deg, #ffe9ea, #FFEFC6)',
+              borderRadius: 6,
+            }}
+          >
             <Typography
               variant="h4"
-              sx={{ color: 'red', fontWeight: 'bold' }}
+              sx={{ color: 'text.primary', fontWeight: 'bold' }}
               textAlign={'left'}
             >
               CONTACT US
             </Typography>
-            <Typography variant="body1" sx={{ mt: 2 }} textAlign={'left'}>
+            <Typography
+              variant="body1"
+              sx={{ color: 'text.primary', mt: 2 }}
+              textAlign={'left'}
+            >
               Do you want to renew yourself with a lavish meal after a long day
               that will set your mood? We promise our lavish meal can set your
               mood and force you to lick your fingers. Enjoy our delicious food
               & for any more queries, reach out to us. Feel free to contact us!
             </Typography>
 
-            <Typography variant="body1" sx={{ mt: 4 }} textAlign={'left'}>
+            <Typography
+              variant="body1"
+              sx={{ color: 'text.primary', mt: 4 }}
+              textAlign={'left'}
+            >
               <Typography>📞 0721421728</Typography>
               <Typography mt={2}>
                 📧 info@punjabitouchindianrestaurant.com.au
@@ -80,7 +96,7 @@ const ContactUs = () => {
           </Stack>
           <Grid
             container
-            spacing={4}
+            spacing={5}
             component="form"
             onSubmit={handleSubmit(onSubmit)}
           >

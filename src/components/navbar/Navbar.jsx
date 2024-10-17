@@ -176,10 +176,11 @@ const Navbar = () => {
 
   return (
     <AppBar
-      position="static"
+      position="sticky"
       sx={{
         bgcolor: (theme) => theme.palette.background.paper,
         boxShadow: '0 15px 40px -20px rgba(40,44,63,.15)',
+        top: 0,
       }}
       elevation={0}
     >

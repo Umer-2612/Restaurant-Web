@@ -84,7 +84,7 @@ const OrderList = () => {
       id: 'actions',
       formatter: ({ row }) => {
         return (
-          <IconButton onClick={() => handleMenuModalOpen({ cart: row?.cart })}>
+          <IconButton onClick={() => handleMenuModalOpen({ cart: row })}>
             <VisibilityOutlined />
           </IconButton>
         );
