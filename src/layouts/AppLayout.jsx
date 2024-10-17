@@ -36,7 +36,7 @@ export default function AppLayout() {
   }, [dispatch]);
 
   return (
-    <Box maxHeight="100vh">
+    <Box minHeight="100vh">
       <Navbar />
       <Stack gap={5}>
         <Outlet />

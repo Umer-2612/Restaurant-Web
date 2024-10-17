@@ -16,6 +16,7 @@ const StyledTextField = styled(TextField)(({ theme, novalidation }) => ({
   'borderRadius': 1,
   '.MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.background.border,
+    borderRadius: 12,
   },
   '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input': {
     color: theme.palette.text.inputText,
@@ -31,7 +32,7 @@ const StyledTextField = styled(TextField)(({ theme, novalidation }) => ({
     color: theme.palette.text.selectIcon,
   },
   '&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.primary.main,
+    borderColor: theme.palette.text.primary,
   },
   '& input[type="time"]::-webkit-calendar-picker-indicator': {
     filter:

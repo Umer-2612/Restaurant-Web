@@ -17,6 +17,47 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 
+export const RenderMenuSkeleton = () => {
+  return (
+    <Stack
+      overflow="hidden"
+      height="100%"
+      direction="row"
+      alignItems="center"
+      py={2}
+    >
+      <Stack
+        gap={1}
+        sx={{
+          borderBottomLeftRadius: 12,
+          borderBottomRightRadius: 12,
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <Stack>
+          <Skeleton variant="text" width="60%" height={28} />
+          <Skeleton variant="text" width="40%" height={24} />
+        </Stack>
+        <Skeleton variant="text" width="80%" height={20} />
+      </Stack>
+      <Stack
+        position="relative"
+        sx={{
+          height: 160,
+          width: 156,
+          borderRadius: 3,
+        }}
+      >
+        <Stack height={144} width={156} borderRadius={3} overflow="hidden">
+          <Skeleton variant="rectangular" width="100%" height="100%" />
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+};
+
 export const MenuItemLayout = ({
   menu,
   handleMenuModalOpen,
