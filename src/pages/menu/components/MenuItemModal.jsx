@@ -104,13 +104,13 @@ const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
         },
       }}
     >
-      <DialogTitle sx={{ px: 2 }}>
+      <DialogTitle sx={{ p: 4 }}>
         <Stack>
-          <Typography variant="body2">{menuDetails?.itemName}</Typography>
-          <Typography variant="h3">Your customisations</Typography>
+          <Typography variant="h3">{menuDetails?.itemName}</Typography>
+          {/* <Typography variant="h3">Your customisations</Typography> */}
         </Stack>
       </DialogTitle>
-      <DialogContent sx={{ px: 2 }}>
+      <DialogContent sx={{ p: 4 }}>
         <Stack bgcolor={(theme) => theme.palette.other.bgcolor}>
           <Typography variant="body1">
             {menuDetails?.itemDescription ||
@@ -142,7 +142,7 @@ const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
                         increaseQuantity: false,
                       })
                     }
-                    disabled={cartDetails?.quantity === 1}
+                    // disabled={cartDetails?.quantity === 1}
                   >
                     <RemoveIcon />
                   </IconButton>
@@ -177,7 +177,15 @@ const MenuItemModal = ({ menuProps, setMenuProps, handleMenuModalClose }) => {
           </Stack>
         </Stack>
       </DialogContent>
-      <DialogActions sx={{ px: 2, pb: 2 }}>
+      <DialogActions sx={{ p: 4 }}>
+        <Button
+          variant="outlined"
+          sx={{ borderRadius: 2 }}
+          onClick={handleMenuModalClose}
+          fullWidth
+        >
+          Cancel
+        </Button>
         <Button
           variant="contained"
           sx={{ borderRadius: 2 }}

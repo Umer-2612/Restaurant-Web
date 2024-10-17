@@ -8,12 +8,15 @@ const ValueForMoney = () => {
   return (
     <Container>
       <Stack
-        gap={2}
-        bgcolor={(theme) => theme.palette.other.bgColor}
-        p={5}
-        borderRadius={3}
+        gap={5}
+        sx={{
+          p: 4,
+          background: (theme) =>
+            `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
+          borderRadius: 6,
+        }}
       >
-        <Typography variant="bh2" color="primary">
+        <Typography variant="bh3" color="text.primary">
           A Value for-money restaurant you must visit
         </Typography>
         <Typography variant="body1" color="text.primary">

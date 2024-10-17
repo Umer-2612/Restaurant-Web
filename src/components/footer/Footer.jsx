@@ -1,18 +1,16 @@
 import React from 'react';
 
-import {
-  Button,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from '@mui/material';
 import Grid from '@mui/material/Grid2';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { Link, useNavigate } from 'react-router-dom';
 
 import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
+import RHFButton from 'components/button/RHFButton';
 import { QUERIES, TABS } from 'utils/commonData';
 
 const Footer = () => {
@@ -132,28 +130,23 @@ const Footer = () => {
               <Typography variant="subtitle2" fontWeight={600}>
                 Catering Booking
               </Typography>
-              <Button
-                variant="outlined"
-                sx={{
-                  borderRadius: 2,
-                }}
+              <RHFButton
+                variant="text"
+                title="Book Your Event"
                 onClick={() => navigate('/reservation')}
-              >
-                Book Your Event
-              </Button>
+                size="medium"
+                color="white"
+              />
               <Typography variant="subtitle2" fontWeight={600}>
                 Make a Reservation
               </Typography>
-              <Button
-                variant="outlined"
-                sx={{
-                  borderRadius: 2,
-                  textAlign: 'start',
-                }}
+              <RHFButton
+                variant="text"
+                title="Book Online"
                 onClick={() => navigate('/menu')}
-              >
-                Book Online
-              </Button>
+                size="medium"
+                color="white"
+              />
             </Stack>
             {/* Google Map */}
             <Stack width="100%">

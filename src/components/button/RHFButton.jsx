@@ -1,5 +1,6 @@
 import { LoadingButton } from '@mui/lab';
-import { CircularProgress, Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
 const RHFButton = ({
@@ -7,7 +8,7 @@ const RHFButton = ({
   title,
   onClick,
   customStyle,
-  color,
+  color = 'white',
   size,
   variant,
   disabled = false,
@@ -19,13 +20,19 @@ const RHFButton = ({
     <LoadingButton
       size={size ? size : 'large'}
       sx={{
-        ...customStyle,
         ':disabled': {
           opacity: noDisableStyle ? 1 : 0.6,
           backgroundColor: (theme) =>
             !noDisableStyle && variant !== 'text' && theme.palette.grey[300],
         },
         'borderRadius': 2,
+        'transition': 'background 0.3s ease, transform 0.3s ease',
+        '&:hover': {
+          background: 'linear-gradient(135deg, #d32f2f, #ffc04d)', // Inverse gradient on hover
+          transform: 'scale(1.05)', // Adds a slight zoom effect on hover
+        },
+        'background': 'linear-gradient(135deg, #b22222, #ffb84d)',
+        ...customStyle,
       }}
       {...other}
       disabled={isLoading || disabled}
@@ -33,14 +40,11 @@ const RHFButton = ({
       variant={variant}
       color={color}
     >
-      <Typography
-        color="inherit"
-        variant={changeVariantTo ? changeVariantTo : 'button'}
-      >
+      <Typography color={color} variant="body1">
         {title}
       </Typography>
       {isLoading ? (
-        <CircularProgress sx={{ ml: 1 }} size={15} color="inherit" />
+        <CircularProgress sx={{ ml: 1 }} size={15} color={color} />
       ) : null}
     </LoadingButton>
   );

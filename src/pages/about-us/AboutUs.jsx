@@ -1,10 +1,9 @@
 import React from 'react';
 
 import { useTheme } from '@emotion/react';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2'; // Import Grid from MUI
-import { styled } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -13,37 +12,12 @@ import aboutUs from 'assets/images/bgimage.jpeg';
 import richnessOfFlavours from 'assets/images/Daal makhni.jpeg';
 import { Banner, BannerText } from 'components/common/Banner';
 
-const Content = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.common.white,
-
-  padding: theme.spacing(4),
-  [theme.breakpoints.down('md')]: {
-    padding: theme.spacing(2),
-  },
-}));
-
-const SectionContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.other.bgColor,
-  padding: theme.spacing(4),
-  textAlign: 'center',
-  color: '#000',
-  width: '100%',
-}));
-
-const SectionContent = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(6),
-  textAlign: 'left',
-  [theme.breakpoints.down('md')]: {
-    padding: theme.spacing(2),
-  },
-}));
-
 const AboutUs = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <>
+    <Stack gap={20}>
       <Banner image={aboutUs}>
         <BannerText>About Us</BannerText>
       </Banner>
@@ -60,32 +34,29 @@ const AboutUs = () => {
               md: 8,
             }}
           >
-            <Content>
+            <Stack gap={3} color="text.primary">
               <Typography
-                variant="h3"
-                gutterBottom
+                variant="bh3"
                 sx={{
-                  color: (theme) => theme.palette.primary.main,
-                  fontWeight: '600',
                   fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
                 }}
               >
                 Enjoy The Desi-Themed Ambiance in Punjabi Touched Indian
                 Restaurant
               </Typography>
-              <Typography variant="body1" color="textSecondary" paragraph>
+              <Typography variant="body1">
                 We serve more than 100 varieties of Punjabi Indian cuisine that
                 will satiate your taste buds and keep you closer to the
                 tradition and food. We serve the speciality cuisine from the
                 roots of Punjab.
               </Typography>
-              <Typography variant="body1" color="textSecondary">
+              <Typography variant="body1">
                 You can’t resist yourself to test every best food mentioned on
                 our menu. By serving the good food, we reached the billions of
                 hearts. Try our bestseller delicious foods like Dal Makhani,
                 Butter Chicken & Tandoori Chicken.
               </Typography>
-            </Content>
+            </Stack>
           </Grid>
           <Grid
             item
@@ -108,20 +79,26 @@ const AboutUs = () => {
       </Container>
 
       {/* Section 2 */}
-      <SectionContainer mt={2}>
-        <Typography
-          variant="h3"
-          gutterBottom
+      <Container>
+        <Stack
+          gap={3}
+          color="text.primary"
           sx={{
-            color: (theme) => theme.palette.primary.main,
-            fontWeight: '600',
-            fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
+            p: 4,
+            background: (theme) =>
+              `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
+            borderRadius: 6,
           }}
         >
-          Discover our Indian food that makes you drool.
-        </Typography>
-        <SectionContent sx={{ padding: '8px' }}>
-          <Typography variant="body1" paragraph textAlign={'justify'}>
+          <Typography
+            variant="bh3"
+            sx={{
+              fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
+            }}
+          >
+            Discover our Indian food that makes you drool
+          </Typography>
+          <Typography variant="body1" textAlign={'justify'}>
             Our Punjabi Touched Indian Restaurant is known for its delectable
             Frontier, Punjabi & Lucknawi food. With over 2 decades of journey in
             the hospitality Industry, our brand has made a mark for itself! We
@@ -134,8 +111,8 @@ const AboutUs = () => {
             So come to enjoy our Culinary experience that you will treasure for
             life!
           </Typography>
-        </SectionContent>
-      </SectionContainer>
+        </Stack>
+      </Container>
 
       {/* Section 3 */}
       <Container>
@@ -167,64 +144,56 @@ const AboutUs = () => {
               md: 8,
             }}
           >
-            <Content>
+            <Stack gap={3} color="text.primary">
               <Typography
-                variant="h3"
-                gutterBottom
+                variant="bh3"
                 sx={{
-                  color: (theme) => theme.palette.primary.main,
-                  fontWeight: '600',
                   fontSize: isSmallScreen ? '1.75rem' : '2.5rem',
                 }}
               >
                 Experience the richness of flavours with us!
               </Typography>
-              <Typography variant="body1" color="textSecondary" paragraph>
+              <Typography variant="body1">
                 The Punjabi Touched Indian Restaurant has come up with
                 mouth-watering delicious food items that will satisfy your
                 hunger pangs! We promise to complete your meals by serving all
                 kinds of Indian dishes.
               </Typography>
-              <Typography variant="body1" color="textSecondary">
+              <Typography variant="body1">
                 Our foods are crafted with the utmost care and detailing so that
                 every bite can deliver an explosion of flavour that will
                 tantalize your taste buds.
               </Typography>
-            </Content>
+            </Stack>
           </Grid>
         </Grid>
       </Container>
 
       {/* Section 4 */}
-      <SectionContainer
-        mt={2}
-        sx={{
-          background:
-            'linear-gradient(180deg, #f8f8f8 0%, #f8f8f5 50%, #FFFFFF 100%)',
-          padding: '20px 0',
-        }}
-      >
-        <Typography
-          variant="h4"
-          gutterBottom
+      <Container>
+        <Stack
+          gap={3}
+          color="text.primary"
           sx={{
-            color: (theme) => theme.palette.primary.main,
-            fontWeight: '600',
+            p: 4,
+            background: (theme) =>
+              `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
+            borderRadius: 6,
           }}
         >
-          Contact us now if you want to experience
-          <br />
-          hospitality & delicacy
-        </Typography>
-        <SectionContent sx={{ padding: '8px' }}>
-          <Typography variant="body1" paragraph textAlign={'center'}>
+          <Typography variant="bh3">
+            Contact us now if you want to experience
+            <br />
+            hospitality & delicacy
+          </Typography>
+          <Typography variant="body1">
             Do you want to taste our delicacy and freshly prepared North India
             Cuisine with your family and friends? Let’s book your table in
             advance!
           </Typography>
-        </SectionContent>
-      </SectionContainer>
-    </>
+        </Stack>
+      </Container>
+    </Stack>
   );
 };
 
