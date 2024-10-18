@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 // import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
@@ -15,7 +15,10 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+
+import { modifyCartDetails } from 'store/slices/cart';
 
 export const RenderMenuSkeleton = () => {
   return (
@@ -61,11 +64,81 @@ export const RenderMenuSkeleton = () => {
 export const MenuItemLayout = ({
   menu,
   handleMenuModalOpen,
-  updateCartDetails,
+  // updateCartDetails,
   isLastItem = false,
   isLoading,
   isFetching,
 }) => {
+  const dispatch = useDispatch();
+  const menuDetails = menu;
+  const [cartDetails, setCartDetails] = useState({
+    menuId: menuDetails?._id || null,
+    quantity: 0,
+    name: menuDetails?.itemName,
+    price: menuDetails?.itemPrice,
+    // itemImagePath: menuDetails?.itemImagePath,
+    categoryName: menuDetails?.category?.name,
+    imagePath:
+      'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg',
+  });
+
+  useEffect(() => {
+    if (menuDetails) {
+      setCartDetails(
+        menuDetails?.cartDetails || {
+          menuId: menuDetails._id,
+          quantity: 0,
+          name: menuDetails?.itemName,
+          price: menuDetails?.itemPrice,
+          // itemImagePath: menuDetails?.itemImagePath,
+          categoryName: menuDetails?.category?.name,
+          imagePath:
+            'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg',
+        }
+      );
+    }
+  }, [menuDetails]);
+
+  const updateCartDetails = ({ increaseQuantity }) => {
+    console.log('in', increaseQuantity);
+    let newQuantity = 0;
+    setCartDetails((prevDetails) => {
+      newQuantity = increaseQuantity
+        ? prevDetails.quantity + 1
+        : Math.max(0, prevDetails?.quantity - 1);
+
+      return {
+        ...prevDetails,
+        quantity: newQuantity,
+      };
+    });
+    handleAddToCart({ ...cartDetails, quantity: newQuantity });
+  };
+
+  const handleAddToCart = (cartDetails) => {
+    const storedMenuDetails =
+      JSON.parse(localStorage.getItem('menuDetails')) || [];
+
+    const itemIndex = storedMenuDetails.findIndex(
+      (menu) => menu?.menuId === cartDetails?.menuId
+    );
+
+    if (itemIndex >= 0) {
+      if (cartDetails?.quantity > 0) {
+        storedMenuDetails[itemIndex] = cartDetails;
+      } else {
+        storedMenuDetails[itemIndex] =
+          storedMenuDetails[storedMenuDetails?.length - 1];
+        storedMenuDetails.pop();
+      }
+    } else {
+      storedMenuDetails.push(cartDetails);
+    }
+
+    localStorage.setItem('menuDetails', JSON.stringify(storedMenuDetails));
+    dispatch(modifyCartDetails(storedMenuDetails));
+  };
+
   return (
     <Stack
       overflow="hidden"
@@ -169,7 +242,14 @@ export const MenuItemLayout = ({
             >
               {menu?.cartDetails?.quantity ? (
                 <>
-                  <IconButton onClick={() => handleMenuModalOpen({ menu })}>
+                  <IconButton
+                    // onClick={() => handleMenuModalOpen({ menu })}
+                    onClick={() =>
+                      updateCartDetails({
+                        increaseQuantity: false,
+                      })
+                    }
+                  >
                     <RemoveIcon
                       sx={{
                         color: (theme) => theme.palette.success.main,
@@ -183,7 +263,14 @@ export const MenuItemLayout = ({
                   >
                     {menu?.cartDetails?.quantity}
                   </Typography>
-                  <IconButton onClick={() => handleMenuModalOpen({ menu })}>
+                  <IconButton
+                    // onClick={() => handleMenuModalOpen({ menu })}
+                    onClick={() =>
+                      updateCartDetails({
+                        increaseQuantity: true,
+                      })
+                    }
+                  >
                     <AddIcon
                       sx={{
                         color: (theme) => theme.palette.success.main,
@@ -201,7 +288,12 @@ export const MenuItemLayout = ({
               ) : (
                 <Button
                   fullWidth
-                  onClick={() => handleMenuModalOpen({ menu })}
+                  // onClick={() => handleMenuModalOpen({ menu })}
+                  onClick={() =>
+                    updateCartDetails({
+                      increaseQuantity: true,
+                    })
+                  }
                   sx={{
                     height: 38,
                     borderRadius: 3,
