@@ -1,4 +1,9 @@
 @font-face {
+  font-family: Poppins;
+  src: url(./fonts/poppins/Poppins-Medium.ttf);
+}
+
+@font-face {
   font-family: Inter;
   src: url(./fonts/Inter/Inter-Regular.ttf);
 }
@@ -11,7 +16,7 @@ body {
 }
 
 * {
-  font-family: 'Inter', 'Poppins', 'Gentium Basic', serif, sans-serif;
+  font-family: 'Poppins', 'Inter', 'Gentium Basic', serif, sans-serif;
 }
 
 #root,

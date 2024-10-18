@@ -12,7 +12,7 @@ export function themeTypography() {
   return {
     htmlFontSize,
     // fontSize: fontSizeCalc(fontSize),
-    fontFamily: ['Inter'].join(','),
+    fontFamily: ['Poppins'].join(','),
     h1: {
       fontWeight: 600,
       fontSize: pxToRem(40),
@@ -36,7 +36,7 @@ export function themeTypography() {
     bh3: {
       fontWeight: 800,
       fontSize: pxToRem(34),
-      lineHeight: pxToRem(36),
+      lineHeight: pxToRem(48),
       letterSpacing: '0.1rem',
     },
     subtitle1: {

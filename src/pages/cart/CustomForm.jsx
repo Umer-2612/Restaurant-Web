@@ -41,6 +41,7 @@ const CustomForm = ({ control, isLoading = false }) => {
             label="Phone no*"
             name="phoneNo"
             fullWidth
+            isPhoneNumber
           />
         </Grid2>
 

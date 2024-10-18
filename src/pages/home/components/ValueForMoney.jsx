@@ -10,7 +10,7 @@ const ValueForMoney = () => {
       <Stack
         gap={5}
         sx={{
-          p: 4,
+          p: 6,
           background: (theme) =>
             `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
           borderRadius: 6,

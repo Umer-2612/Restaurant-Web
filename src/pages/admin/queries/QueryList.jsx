@@ -30,6 +30,7 @@ const QueryList = () => {
     },
     {
       refetchOnMountOrArgChange: true,
+      pollingInterval: 20000,
     }
   );
   const queryData = data?.data;

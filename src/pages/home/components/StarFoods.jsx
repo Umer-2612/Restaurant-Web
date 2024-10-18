@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 
 import classsicCurries from 'assets/images/classic_curries.jpg';
 import MenuItemModal from 'pages/menu/components/MenuItemModal';
-import { useGetMenusQuery } from 'store/apis/menu';
+import { useGetCategoriesQuery } from 'store/apis/categories';
 
 const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
+  const navigate = useNavigate();
   return (
     <Grid item size={{ xs: 12, sm: 6, md: 4 }}>
       <Stack
@@ -26,7 +27,7 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
             transform: 'scale(1.1)',
           },
         }}
-        onClick={() => handleMenuModalOpen({ menu })}
+        onClick={() => navigate(`/menu?category=${menu._id}`)}
       >
         <Box
           sx={{
@@ -42,7 +43,7 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
         <img
           src={menu?.itemImagePath ? menu?.itemImagePath : classsicCurries}
           // src={classsicCurries}
-          alt={menu?.itemName}
+          alt={menu?.name}
           style={{
             width: '100%',
             maxHeight: '180px',
@@ -73,10 +74,9 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
             zIndex: 4,
           }}
         >
-          <Typography variant="h6" fontWeight="bold" sx={{ color: '#fff' }}>
-            {menu?.itemName}
+          <Typography variant="subtitle1" sx={{ color: '#fff' }}>
+            {menu?.name}
           </Typography>
-          <Button sx={{ color: '#fff', fontSize: '1rem' }}>Order Now</Button>
         </Stack>
       </Stack>
     </Grid>
@@ -94,7 +94,7 @@ const StarFoods = () => {
     isMenuOpen: false,
   });
   const navigate = useNavigate();
-  const { data } = useGetMenusQuery({ page: 1, limit: 6 });
+  const { data } = useGetCategoriesQuery({ page: 1, limit: 6 });
 
   let storedMenuDetails = [];
   try {
