@@ -285,8 +285,6 @@ const Cart = () => {
                 </Stack>
                 <RHFButton
                   isLoading={isLoading}
-                  variant="outlined"
-                  color="primary"
                   type="submit"
                   title="Proceed to Payment"
                 />
