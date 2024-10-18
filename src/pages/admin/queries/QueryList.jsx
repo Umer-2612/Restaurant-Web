@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Button, Chip } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
@@ -9,7 +10,10 @@ import { useSearchParams } from 'react-router-dom';
 import NoRecordsFound from 'components/common/NoRecordsFound';
 import TableWrapper from 'components/common/TableWapper';
 import TableLayout from 'layouts/TableLayout';
-import { useGetAllQueriesQuery } from 'store/apis/contactUs';
+import {
+  useContactUsStatusUpdateMutation,
+  useGetAllQueriesQuery,
+} from 'store/apis/contactUs';
 
 const QueryList = () => {
   const [viewParams] = useSearchParams();
@@ -33,6 +37,9 @@ const QueryList = () => {
       pollingInterval: 20000,
     }
   );
+
+  const [contactUsStatusUpdate, { isLoading: isStatusLoading }] =
+    useContactUsStatusUpdateMutation();
   const queryData = data?.data;
 
   const columns = [
@@ -53,6 +60,10 @@ const QueryList = () => {
     },
     {
       id: 'message',
+      title: 'Message',
+    },
+    {
+      id: 'Contact Number',
       title: 'Contact Number',
     },
     {
@@ -64,6 +75,59 @@ const QueryList = () => {
             {dayjs(row?.createdAt).format('ddd, MMM DD - hh:mm A')}
           </Typography>
         );
+      },
+    },
+    {
+      id: 'action',
+      title: 'Actions',
+      formatter: ({ row }) => {
+        if (row?.status === 'Responded') {
+          return (
+            <>
+              <Stack
+                direction="row"
+                width="100%"
+                gap={2}
+                justifyContent={'left'}
+              >
+                <Chip
+                  label={
+                    <Stack
+                      flexDirection="row"
+                      alignItems="center"
+                      gap={1}
+                      color="#FE4040"
+                    >
+                      <Typography variant="body3">Responded</Typography>
+                    </Stack>
+                  }
+                  sx={{
+                    backgroundColor: '#FEEAEA',
+                    cursor: 'pointer',
+                    borderRadius: 2,
+                  }}
+                />
+              </Stack>
+            </>
+          );
+        } else {
+          return (
+            <Stack direction="row" width="100%" gap={2}>
+              <Button
+                disabled={isStatusLoading}
+                onClick={() =>
+                  contactUsStatusUpdate({ _id: row?._id, status: 'Responded' })
+                }
+                sx={{
+                  minWidth: '32px',
+                  height: '32px',
+                }}
+              >
+                New
+              </Button>
+            </Stack>
+          );
+        }
       },
     },
   ];

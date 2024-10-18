@@ -3,6 +3,7 @@ import { createApiInstance } from './createApiInstance';
 const reservationApi = createApiInstance.injectEndpoints({
   endpoints: (build) => ({
     getAllReservation: build.query({
+      providesTags: ['Reservation'],
       query: (query) => '/reservation',
     }),
 
@@ -14,6 +15,7 @@ const reservationApi = createApiInstance.injectEndpoints({
           body: data,
         };
       },
+      invalidatesTags: ['Reservation'],
     }),
 
     reservationStatusUpdate: build.mutation({
@@ -24,6 +26,7 @@ const reservationApi = createApiInstance.injectEndpoints({
           body: { status },
         };
       },
+      invalidatesTags: ['Reservation'],
     }),
   }),
 });

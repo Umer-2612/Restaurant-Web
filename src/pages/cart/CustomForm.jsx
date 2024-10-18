@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { Box, Grid2 } from '@mui/material';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 
-import HookTextField from 'components/common/form-components/HookTextField'; // Input field component
+import HookTextField from 'components/common/form-components/HookTextField';
 
 const CustomForm = ({ control, isLoading = false }) => {
   return (
@@ -13,7 +13,7 @@ const CustomForm = ({ control, isLoading = false }) => {
         borderRadius: '8px',
       }}
     >
-      <Grid2 container spacing={3}>
+      <Grid2 container spacing={4}>
         {/* First Name Field */}
         <Grid2 item size={{ xs: 12, md: 6 }}>
           <HookTextField

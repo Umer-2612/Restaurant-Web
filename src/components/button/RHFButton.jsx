@@ -8,7 +8,7 @@ const RHFButton = ({
   title,
   onClick,
   customStyle,
-  color = 'white',
+  color,
   size,
   variant,
   disabled = false,
@@ -27,11 +27,7 @@ const RHFButton = ({
         },
         'borderRadius': 2,
         'transition': 'background 0.3s ease, transform 0.3s ease',
-        '&:hover': {
-          background: 'linear-gradient(135deg, #d32f2f, #ffc04d)', // Inverse gradient on hover
-          transform: 'scale(1.05)', // Adds a slight zoom effect on hover
-        },
-        'background': 'linear-gradient(135deg, #b22222, #ffb84d)',
+
         ...customStyle,
       }}
       {...other}

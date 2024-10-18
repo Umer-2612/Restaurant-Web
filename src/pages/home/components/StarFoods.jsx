@@ -94,7 +94,12 @@ const StarFoods = () => {
     isMenuOpen: false,
   });
   const navigate = useNavigate();
-  const { data } = useGetCategoriesQuery({ page: 1, limit: 6 });
+  const { data } = useGetCategoriesQuery(
+    { page: 1, limit: 6 },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   let storedMenuDetails = [];
   try {

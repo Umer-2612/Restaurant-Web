@@ -44,12 +44,17 @@ const Menu = () => {
     }, 200);
   };
 
-  const { data, isSuccess, isLoading, isFetching } = useGetMenusQuery({
-    search: searchParams.get('search')?.trim() || '',
-    page: page,
-    limit: 20,
-    category: searchParams.get('category') || '',
-  });
+  const { data, isSuccess, isLoading, isFetching } = useGetMenusQuery(
+    {
+      search: searchParams.get('search')?.trim() || '',
+      page: page,
+      limit: 20,
+      category: searchParams.get('category') || '',
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const { data: categoryData } = useGetCategoriesQuery();
 

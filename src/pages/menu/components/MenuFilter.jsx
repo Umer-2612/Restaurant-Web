@@ -8,7 +8,11 @@ import { useSearchParams } from 'react-router-dom';
 const CHIP_STYLE = (theme, searchParams, category) => {
   return {
     'px': 1,
-    'border': `1px solid ${searchParams.get('category') === category.id ? theme.palette.other.border : theme.palette.other.border}`,
+    'border': `1px solid ${
+      searchParams.get('category') === category.id
+        ? theme.palette.other.border
+        : theme.palette.other.border
+    }`,
     'background':
       searchParams.get('category') === category.id
         ? theme.palette.primaryColor[50]
@@ -24,7 +28,7 @@ const CHIP_STYLE = (theme, searchParams, category) => {
     '&:hover': {
       background: theme.palette.primaryColor[50],
       boxShadow:
-        'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px',
+        'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px',
       transform: 'scale(1.02)',
     },
     '&:active': {
@@ -33,17 +37,21 @@ const CHIP_STYLE = (theme, searchParams, category) => {
     'maxWidth': 200,
     'whiteSpace': 'nowrap',
     'textOverflow': 'ellipsis',
-    'overflow': 'hidden', // Make sure overflow is hidden for the ellipsis to work
+    'overflow': 'hidden',
   };
 };
 
 const MenuFilter = ({ categories, onCategoryChange }) => {
   const [searchParams] = useSearchParams();
+
   const handleChipClick = (category) => {
     if (onCategoryChange) {
-      onCategoryChange(category.id);
+      onCategoryChange(category?.id || null);
     }
   };
+
+  const allCategory = { id: 'All', name: 'All' };
+  const updatedCategories = [allCategory, ...categories];
 
   return (
     <Grid size={12}>
@@ -54,7 +62,7 @@ const MenuFilter = ({ categories, onCategoryChange }) => {
         gap={2}
         width="100%"
       >
-        {categories.map((category) => (
+        {updatedCategories?.map((category) => (
           <Chip
             key={category?.id}
             label={
@@ -63,7 +71,8 @@ const MenuFilter = ({ categories, onCategoryChange }) => {
               </Typography>
             }
             color={
-              searchParams.get('category') === category.id
+              searchParams.get('category') === category.id ||
+              (!searchParams.get('category') && category.id === 'All')
                 ? 'primary'
                 : 'default'
             }

@@ -10,8 +10,14 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
-import Paper from '@mui/material/Paper';
+// import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import { loadStripe } from '@stripe/stripe-js';
 import { useForm } from 'react-hook-form';
@@ -25,7 +31,7 @@ import EmptyCartImage from 'assets/images/barbecue.svg';
 import RHFButton from 'components/button/RHFButton';
 import { useCreateCheckoutSessionMutation } from 'store/apis/checkoutApi';
 import { cartSelector, modifyCartDetails } from 'store/slices/cart';
-import { validationSchema } from 'utils/validation'; // Your custom validation rules
+import { validationSchema } from 'utils/validation';
 
 // Validation schema
 const CUSTOM_FORM_VALIDATION = Yup.object().shape({
@@ -81,10 +87,10 @@ const Cart = () => {
     dispatch(modifyCartDetails(updatedItems));
   };
 
-  const totalQuantity = cartItems.reduce(
-    (total, item) => total + item.quantity,
-    0
-  );
+  // const totalQuantity = cartItems.reduce(
+  //   (total, item) => total + item.quantity,
+  //   0
+  // );
   const totalPrice = cartItems.reduce(
     (total, item) => total + item?.price * item.quantity,
     0
@@ -121,21 +127,11 @@ const Cart = () => {
   });
 
   return (
-    <Stack
-      sx={{ bgcolor: (theme) => theme.palette.other.bgColor }}
-      height="100%"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Stack alignItems="center" justifyContent="center" my={15}>
       <Container sx={{ mt: 4, mb: 4 }}>
         {cartItems.length === 0 ? (
           <Box sx={{ textAlign: 'center' }}>
-            <EmptyCartImage
-              style={{
-                width: '250px',
-                height: '350px',
-              }}
-            />
+            <EmptyCartImage style={{ width: '250px', height: '350px' }} />
             <Typography variant="h6" sx={{ mb: 2, color: '#666' }}>
               Your cart is empty!
             </Typography>
@@ -156,11 +152,13 @@ const Cart = () => {
             container
             spacing={6}
           >
-            <Grid item size={{ xs: 12, md: 7 }}>
+            <Grid item size={{ xs: 12, md: 5 }}>
               <Card
                 elevation={0}
                 sx={{
                   p: 6,
+
+                  boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
                 }}
               >
                 <Typography
@@ -169,7 +167,7 @@ const Cart = () => {
                 >
                   Enter Your Details
                 </Typography>
-                <Divider sx={{ mb: 3 }} />
+                <Divider sx={{ mb: 4 }} />
                 <CustomForm
                   handleCheckout={handleCheckout}
                   control={control}
@@ -178,128 +176,139 @@ const Cart = () => {
                 />
               </Card>
             </Grid>
-            <Grid item size={{ xs: 12, md: 5 }}>
+            <Grid item size={{ xs: 12, md: 7 }}>
               <Stack gap={3}>
-                <Stack bgcolor={(theme) => theme.palette.background.paper}>
-                  <Card
-                    elevation={0}
-                    sx={{
-                      px: 6,
-                      pt: 6,
-                    }}
+                <Card
+                  elevation={0}
+                  sx={{
+                    p: 6,
+                    boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
+                  }}
+                >
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontWeight: 'bold', mb: 2 }}
                   >
-                    <Typography
-                      variant="subtitle2"
-                      sx={{ fontWeight: 'bold', mb: 2 }}
+                    Order Summary
+                  </Typography>
+                  <Divider sx={{ mb: 2 }} />
+
+                  <Stack>
+                    <TableContainer
+                      sx={{
+                        maxHeight: '300px',
+                        overflowY: 'auto',
+                      }}
                     >
-                      Your Cart Items
-                    </Typography>
-                    <Divider sx={{ mb: 2 }} />
-                    <Stack
-                      gap={2}
-                      sx={{ maxHeight: '400px', overflowY: 'auto' }}
-                    >
-                      {cartItems.map((item) => (
-                        <Paper
-                          key={item.menuId}
-                          elevation={0}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            borderRadius: '10px',
-                            transition: '0.3s',
-                            gap: 2,
-                          }}
+                      <Table stickyHeader>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Name</TableCell>
+                            <TableCell align="center">Quantity</TableCell>
+                            <TableCell align="right">Price</TableCell>
+                            <TableCell align="right">Total</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {cartItems.map((item) => (
+                            <TableRow key={item.menuId}>
+                              <TableCell component="th" scope="row">
+                                {item.name}
+                              </TableCell>
+                              <TableCell align="center">
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                  }}
+                                >
+                                  <IconButton
+                                    onClick={() =>
+                                      updateQuantity(item?.menuId, false)
+                                    }
+                                  >
+                                    <RemoveIcon
+                                      sx={{
+                                        color: (theme) =>
+                                          theme.palette.success.main,
+                                      }}
+                                    />
+                                  </IconButton>
+                                  <Typography
+                                    variant="body1"
+                                    color="success.main"
+                                    fontWeight={600}
+                                  >
+                                    {item?.quantity}
+                                  </Typography>
+                                  <IconButton
+                                    onClick={() =>
+                                      updateQuantity(item?.menuId, true)
+                                    }
+                                  >
+                                    <AddIcon
+                                      sx={{
+                                        color: (theme) =>
+                                          theme.palette.success.main,
+                                      }}
+                                    />
+                                  </IconButton>
+                                </Box>
+                              </TableCell>
+                              <TableCell align="right">
+                                ${item.price.toFixed(2)}
+                              </TableCell>
+                              <TableCell align="right">
+                                ${(item.price * item.quantity).toFixed(2)}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+
+                    <Box sx={{ mt: 2, p: 2 }}>
+                      {/* <Stack direction="row" justifyContent="space-between">
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontSize: '14px' }}
                         >
-                          <Stack minWidth="55%" overflow="hidden">
-                            <Typography
-                              variant="body1"
-                              sx={{ fontWeight: 600 }}
-                              color="text.primary"
-                            >
-                              {item?.name}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                              {item?.categoryName}
-                            </Typography>
-                          </Stack>
-                          <Box
-                            sx={{
-                              boxShadow:
-                                'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px',
-                              borderRadius: 1,
-                              display: 'flex',
-                              alignItems: 'center',
-                            }}
-                          >
-                            <IconButton
-                              onClick={() =>
-                                updateQuantity(item?.menuId, false)
-                              }
-                            >
-                              <RemoveIcon
-                                sx={{
-                                  color: (theme) => theme.palette.success.main,
-                                }}
-                              />
-                            </IconButton>
-                            <Typography
-                              variant="body1"
-                              color="success.main"
-                              fontWeight={600}
-                            >
-                              {item?.quantity}
-                            </Typography>
-                            <IconButton
-                              onClick={() => updateQuantity(item?.menuId, true)}
-                            >
-                              <AddIcon
-                                sx={{
-                                  color: (theme) => theme.palette.success.main,
-                                }}
-                              />
-                            </IconButton>
-                          </Box>
-                          <Stack
-                            sx={{
-                              flexGrow: 1,
-                              justifyContent: 'center',
-                              alignItems: 'end',
-                              mr: 1,
-                            }}
-                          >
-                            <Typography variant="body3">
-                              ${(item?.price * item.quantity).toFixed(2)}
-                            </Typography>
-                          </Stack>
-                        </Paper>
-                      ))}
-                    </Stack>
-                  </Card>
-                  <Stack px={4} py={2} pb={4}>
-                    <Stack
-                      direction="row"
-                      justifyContent="space-between"
-                      bgcolor={(theme) => theme.palette.other.bgColor}
-                      p={2}
-                    >
-                      <Typography variant="body1">
-                        Total Items: <strong>{totalQuantity}</strong>
-                      </Typography>
-                      <Typography variant="body1">
-                        Total Price:{' '}
-                        <strong style={{ color: '#ff5722' }}>
-                          ${totalPrice?.toFixed(2)}
-                        </strong>
-                      </Typography>
-                    </Stack>
+                          Total Items:
+                        </Typography>
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ fontSize: '14px' }}
+                        >
+                          {totalQuantity}
+                        </Typography>
+                      </Stack> */}
+                      <Stack
+                        direction="row"
+                        justifyContent="space-between"
+                        sx={{ mt: 1 }}
+                      >
+                        <Typography
+                          variant="subtitle2"
+                          fontWeight={'bold'}
+                          // sx={{ fontSize: '14px' }}
+                        >
+                          Total Price:
+                        </Typography>
+                        <Typography variant="subtitle2" fontWeight={'bold'}>
+                          ${totalPrice.toFixed(2)}
+                        </Typography>
+                      </Stack>
+                    </Box>
                   </Stack>
-                </Stack>
+                </Card>
                 <RHFButton
                   isLoading={isLoading}
                   type="submit"
-                  title="Proceed to Payment"
+                  onClick={handleSubmit}
+                  title={'Proceed To Payment'}
+                  variant={'contained'}
+                  // startIcon={<Iconify icon="material-symbols:lock-outline" />}
                 />
               </Stack>
             </Grid>
