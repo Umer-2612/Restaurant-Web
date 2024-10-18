@@ -16,7 +16,7 @@ import Typography from '@mui/material/Typography';
 import { loadStripe } from '@stripe/stripe-js';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import CustomForm from './CustomForm';
@@ -43,6 +43,19 @@ const Cart = () => {
     useCreateCheckoutSessionMutation();
   const dispatch = useDispatch();
   const cartItems = useSelector(cartSelector) || [];
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get('status') && searchParams.get('orderId')) {
+      if (searchParams.get('status') === 'success') {
+        localStorage.clear('menuDetails');
+        dispatch(modifyCartDetails([]));
+      }
+      navigate(
+        `/feedback?status=${searchParams.get('status')}&orderId=${searchParams.get('orderId')}`
+      );
+    }
+  }, [dispatch, navigate, searchParams]);
 
   useEffect(() => {
     const storedCartItems =

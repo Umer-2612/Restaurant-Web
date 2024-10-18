@@ -37,6 +37,7 @@ const OrderList = () => {
     },
     {
       refetchOnMountOrArgChange: true,
+      pollingInterval: 20000,
     }
   );
   const orderData = data?.data;

@@ -2,11 +2,22 @@ import React from 'react';
 
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { Box, Typography, Button, Card, CardContent } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Stack,
+} from '@mui/material';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-const FeedbackPage = ({ status }) => {
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+const FeedbackPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get('status');
+  // const orderId = searchParams.get('orderId');
   return (
     <Box
       display="flex"
@@ -30,13 +41,18 @@ const FeedbackPage = ({ status }) => {
       >
         <CardContent>
           {status === 'success' ? (
-            <Box>
-              <CheckCircleOutlineIcon sx={{ fontSize: 80, color: '#ff6d00' }} />
-              <Typography variant="h5" component="div" sx={{ mt: 2 }}>
+            <Stack gap={4} justifyContent="center" alignItems="center">
+              <CheckCircleOutlineIcon
+                sx={{
+                  fontSize: 80,
+                  color: (theme) => theme.palette.success.main,
+                }}
+              />
+              <Typography variant="h3" component="div">
                 Thank you for ordering!
               </Typography>
-              <Typography color="text.secondary" sx={{ mb: 4 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              <Typography variant="body2" component="div">
+                You will get a call when your order is ready!
               </Typography>
 
               <Button
@@ -47,9 +63,9 @@ const FeedbackPage = ({ status }) => {
               >
                 Continue browsing
               </Button>
-            </Box>
+            </Stack>
           ) : (
-            <Box>
+            <Stack gap={4} justifyContent="center" alignItems="center">
               <ErrorOutlineIcon sx={{ fontSize: 80, color: 'red' }} />
               <Typography variant="h5" component="div" sx={{ mt: 2 }}>
                 Something went wrong!
@@ -57,22 +73,24 @@ const FeedbackPage = ({ status }) => {
               <Typography color="text.secondary" sx={{ mb: 4 }}>
                 Please try again later or contact support.
               </Typography>
-              <Button
-                variant="outlined"
-                sx={{ mr: 2, borderRadius: 2 }}
-                onClick={() => navigate('/cart')}
-              >
-                Retry
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ borderRadius: 2 }}
-                onClick={() => navigate('/contact-us')}
-              >
-                Contact Support
-              </Button>
-            </Box>
+              <Stack direction="row" gap={2}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{ borderRadius: 2 }}
+                  onClick={() => navigate('/contact-us')}
+                >
+                  Contact Support
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{ mr: 2, borderRadius: 2 }}
+                  onClick={() => navigate('/cart')}
+                >
+                  Retry
+                </Button>
+              </Stack>
+            </Stack>
           )}
         </CardContent>
       </Card>

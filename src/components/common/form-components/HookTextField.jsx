@@ -69,12 +69,18 @@ export default function HookTextField(props) {
   const { field, fieldState, formState } = useController(props);
   const [count, setCount] = useState(field.value ? field.value.length : 0);
 
-  const { isNoOfQuestion, showCount, ...textFieldProps } = props;
+  const { isNoOfQuestion, showCount, isPhoneNumber, ...textFieldProps } = props;
 
   const handleChange = (event) => {
     const { value } = event.target;
 
-    if (isNoOfQuestion) {
+    if (isPhoneNumber) {
+      // Check if the input matches the desired pattern
+      if (/^\d*$/.test(value) && value.length <= 10) {
+        field.onChange(event);
+        setCount(field.length);
+      }
+    } else if (isNoOfQuestion) {
       // Check if the input matches the desired pattern
       if (/^\d*$/.test(value) && value.length <= 2) {
         field.onChange(event);
@@ -132,4 +138,5 @@ HookTextField.propTypes = {
   inputProps: PropTypes.object,
   showCount: PropTypes.bool,
   isNoOfQuestion: PropTypes.bool,
+  isPhoneNumber: PropTypes.bool,
 };

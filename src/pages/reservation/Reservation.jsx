@@ -60,12 +60,12 @@ const Reservation = () => {
       </Banner>
       {/* New Reservation Section */}
       <Container>
-        <Stack gap={8} mt={8}>
+        <Stack gap={8}>
           <Stack
             gap={3}
             sx={{
               textAlign: 'center',
-              p: 4,
+              p: 6,
               background: (theme) =>
                 `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
               borderRadius: 6,

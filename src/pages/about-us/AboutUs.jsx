@@ -83,7 +83,7 @@ const AboutUs = () => {
           gap={3}
           color="text.primary"
           sx={{
-            p: 4,
+            p: 6,
             background: (theme) =>
               `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
             borderRadius: 6,
@@ -174,7 +174,7 @@ const AboutUs = () => {
           gap={3}
           color="text.primary"
           sx={{
-            p: 4,
+            p: 6,
             background: (theme) =>
               `linear-gradient(135deg, ${theme.palette.primaryColor[50]}, ${theme.palette.sectionBackground.main})`,
             borderRadius: 6,
