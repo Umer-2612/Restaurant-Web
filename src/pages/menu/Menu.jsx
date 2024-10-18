@@ -100,13 +100,22 @@ const Menu = () => {
   }, [data?.data, isSuccess, page, storedMenuDetails]);
 
   useEffect(() => {
+    let isFetching = false;
+
     const fetchMoreData = () => {
       if (
         window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight - 1 &&
-        hasMore
+          document.documentElement.scrollHeight - 800 &&
+        hasMore &&
+        !isFetching
       ) {
+        isFetching = true;
         setPage((prevPage) => prevPage + 1);
+
+        // To avoid multiple calls, reset the flag after a delay (adjust if necessary)
+        setTimeout(() => {
+          isFetching = false;
+        }, 500); // Delay before allowing the next call (500ms here)
       }
     };
 
