@@ -5,6 +5,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import MenuFilter from './components/MenuFilter';
@@ -16,6 +17,7 @@ import {
 } from 'components/common/CommonComponents';
 import { useGetCategoriesQuery } from 'store/apis/categories';
 import { useGetMenusQuery } from 'store/apis/menu';
+import { cartSelector } from 'store/slices/cart';
 
 const Menu = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,14 +30,7 @@ const Menu = () => {
   // Append new data on infinite scroll
   const [menuItems, setMenuItems] = useState([]);
   const [isCategoryChanged, setIsCategoryChanged] = useState(false);
-  const [storedMenuDetails, setStoredMenuDetails] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('menuDetails')) || [];
-    } catch (error) {
-      console.error('Error parsing localStorage data:', error);
-      return [];
-    }
-  });
+  const storedMenuDetails = useSelector(cartSelector);
   const containerRef = useRef();
 
   const handleMenuModalOpen = ({ menu }) => {
@@ -47,14 +42,6 @@ const Menu = () => {
     setTimeout(() => {
       setMenuProps({ menuDetails: null, isMenuOpen: false });
     }, 200);
-    setStoredMenuDetails(() => {
-      try {
-        return JSON.parse(localStorage.getItem('menuDetails')) || [];
-      } catch (error) {
-        console.error('Error parsing localStorage data:', error);
-        return [];
-      }
-    });
   };
 
   const { data, isSuccess, isLoading, isFetching } = useGetMenusQuery({
@@ -100,13 +87,22 @@ const Menu = () => {
   }, [data?.data, isSuccess, page, storedMenuDetails]);
 
   useEffect(() => {
+    let isFetching = false;
+
     const fetchMoreData = () => {
       if (
         window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight - 1 &&
-        hasMore
+          document.documentElement.scrollHeight - 800 &&
+        hasMore &&
+        !isFetching
       ) {
+        isFetching = true;
         setPage((prevPage) => prevPage + 1);
+
+        // To avoid multiple calls, reset the flag after a delay (adjust if necessary)
+        setTimeout(() => {
+          isFetching = false;
+        }, 500); // Delay before allowing the next call (500ms here)
       }
     };
 
