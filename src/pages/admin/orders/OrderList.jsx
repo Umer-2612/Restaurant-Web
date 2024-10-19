@@ -70,13 +70,11 @@ const OrderList = () => {
     },
     {
       id: 'createdAt',
-      title: 'Contact Date',
+      title: 'Order Date',
       formatter: ({ row }) => {
         return (
           <Typography variant="body1">
-            {dayjs(row?.customerDetails?.orderedAt).format(
-              'ddd, MMM DD - hh:mm A'
-            )}
+            {dayjs(row?.createdAt).format('ddd, MMM DD - hh:mm A')}
           </Typography>
         );
       },
