@@ -63,7 +63,7 @@ const QueryList = () => {
       title: 'Message',
     },
     {
-      id: 'Contact Number',
+      id: 'phoneNo',
       title: 'Contact Number',
     },
     {

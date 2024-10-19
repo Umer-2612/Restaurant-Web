@@ -1,6 +1,8 @@
 import React from 'react';
 
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
@@ -12,7 +14,7 @@ import './../index.css';
 const CartDetailsModal = ({ menuProps, handleMenuModalClose }) => {
   // Function to handle printing the order details
   const cartDetails = menuProps?.cartDetails?.cart;
-  console.log(cartDetails);
+
   const handlePrint = () => {
     const newWindow = window.open();
     newWindow.document.write(`
@@ -191,16 +193,22 @@ const CartDetailsModal = ({ menuProps, handleMenuModalClose }) => {
                 boxShadow: '0 1px 4px rgba(0, 0, 0, 0.1)',
               }}
             >
-              <img
-                src={item?.itemImagePath}
-                alt={item?.itemName}
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: '8px',
-                  objectFit: 'cover',
-                }}
-              />
+              {item?.itemImagePath ? (
+                <img
+                  src={item?.itemImagePath}
+                  alt={item?.itemName}
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '8px',
+                    objectFit: 'cover',
+                  }}
+                />
+              ) : (
+                <Avatar sx={{ width: 60, height: 60, borderRadius: '8px' }}>
+                  {item?.itemName?.charAt(0).toUpperCase() || 'A'}
+                </Avatar>
+              )}
               <Stack>
                 <strong>{item?.itemName}</strong>
                 <span>Quantity: {quantity}</span>
@@ -211,9 +219,28 @@ const CartDetailsModal = ({ menuProps, handleMenuModalClose }) => {
         <Stack alignItems="end">
           <Stack direction="row" alignItems="center" gap={1}>
             <Typography variant="body2">Payment Status:</Typography>
-            <Typography variant="subtitle2">
+            {/* <Typography variant="subtitle2">
               {menuProps?.cartDetails?.status}
-            </Typography>
+            </Typography> */}
+            <Chip
+              label={
+                <Stack
+                  flexDirection="row"
+                  alignItems="center"
+                  gap={1}
+                  color="#FE4040"
+                >
+                  <Typography variant="subtitle2">
+                    {menuProps?.cartDetails?.status}
+                  </Typography>
+                </Stack>
+              }
+              sx={{
+                backgroundColor: '#FEEAEA',
+                cursor: 'pointer',
+                borderRadius: 2,
+              }}
+            />
           </Stack>
         </Stack>
       </Stack>

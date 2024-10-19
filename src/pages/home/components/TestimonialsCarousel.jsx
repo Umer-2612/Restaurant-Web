@@ -11,23 +11,53 @@ import './TestimonialsCarousel.css'; // Additional custom styles if necessary
 const testimonials = [
   {
     id: 1,
-    text: "Amazing amazing amazing taste, superb ambience. I never spend my money on veg buffet but this time I opted for this one and felt happy. It's very pocket friendly as well. Very good service. From pani puri to soups to starters to main course till sweets everything was super tasty. Will visit this place as many times as I visit Surat. Keep it up.",
-    name: 'John Doe',
+    text: "Had an amazing meal at Punjabi Touch! The food was incredibly delicious, some of the best I've ever had. The staff were super friendly and made us feel right at home. The place was spotless, and you could tell they really care about their customers. Highly recommend if you're craving authentic Indian food…🕊️",
+    name: 'Sukhman Waraich',
   },
   {
     id: 2,
-    text: 'This is the second testimonial and I loved everything about the service. The food was beyond amazing, and the staff were incredibly helpful!',
-    name: 'Jane Smith',
+    text: 'Delicious Lamb Madras curry! Meat was tender and perfect. The meat samosas had a great flavour too. All tasted freshly cooked. Great portions. I asked for a big glass of ice and was not disappointed. Friendly service. I wll be back, Thanks',
+    name: 'James',
   },
   {
     id: 3,
-    text: "I usually don't leave reviews but I was truly impressed by how organized and delightful the restaurant's experience was!I usually don't leave reviews but I was truly impressed by how organized and delightful the restaurant's experience was!I usually don't leave reviews but I was truly impressed.",
-    name: 'Samuel Jackson',
+    text: 'Presentation, service and food was very delicious and tasty, everything was in a perfect way, really feels like home and taste as well ♥️♥️♥️. Will visit again!!!',
+    name: 'Navanjeet Kaur',
   },
   {
     id: 4,
-    text: "A hidden gem in Surat! The food is on another level, and I can't recommend it enough. The best dining experience I've had in a long time.I usually don't leave reviews but I was truly impressed by how organized and delightful the restaurant's experience was!",
-    name: 'Emily White',
+    text: "Had an amazing meal at Punjabi Touch! The food was incredibly delicious, some of the best I've ever had. The staff were super friendly and made us feel right at home. The place was spotless, and you could tell they really care about their customers. Highly recommend if you're craving authentic Indian food…🕊️",
+    name: 'Foodista',
+  },
+  {
+    id: 5,
+    text: 'Punjabi touch is an absolute gem of an Indian restaurant! From the moment we stepped inside, we were greeted with warmth and hospitality that set the tone for a fantastic dining experience. The ambiance is inviting, with vibrant decor. Now, lets talk about the food simply divine! Each dish bursts with authentic flavors and spices that transport your taste buds straight to India. The service was impeccable, with attentive staff who went above and beyond to ensure your satisfaction.',
+    name: 'Gurpreet Kaur',
+  },
+  {
+    id: 6,
+    text: 'Superb and authentic food. Taste is just superb. Loved it. They serve all the cuisine Veg and Non veg with amazing menu ,Service is also top notch.Highly recommend when in Brisbane .Keep Shining always #Punjabi Touch ..🔥🔥🤗❤️',
+    name: 'Manpreet Kaur',
+  },
+  {
+    id: 7,
+    text: 'Delicious curries, we had a lamb madras, butter chicken and a Dahl makhani. All were rich in flavour with whole spices and tender meat. We will be regulars, bonus that they deliver! Highly recommend.',
+    name: 'Lucy Schmidt',
+  },
+  {
+    id: 8,
+    text: 'Food was extremely delicious as well as surroundings is serene😇.. Moreover staff is friendly and deal with customers in a good way🤟',
+    name: 'renuka garg',
+  },
+  {
+    id: 9,
+    text: 'Looking for indian take away, this place is where you must go. The best indian take away in Brisbane that I have experience in YEARS. The dishes may not be traditional and may not be cooked in a traditional way. But the food itself is absolutely delicious. Try this place just once and I promise you, you wont regret it',
+    name: 'Bethany Rogers',
+  },
+  {
+    id: 10,
+    text: 'Punjabi touch restaurant provided a delightful dining experience with its authentic flavours and impeccable service. The ambiance was elegant, and the staff was knowledgeable and attentive. The extensive menu showcased a wide variety of dishes, each prepared with care and expertise. Overall, a highly recommended establishment for those seeking an exceptional Indian culinary experience."',
+    name: 'GURJIT SINGH',
   },
 ];
 

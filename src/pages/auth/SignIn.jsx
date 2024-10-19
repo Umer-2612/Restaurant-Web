@@ -56,8 +56,7 @@ const SignIn = () => {
     try {
       const response = await signInGet(body);
 
-      // Assuming your API sends back a success response that you can check
-      if (response.success) {
+      if (response?.success) {
         toast.success('Sign-in successful.');
       } else {
         toast.error(

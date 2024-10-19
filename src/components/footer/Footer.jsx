@@ -131,21 +131,19 @@ const Footer = () => {
                 Catering Booking
               </Typography>
               <RHFButton
-                variant="text"
+                variant={'contained'}
                 title="Book Your Event"
                 onClick={() => navigate('/reservation')}
                 size="medium"
-                color="white"
               />
               <Typography variant="subtitle2" fontWeight={600}>
                 Make a Reservation
               </Typography>
               <RHFButton
-                variant="text"
+                variant={'contained'}
                 title="Book Online"
                 onClick={() => navigate('/menu')}
                 size="medium"
-                color="white"
               />
             </Stack>
             {/* Google Map */}

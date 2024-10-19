@@ -10,7 +10,6 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
-// import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -58,7 +57,7 @@ const Cart = () => {
         dispatch(modifyCartDetails([]));
       }
       navigate(
-        `/feedback?status=${searchParams.get('status')}&orderId=${searchParams.get('orderId')}`
+        `/orderStatus?status=${searchParams.get('status')}&orderId=${searchParams.get('orderId')}`
       );
     }
   }, [dispatch, navigate, searchParams]);
@@ -101,17 +100,17 @@ const Cart = () => {
 
     const payload = {
       user: {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        phoneNo: formData.phoneNo,
-        email: formData.email,
+        firstName: formData?.firstName,
+        lastName: formData?.lastName,
+        phoneNo: formData?.phoneNo,
+        email: formData?.email,
       },
       items: cartItems.map((item) => ({
-        menuId: item.menuId,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        imagePath: item.imagePath,
+        menuId: item?.menuId,
+        name: item?.name,
+        price: item?.price,
+        quantity: item?.quantity,
+        imagePath: item?.imagePath,
       })),
       totalPrice: totalPrice,
     };
@@ -211,9 +210,9 @@ const Cart = () => {
                         </TableHead>
                         <TableBody>
                           {cartItems.map((item) => (
-                            <TableRow key={item.menuId}>
+                            <TableRow key={item?.menuId}>
                               <TableCell component="th" scope="row">
-                                {item.name}
+                                {item?.name}
                               </TableCell>
                               <TableCell align="center">
                                 <Box
@@ -257,10 +256,10 @@ const Cart = () => {
                                 </Box>
                               </TableCell>
                               <TableCell align="right">
-                                ${item.price.toFixed(2)}
+                                ${item?.price?.toFixed(2)}
                               </TableCell>
                               <TableCell align="right">
-                                ${(item.price * item.quantity).toFixed(2)}
+                                ${(item?.price * item?.quantity).toFixed(2)}
                               </TableCell>
                             </TableRow>
                           ))}
@@ -269,34 +268,16 @@ const Cart = () => {
                     </TableContainer>
 
                     <Box sx={{ mt: 2, p: 2 }}>
-                      {/* <Stack direction="row" justifyContent="space-between">
-                        <Typography
-                          variant="subtitle1"
-                          sx={{ fontSize: '14px' }}
-                        >
-                          Total Items:
-                        </Typography>
-                        <Typography
-                          variant="subtitle1"
-                          sx={{ fontSize: '14px' }}
-                        >
-                          {totalQuantity}
-                        </Typography>
-                      </Stack> */}
                       <Stack
                         direction="row"
                         justifyContent="space-between"
                         sx={{ mt: 1 }}
                       >
-                        <Typography
-                          variant="subtitle2"
-                          fontWeight={'bold'}
-                          // sx={{ fontSize: '14px' }}
-                        >
+                        <Typography variant="subtitle2" fontWeight={'bold'}>
                           Total Price:
                         </Typography>
                         <Typography variant="subtitle2" fontWeight={'bold'}>
-                          ${totalPrice.toFixed(2)}
+                          ${totalPrice?.toFixed(2)}
                         </Typography>
                       </Stack>
                     </Box>
@@ -308,7 +289,6 @@ const Cart = () => {
                   onClick={handleSubmit}
                   title={'Proceed To Payment'}
                   variant={'contained'}
-                  // startIcon={<Iconify icon="material-symbols:lock-outline" />}
                 />
               </Stack>
             </Grid>
