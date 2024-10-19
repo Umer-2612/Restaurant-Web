@@ -47,7 +47,7 @@ const HeroSection = () => {
           bgcolor: 'rgba(0, 0, 0, 0.6)',
           justifyContent: 'center',
           alignItems: 'center',
-          px: { xs: 3, sm: 5, md: 10, lg: 16 },
+          px: { xs: 2, sm: 5, md: 10, lg: 16 },
           color: (theme) => theme.palette.common.white,
         }}
       >
@@ -58,7 +58,7 @@ const HeroSection = () => {
             variant="h1"
             textAlign="center"
             sx={{
-              fontSize: { xs: pxToRem(40), sm: pxToRem(50), md: pxToRem(72) },
+              fontSize: { xs: pxToRem(24), sm: pxToRem(50), md: pxToRem(72) },
               lineHeight: 1,
             }}
           >
@@ -81,7 +81,22 @@ const HeroSection = () => {
               sx={{ width: { xs: '95%', sm: '90%', md: 500 }, gap: 2 }}
             >
               {/* Description Text */}
-              <Typography variant="subtitle2" textAlign="justify">
+              <Typography
+                variant="subtitle2"
+                textAlign="justify"
+                sx={{
+                  fontSize: {
+                    xs: pxToRem(14),
+                    sm: pxToRem(16),
+                    md: pxToRem(18),
+                  },
+                  lineHeight: {
+                    xs: pxToRem(20),
+                    sm: pxToRem(24),
+                    md: pxToRem(27),
+                  },
+                }}
+              >
                 Bring the lover of your life here and romanticize your date with
                 our lip-smacking foods. Book your table now in advance to get
                 rid of any hassle or order online.

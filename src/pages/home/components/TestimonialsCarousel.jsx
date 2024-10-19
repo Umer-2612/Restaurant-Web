@@ -65,7 +65,7 @@ const TestimonialsCarousel = () => {
   const showArrows = testimonials.length > 1;
 
   return (
-    <Container sx={{ my: 4, padding: '50px' }}>
+    <Container sx={{ my: 4, padding: { xs: 0, md: '50px' } }}>
       <Carousel
         infiniteLoop
         showStatus={false}
@@ -74,7 +74,7 @@ const TestimonialsCarousel = () => {
         interval={3000}
         stopOnHover
         swipeable
-        dynamicHeight={false}
+        dynamicHeight={true}
         showThumbs={false}
         emulateTouch
         renderArrowPrev={(onClickHandler) =>
@@ -101,6 +101,7 @@ const TestimonialsCarousel = () => {
                 right: '10px',
                 top: '50%',
                 zIndex: 2,
+                transform: 'translate(0, -50%)',
               }}
             >
               <ArrowForwardIosIcon
@@ -129,9 +130,9 @@ const TestimonialsCarousel = () => {
             }}
           >
             <Typography
-              variant="body1"
+              variant="subtitle1"
               sx={{
-                fontSize: '27px',
+                fontSize: { xs: '18px', md: '27px' },
                 lineHeight: '1.8',
                 fontStyle: 'italic',
                 color: (theme) => theme.palette.other.carouselText,

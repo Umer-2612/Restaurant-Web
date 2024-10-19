@@ -122,8 +122,10 @@ const MobileMenu = ({
         <MenuItem
           key={tab?.title}
           onClick={() => {
-            navigate(tab?.path);
             handleCloseNavMenu();
+            setTimeout(() => {
+              navigate(tab?.path);
+            }, 50);
           }}
         >
           <Typography

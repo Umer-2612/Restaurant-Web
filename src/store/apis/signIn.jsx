@@ -25,9 +25,6 @@ const extendedApi = createApiInstance.injectEndpoints({
           body: query,
         };
       },
-      transformResponse: (res) => {
-        return res.data;
-      },
     }),
     getUserInfo: build.query({
       query: () => '/user/info',

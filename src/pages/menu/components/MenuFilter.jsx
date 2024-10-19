@@ -9,22 +9,29 @@ const CHIP_STYLE = (theme, searchParams, category) => {
   return {
     'px': 1,
     'border': `1px solid ${
-      searchParams.get('category') === category.id
+      searchParams.get('category') === category?.id ||
+      (!searchParams.get('category') && category?.name === 'All')
         ? theme.palette.other.border
         : theme.palette.other.border
     }`,
     'background':
-      searchParams.get('category') === category.id
+      searchParams.get('category') === category?.id ||
+      (!searchParams.get('category') && category?.name === 'All')
         ? theme.palette.primaryColor[50]
         : theme.palette.other.bgColor,
     'color':
-      searchParams.get('category') === category.id
-        ? theme.palette.primary.main
+      searchParams.get('category') === category?.id ||
+      (!searchParams.get('category') && category?.name === 'All')
+        ? // searchParams.get('category') === category.id
+          theme.palette.primary.main
         : theme.palette.text.primary,
     'transition': 'all 0.2s ease-in-out',
     'borderRadius': 2,
     'transform':
-      searchParams.get('category') === category.id ? 'scale(1.02)' : 'scale(1)',
+      searchParams.get('category') === category?.id ||
+      (!searchParams.get('category') && category?.name === 'All')
+        ? 'scale(1.02)'
+        : 'scale(1)',
     '&:hover': {
       background: theme.palette.primaryColor[50],
       boxShadow:
@@ -70,14 +77,8 @@ const MenuFilter = ({ categories, onCategoryChange }) => {
                 {category?.name}
               </Typography>
             }
-            color={
-              searchParams.get('category') === category.id ||
-              (!searchParams.get('category') && category.id === 'All')
-                ? 'primary'
-                : 'default'
-            }
-            clickable
             sx={(theme) => CHIP_STYLE(theme, searchParams, category)}
+            clickable
             onClick={() => handleChipClick(category)}
           />
         ))}

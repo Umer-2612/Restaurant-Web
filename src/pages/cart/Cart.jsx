@@ -5,9 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
 import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid2';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
@@ -152,45 +150,36 @@ const Cart = () => {
             spacing={6}
           >
             <Grid item size={{ xs: 12, md: 5 }}>
-              <Card
-                elevation={0}
-                sx={{
-                  p: 6,
-
-                  boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
-                }}
+              <Stack
+                bgcolor={(theme) => theme.palette.other.bgColor}
+                p={4}
+                borderRadius={3}
+                gap={4}
               >
-                <Typography
-                  variant="subtitle2"
-                  sx={{ fontWeight: 'bold', mb: 2 }}
-                >
-                  Enter Your Details
-                </Typography>
-                <Divider sx={{ mb: 4 }} />
+                <Stack px={1}>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
+                    Enter Your Details
+                  </Typography>
+                </Stack>
                 <CustomForm
                   handleCheckout={handleCheckout}
                   control={control}
                   handleSubmit={handleSubmit}
                   isLoading={isLoading}
                 />
-              </Card>
+              </Stack>
             </Grid>
             <Grid item size={{ xs: 12, md: 7 }}>
               <Stack gap={3}>
-                <Card
-                  elevation={0}
-                  sx={{
-                    p: 6,
-                    boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.15)',
-                  }}
+                <Stack
+                  bgcolor={(theme) => theme.palette.other.bgColor}
+                  p={4}
+                  borderRadius={3}
+                  gap={4}
                 >
-                  <Typography
-                    variant="subtitle2"
-                    sx={{ fontWeight: 'bold', mb: 2 }}
-                  >
+                  <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
                     Order Summary
                   </Typography>
-                  <Divider sx={{ mb: 2 }} />
 
                   <Stack>
                     <TableContainer
@@ -202,10 +191,27 @@ const Cart = () => {
                       <Table stickyHeader>
                         <TableHead>
                           <TableRow>
-                            <TableCell>Name</TableCell>
+                            <TableCell
+                              sx={{
+                                borderTopLeftRadius: 12,
+                                borderBottomLeftRadius: 12,
+                                height: 56,
+                              }}
+                            >
+                              Name
+                            </TableCell>
                             <TableCell align="center">Quantity</TableCell>
                             <TableCell align="right">Price</TableCell>
-                            <TableCell align="right">Total</TableCell>
+                            <TableCell
+                              sx={{
+                                borderTopRightRadius: 12,
+                                borderBottomRightRadius: 12,
+                                height: 56,
+                              }}
+                              align="right"
+                            >
+                              Total
+                            </TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -282,7 +288,7 @@ const Cart = () => {
                       </Stack>
                     </Box>
                   </Stack>
-                </Card>
+                </Stack>
                 <RHFButton
                   isLoading={isLoading}
                   type="submit"
