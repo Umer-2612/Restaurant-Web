@@ -31,17 +31,20 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
       >
         <Box
           sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 1,
+            'position': 'absolute',
+            'top': 0,
+            'left': 0,
+            'right': 0,
+            'bottom': 0,
+            'backgroundColor': 'rgba(0, 0, 0, 0.2)',
+            '&: hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0)',
+            },
+            'zIndex': 1,
           }}
         />
         <img
-          src={menu?.itemImagePath ? menu?.itemImagePath : classsicCurries}
+          src={menu?.imagePath ? menu?.imagePath : classsicCurries}
           // src={classsicCurries}
           alt={menu?.name}
           style={{
@@ -60,7 +63,7 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
             right: '1rem',
             bottom: '1rem',
             border: '3px solid white',
-            zIndex: 3,
+            // zIndex: 3,
           }}
         />
         <Stack
@@ -71,7 +74,7 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
             left: 0,
             width: '100%',
             transform: 'translateY(-50%)',
-            zIndex: 4,
+            // zIndex: 4,
           }}
         >
           <Typography variant="subtitle1" sx={{ color: '#fff' }}>
@@ -95,7 +98,7 @@ const StarFoods = () => {
   });
   const navigate = useNavigate();
   const { data } = useGetCategoriesQuery(
-    { page: 1, limit: 6 },
+    { page: 1, limit: 6, isFav: true },
     {
       refetchOnMountOrArgChange: true,
     }
