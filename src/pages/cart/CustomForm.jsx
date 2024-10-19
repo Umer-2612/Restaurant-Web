@@ -1,9 +1,25 @@
 import React from 'react';
 
 import { Box, Grid2 } from '@mui/material';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 
-import HookTextField from 'components/common/form-components/HookTextField'; // Input field component
+import HookTextField from 'components/common/form-components/HookTextField';
+
+const TEXT_FIELD_SX = {
+  '.MuiOutlinedInput-notchedOutline': {
+    borderColor: (theme) => theme.palette.background.border,
+    border: 'none',
+  },
+  '& input::placeholder': {
+    color: (theme) => `${theme.palette.text.placeholder} !important`, // Customize placeholder color
+    opacity: '1 !important',
+  },
+  'input': {
+    color: (theme) => theme.palette.text.secondary,
+    background: (theme) => theme.palette.background.paper,
+    borderRadius: 3,
+  },
+};
 
 const CustomForm = ({ control, isLoading = false }) => {
   return (
@@ -13,7 +29,7 @@ const CustomForm = ({ control, isLoading = false }) => {
         borderRadius: '8px',
       }}
     >
-      <Grid2 container spacing={3}>
+      <Grid2 container spacing={4}>
         {/* First Name Field */}
         <Grid2 item size={{ xs: 12, md: 6 }}>
           <HookTextField
@@ -21,6 +37,7 @@ const CustomForm = ({ control, isLoading = false }) => {
             label="First Name*"
             name="firstName"
             fullWidth
+            customInputStyles={TEXT_FIELD_SX}
           />
         </Grid2>
 
@@ -31,6 +48,7 @@ const CustomForm = ({ control, isLoading = false }) => {
             label="Last Name*"
             name="lastName"
             fullWidth
+            customInputStyles={TEXT_FIELD_SX}
           />
         </Grid2>
 
@@ -42,6 +60,7 @@ const CustomForm = ({ control, isLoading = false }) => {
             name="phoneNo"
             fullWidth
             isPhoneNumber
+            customInputStyles={TEXT_FIELD_SX}
           />
         </Grid2>
 
@@ -52,6 +71,7 @@ const CustomForm = ({ control, isLoading = false }) => {
             label="Email*"
             name="email"
             fullWidth
+            customInputStyles={TEXT_FIELD_SX}
           />
         </Grid2>
       </Grid2>

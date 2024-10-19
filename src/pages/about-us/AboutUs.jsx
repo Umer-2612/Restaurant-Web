@@ -7,8 +7,9 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import butterChicken from 'assets/images/butter.webp';
-import tandooriPaneerTikka from 'assets/images/tandoori_paneer_tikka_restaurant_style.jpg';
+import Ambiance from 'assets/images/ambiance.jpg';
+import aboutUs from 'assets/images/bgimage.jpeg';
+import richnessOfFlavours from 'assets/images/Daal makhni.jpeg';
 import { Banner, BannerText } from 'components/common/Banner';
 
 const AboutUs = () => {
@@ -17,7 +18,7 @@ const AboutUs = () => {
 
   return (
     <Stack gap={20}>
-      <Banner>
+      <Banner image={aboutUs}>
         <BannerText>About Us</BannerText>
       </Banner>
       {/* Section 1 */}
@@ -65,7 +66,7 @@ const AboutUs = () => {
             }}
           >
             <img
-              src={butterChicken}
+              src={Ambiance}
               alt="Punjabi food"
               style={{
                 width: '100%',
@@ -124,7 +125,7 @@ const AboutUs = () => {
             }}
           >
             <img
-              src={tandooriPaneerTikka}
+              src={richnessOfFlavours}
               alt="Punjabi food"
               style={{
                 width: '100%',

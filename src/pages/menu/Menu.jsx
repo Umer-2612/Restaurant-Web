@@ -44,12 +44,17 @@ const Menu = () => {
     }, 200);
   };
 
-  const { data, isSuccess, isLoading, isFetching } = useGetMenusQuery({
-    search: searchParams.get('search')?.trim() || '',
-    page: page,
-    limit: 20,
-    category: searchParams.get('category') || '',
-  });
+  const { data, isSuccess, isLoading, isFetching } = useGetMenusQuery(
+    {
+      search: searchParams.get('search')?.trim() || '',
+      page: page,
+      limit: 20,
+      category: searchParams.get('category') || 'All',
+    },
+    {
+      refetchOnMountOrArgChange: true,
+    }
+  );
 
   const { data: categoryData } = useGetCategoriesQuery();
 
@@ -58,6 +63,12 @@ const Menu = () => {
       id: category._id,
       name: category.name,
     })) || [];
+
+  useEffect(() => {
+    if (data?.paginationData?.total === menuItems?.length) {
+      setHasMore(false);
+    }
+  }, [data?.paginationData?.total, menuItems?.length]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -72,7 +83,7 @@ const Menu = () => {
       });
       if (page === 1) {
         setMenuItems(modifiedData || []);
-      } else if (data?.data?.length === 0) {
+      } else if (data?.paginationData?.total === menuItems?.length) {
         setHasMore(false);
       } else {
         setMenuItems((prevItems) => {
@@ -84,7 +95,14 @@ const Menu = () => {
         });
       }
     }
-  }, [data?.data, isSuccess, page, storedMenuDetails]);
+  }, [
+    data?.data,
+    data?.paginationData?.total,
+    isSuccess,
+    menuItems?.length,
+    page,
+    storedMenuDetails,
+  ]);
 
   useEffect(() => {
     let isFetching = false;
@@ -94,7 +112,8 @@ const Menu = () => {
         window.innerHeight + window.scrollY >=
           document.documentElement.scrollHeight - 800 &&
         hasMore &&
-        !isFetching
+        !isFetching &&
+        !isLoading
       ) {
         isFetching = true;
         setPage((prevPage) => prevPage + 1);
@@ -111,7 +130,7 @@ const Menu = () => {
     return () => {
       window.removeEventListener('scroll', fetchMoreData);
     };
-  }, [hasMore]);
+  }, [hasMore, isLoading]);
 
   useEffect(() => {
     if (isCategoryChanged && !isFetching) {

@@ -34,8 +34,8 @@ const SignIn = () => {
 
   useLayoutEffect(() => {
     if (isSuccess && data) {
-      dispatch(setUserInfo(data?.user));
-      auth.setAuth(data);
+      dispatch(setUserInfo(data?.data?.user));
+      auth.setAuth(data?.data);
     }
   }, [auth, data, dispatch, isSuccess]);
 
@@ -56,16 +56,13 @@ const SignIn = () => {
     try {
       const response = await signInGet(body);
 
-      // Assuming your API sends back a success response that you can check
-      if (response.success) {
+      if (response?.data?.success) {
         toast.success('Sign-in successful.');
       } else {
         toast.error(
           response?.error?.data?.message || 'Sign-in failed. Please try again.'
         );
       }
-
-      console.log(response); // Check the response here
     } catch (apiError) {
       // Handle error during sign-in
       toast.error('Error during sign-in. Please try again.');

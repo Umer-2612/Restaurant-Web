@@ -8,8 +8,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import MenuList from './MenuList';
 
+import RHFButton from 'components/button/RHFButton';
 import { Logo } from 'components/navbar/Navbar';
 import { pxToRem } from 'store/theme/typography';
+import useAuth from 'utils/authUtils';
 
 const drawerWidth = 260;
 const minWidth = 68;
@@ -91,13 +93,15 @@ const StyledDrawer = styled(Drawer, {
 export default function SideBar({ open }) {
   const navigate = useNavigate();
   const currentRoute = useLocation();
-
+  const { removeAuth } = useAuth();
   const handleClick = useCallback(() => {
     if (currentRoute.pathname !== '/admin/orders') {
       navigate('/admin/orders');
     }
   }, [currentRoute.pathname, navigate]);
-
+  const handleLogout = useCallback(() => {
+    removeAuth();
+  }, [removeAuth]);
   return (
     <StyledDrawer
       open={true}
@@ -128,6 +132,12 @@ export default function SideBar({ open }) {
           </Stack>
           <MenuList />
         </Stack>
+
+        <RHFButton
+          onClick={handleLogout}
+          title={'Logout'}
+          variant={'outlined'}
+        />
       </Stack>
     </StyledDrawer>
   );

@@ -1,5 +1,8 @@
 import React from 'react';
 
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Chip, Tooltip } from '@mui/material';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -79,32 +82,129 @@ const ReservationList = () => {
       },
     },
     {
+      id: 'reservationDate',
+      title: 'Reservation Date',
+      formatter: ({ row }) => {
+        return (
+          <Typography variant="body1">
+            {dayjs(row?.publishedOn).format('ddd, MMM DD - hh:mm A')}
+          </Typography>
+        );
+      },
+    },
+    {
       id: 'action',
       title: 'Actions',
       formatter: ({ row }) => {
-        return (
-          <Stack direction="row" width="100%" gap={2}>
-            <Button
-              disabled={isStatusLoading}
-              onClick={() =>
-                reservationStatusUpdate({ _id: row?._id, status: 'Rejected' })
-              }
-            >
-              Reject
-            </Button>
-            <Button
-              disabled={isStatusLoading}
-              sx={{
-                color: (theme) => theme.palette.success.main,
-              }}
-              onClick={() =>
-                reservationStatusUpdate({ _id: row?._id, status: 'Accepted' })
-              }
-            >
-              Approve
-            </Button>
-          </Stack>
-        );
+        console.log('::row', row);
+        if (row?.status === 'Rejected') {
+          return (
+            <>
+              <Stack
+                direction="row"
+                width="100%"
+                gap={2}
+                justifyContent={'center'}
+              >
+                <Chip
+                  label={
+                    <Stack
+                      flexDirection="row"
+                      alignItems="center"
+                      gap={1}
+                      color="#FE4040"
+                    >
+                      <Typography variant="body3">Rejected</Typography>
+                    </Stack>
+                  }
+                  sx={{
+                    backgroundColor: '#FEEAEA',
+                    cursor: 'pointer',
+                    borderRadius: 2,
+                  }}
+                />
+              </Stack>
+            </>
+          );
+        } else if (row?.status === 'Accepted') {
+          return (
+            <>
+              <Stack
+                direction="row"
+                width="100%"
+                gap={2}
+                justifyContent={'center'}
+              >
+                <Chip
+                  label={
+                    <Stack
+                      flexDirection="row"
+                      alignItems="center"
+                      gap={1}
+                      color="#23C55E"
+                    >
+                      <Typography variant="body3">Approved</Typography>
+                    </Stack>
+                  }
+                  sx={{
+                    backgroundColor: '#EBFFF2',
+                    cursor: 'pointer',
+                    borderRadius: 2,
+                  }}
+                />
+              </Stack>
+            </>
+          );
+        } else {
+          return (
+            <Stack direction="row" width="100%" gap={2}>
+              <Tooltip title="Reject">
+                <span>
+                  {' '}
+                  <Button
+                    disabled={isStatusLoading}
+                    onClick={() =>
+                      reservationStatusUpdate({
+                        _id: row?._id,
+                        status: 'Rejected',
+                      })
+                    }
+                    sx={{
+                      minWidth: '32px',
+                      height: '32px',
+                    }}
+                  >
+                    <CancelIcon
+                      sx={{ color: 'error.main', fontSize: '1.5rem' }}
+                    />
+                  </Button>
+                </span>
+              </Tooltip>
+              <Tooltip title="Approve">
+                <span>
+                  {' '}
+                  <Button
+                    disabled={isStatusLoading}
+                    onClick={() =>
+                      reservationStatusUpdate({
+                        _id: row?._id,
+                        status: 'Accepted',
+                      })
+                    }
+                    sx={{
+                      minWidth: '32px',
+                      height: '32px',
+                    }}
+                  >
+                    <CheckCircleIcon
+                      sx={{ color: 'success.main', fontSize: '1.5rem' }}
+                    />
+                  </Button>
+                </span>
+              </Tooltip>
+            </Stack>
+          );
+        }
       },
     },
   ];

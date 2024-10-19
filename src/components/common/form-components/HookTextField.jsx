@@ -39,7 +39,7 @@ const StyledTextField = styled(TextField)(({ theme, novalidation }) => ({
       'invert(58%) sepia(8%) saturate(731%) hue-rotate(189deg) brightness(97%) contrast(83%)',
   },
   '& .MuiFormHelperText-root': {
-    color: (theme) => theme.palette.text.subText,
+    color: (theme) => theme.palette.error.main,
     margin: 0,
     marginTop: 1,
     display: novalidation && 'none',
@@ -69,7 +69,13 @@ export default function HookTextField(props) {
   const { field, fieldState, formState } = useController(props);
   const [count, setCount] = useState(field.value ? field.value.length : 0);
 
-  const { isNoOfQuestion, showCount, isPhoneNumber, ...textFieldProps } = props;
+  const {
+    isNoOfQuestion,
+    showCount,
+    isPhoneNumber,
+    customInputStyles,
+    ...textFieldProps
+  } = props;
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -100,6 +106,7 @@ export default function HookTextField(props) {
           fieldset: {
             borderColor: (theme) => theme.palette.background.border,
           },
+          ...customInputStyles,
         }}
         {...field}
         placeholder={props.label?.replace(/\*/g, '')}
@@ -139,4 +146,5 @@ HookTextField.propTypes = {
   showCount: PropTypes.bool,
   isNoOfQuestion: PropTypes.bool,
   isPhoneNumber: PropTypes.bool,
+  customInputStyles: PropTypes.object,
 };

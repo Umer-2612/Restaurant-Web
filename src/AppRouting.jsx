@@ -129,7 +129,7 @@ export default function AppRouting() {
       ],
     },
     {
-      path: '/feedback',
+      path: '/orderStatus',
       element: <AppLayout />,
       children: [
         {
