@@ -11,6 +11,7 @@ import { useSearchParams } from 'react-router-dom';
 import MenuFilter from './components/MenuFilter';
 import MenuItemModal from './components/MenuItemModal';
 
+import Reveal from 'components/animation/Reveal';
 import {
   MenuItemLayout,
   RenderMenuSkeleton,
@@ -162,16 +163,28 @@ const Menu = () => {
               ? Array.from({ length: 8 }).map((_, cellIndex) => (
                   <RenderMenuSkeleton key={cellIndex} />
                 ))
-              : menuItems?.map((menu, index) => (
-                  <MenuItemLayout
-                    key={menu?._id}
-                    menu={menu}
-                    handleMenuModalOpen={handleMenuModalOpen}
-                    isLastItem={Number(menuItems?.length - 1) === Number(index)}
-                    isLoading={isLoading}
-                    isFetching={isFetching}
-                  />
-                ))}
+              : menuItems?.map((menu, index) => {
+                  const isEven = index % 2 === 0;
+                  return (
+                    <Reveal
+                      key={menu?._id}
+                      output={
+                        isEven ? [0, 10, 20, 30, 40] : [0, -10, -20, -30, -40]
+                      }
+                      isHorizontal
+                    >
+                      <MenuItemLayout
+                        menu={menu}
+                        handleMenuModalOpen={handleMenuModalOpen}
+                        isLastItem={
+                          Number(menuItems?.length - 1) === Number(index)
+                        }
+                        isLoading={isLoading}
+                        isFetching={isFetching}
+                      />
+                    </Reveal>
+                  );
+                })}
             {hasMore && (
               <Stack
                 justifyContent="center"

@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
 import ButterChickenImg from 'assets/images/butter-chicken.jpg';
+import Reveal from 'components/animation/Reveal';
 import { pxToRem } from 'store/theme/typography';
 
 const HeroSection = () => {
@@ -53,26 +54,28 @@ const HeroSection = () => {
       >
         <Stack gap={{ xs: 3, sm: 5, md: 10 }}>
           {/* Hero Title */}
-          <Typography
-            component="h1"
-            variant="h1"
-            textAlign="center"
-            sx={{
-              fontSize: { xs: pxToRem(24), sm: pxToRem(50), md: pxToRem(72) },
-              lineHeight: 1,
-            }}
-          >
-            Relish The Flavours Of{' '}
+          <Reveal>
             <Typography
-              component="span"
-              fontSize="inherit"
+              component="h1"
               variant="h1"
-              sx={{ color: (theme) => theme.palette.subColor.main }}
+              textAlign="center"
+              sx={{
+                fontSize: { xs: pxToRem(24), sm: pxToRem(50), md: pxToRem(72) },
+                lineHeight: 1,
+              }}
             >
-              India
-            </Typography>{' '}
-            With Us!
-          </Typography>
+              Relish The Flavours Of{' '}
+              <Typography
+                component="span"
+                fontSize="inherit"
+                variant="h1"
+                sx={{ color: (theme) => theme.palette.subColor.main }}
+              >
+                India
+              </Typography>{' '}
+              With Us!
+            </Typography>
+          </Reveal>
 
           {/* Content Area */}
           <Stack alignItems={{ xs: 'center', md: 'end' }} width="100%">
