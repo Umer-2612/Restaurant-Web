@@ -272,6 +272,12 @@ const Reservation = () => {
                   label="Message*"
                   name="message"
                   fullWidth
+                  multiline={true}
+                  showCount
+                  rows={5}
+                  inputProps={{
+                    maxLength: 500,
+                  }}
                 />{' '}
               </Reveal>
             </Grid>

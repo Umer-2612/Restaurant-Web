@@ -2,8 +2,7 @@ import React from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Chip, Tooltip } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Chip, IconButton, Tooltip } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
@@ -37,7 +36,7 @@ const ReservationList = () => {
     },
     {
       refetchOnMountOrArgChange: true,
-      pollingInterval: 20000,
+      pollingInterval: 300000,
     }
   );
 
@@ -100,12 +99,7 @@ const ReservationList = () => {
         if (row?.status === 'Rejected') {
           return (
             <>
-              <Stack
-                direction="row"
-                width="100%"
-                gap={2}
-                justifyContent={'center'}
-              >
+              <Stack direction="row" width="100%" gap={2}>
                 <Chip
                   label={
                     <Stack
@@ -129,12 +123,7 @@ const ReservationList = () => {
         } else if (row?.status === 'Accepted') {
           return (
             <>
-              <Stack
-                direction="row"
-                width="100%"
-                gap={2}
-                justifyContent={'center'}
-              >
+              <Stack direction="row" width="100%" gap={2}>
                 <Chip
                   label={
                     <Stack
@@ -161,7 +150,7 @@ const ReservationList = () => {
               <Tooltip title="Reject">
                 <span>
                   {' '}
-                  <Button
+                  <IconButton
                     disabled={isStatusLoading}
                     onClick={() =>
                       reservationStatusUpdate({
@@ -170,20 +159,20 @@ const ReservationList = () => {
                       })
                     }
                     sx={{
-                      minWidth: '32px',
-                      height: '32px',
+                      'bgcolor': '#FEEAEA',
+                      '&: hover': {
+                        bgcolor: '#FEEAEA',
+                      },
                     }}
                   >
-                    <CancelIcon
-                      sx={{ color: 'error.main', fontSize: '1.5rem' }}
-                    />
-                  </Button>
+                    <CancelIcon sx={{ color: '#FE4040', fontSize: '1.5rem' }} />
+                  </IconButton>
                 </span>
               </Tooltip>
               <Tooltip title="Approve">
                 <span>
                   {' '}
-                  <Button
+                  <IconButton
                     disabled={isStatusLoading}
                     onClick={() =>
                       reservationStatusUpdate({
@@ -192,14 +181,16 @@ const ReservationList = () => {
                       })
                     }
                     sx={{
-                      minWidth: '32px',
-                      height: '32px',
+                      'bgcolor': '#EBFFF2',
+                      '&: hover': {
+                        bgcolor: '#EBFFF2',
+                      },
                     }}
                   >
                     <CheckCircleIcon
-                      sx={{ color: 'success.main', fontSize: '1.5rem' }}
+                      sx={{ color: '#23C55E', fontSize: '1.5rem' }}
                     />
-                  </Button>
+                  </IconButton>
                 </span>
               </Tooltip>
             </Stack>

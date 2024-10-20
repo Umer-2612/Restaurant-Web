@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button, Chip } from '@mui/material';
+import { Button, Chip, Tooltip } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
@@ -34,7 +34,7 @@ const QueryList = () => {
     },
     {
       refetchOnMountOrArgChange: true,
-      pollingInterval: 20000,
+      pollingInterval: 300000,
     }
   );
 
@@ -61,6 +61,24 @@ const QueryList = () => {
     {
       id: 'message',
       title: 'Message',
+      formatter: ({ row }) => {
+        return (
+          <Tooltip title={row?.message} arrow>
+            <Stack width="250px" overflow="hidden">
+              <Typography
+                variant="body1"
+                sx={{
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {row?.message}
+              </Typography>
+            </Stack>
+          </Tooltip>
+        );
+      },
     },
     {
       id: 'phoneNo',
@@ -105,6 +123,7 @@ const QueryList = () => {
                     backgroundColor: '#FEEAEA',
                     cursor: 'pointer',
                     borderRadius: 2,
+                    width: '110px',
                   }}
                 />
               </Stack>
@@ -119,11 +138,13 @@ const QueryList = () => {
                   contactUsStatusUpdate({ _id: row?._id, status: 'Responded' })
                 }
                 sx={{
-                  minWidth: '32px',
                   height: '32px',
+                  width: '110px',
+                  borderRadius: 2,
                 }}
+                variant="outlined"
               >
-                New
+                Respond
               </Button>
             </Stack>
           );

@@ -93,7 +93,6 @@ const ContactUs = () => {
               textAlign={'left'}
             >
               <Typography>
-                {' '}
                 <Reveal>📞 0721421728 </Reveal>
               </Typography>
               <Typography mt={1}>
@@ -193,7 +192,13 @@ const ContactUs = () => {
                   control={control}
                   label="Message*"
                   name="message"
+                  multiline={true}
+                  showCount
+                  rows={5}
                   fullWidth
+                  inputProps={{
+                    maxLength: 500,
+                  }}
                 />
               </Reveal>
             </Grid>
