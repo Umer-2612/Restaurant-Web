@@ -65,7 +65,7 @@ const OrderList = () => {
       id: 'contact',
       title: 'Contact Number',
       formatter: ({ row }) => {
-        return <>{row?.customerDetails?.phone}</>;
+        return <>{row?.customerDetails?.phoneNo}</>;
       },
     },
     {
