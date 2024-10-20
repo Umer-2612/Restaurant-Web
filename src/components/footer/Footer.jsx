@@ -141,34 +141,28 @@ const Footer = () => {
             </Stack>
 
             {/* CTA Buttons */}
-            <Stack gap={2} color="text.primary">
-              <Reveal>
+            <Reveal>
+              <Stack gap={2} color="text.primary">
                 <Typography variant="subtitle2" fontWeight={600}>
                   Catering Booking
                 </Typography>
-              </Reveal>
-              <Reveal>
                 <RHFButton
                   variant={'contained'}
                   title="Book Your Event"
                   onClick={() => navigate('/reservation')}
                   size="medium"
                 />
-              </Reveal>
-              <Reveal>
                 <Typography variant="subtitle2" fontWeight={600}>
                   Make a Reservation
                 </Typography>
-              </Reveal>
-              <Reveal>
                 <RHFButton
                   variant={'contained'}
                   title="Book Online"
                   onClick={() => navigate('/menu')}
                   size="medium"
                 />
-              </Reveal>
-            </Stack>
+              </Stack>
+            </Reveal>
             {/* Google Map */}
 
             <Stack width="100%">
