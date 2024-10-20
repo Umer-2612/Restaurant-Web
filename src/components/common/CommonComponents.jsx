@@ -26,6 +26,7 @@ export const RenderMenuSkeleton = () => {
       overflow="hidden"
       height="100%"
       direction="row"
+      width="100%"
       alignItems="center"
       py={2}
     >
@@ -149,6 +150,7 @@ export const MenuItemLayout = ({
       }}
       direction="row"
       alignItems="center"
+      width="100%"
       py={2}
     >
       <Stack

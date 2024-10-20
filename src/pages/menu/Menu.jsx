@@ -57,7 +57,8 @@ const Menu = () => {
     }
   );
 
-  const { data: categoryData } = useGetCategoriesQuery();
+  const { data: categoryData, isLoading: isCategoryLoading } =
+    useGetCategoriesQuery();
 
   const categories =
     categoryData?.data?.map((category) => ({
@@ -148,6 +149,20 @@ const Menu = () => {
     setIsCategoryChanged(true);
   };
 
+  if (isLoading || isCategoryChanged || isCategoryLoading) {
+    return (
+      <Container sx={{ mt: 5 }}>
+        <Stack alignItems="center" ref={containerRef}>
+          <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={3}>
+            {Array.from({ length: 8 }).map((_, cellIndex) => (
+              <RenderMenuSkeleton key={cellIndex} />
+            ))}
+          </Grid>
+        </Stack>
+      </Container>
+    );
+  }
+
   return (
     <Container sx={{ mt: 5 }}>
       <Stack alignItems="center" ref={containerRef}>
@@ -159,32 +174,26 @@ const Menu = () => {
             />
           )}
           <Stack width="100%">
-            {isLoading || isCategoryChanged
-              ? Array.from({ length: 8 }).map((_, cellIndex) => (
-                  <RenderMenuSkeleton key={cellIndex} />
-                ))
-              : menuItems?.map((menu, index) => {
-                  const isEven = index % 2 === 0;
-                  return (
-                    <Reveal
-                      key={menu?._id}
-                      output={
-                        isEven ? [0, 10, 20, 30, 40] : [0, -10, -20, -30, -40]
-                      }
-                      isHorizontal
-                    >
-                      <MenuItemLayout
-                        menu={menu}
-                        handleMenuModalOpen={handleMenuModalOpen}
-                        isLastItem={
-                          Number(menuItems?.length - 1) === Number(index)
-                        }
-                        isLoading={isLoading}
-                        isFetching={isFetching}
-                      />
-                    </Reveal>
-                  );
-                })}
+            {menuItems?.map((menu, index) => {
+              const isEven = index % 2 === 0;
+              return (
+                <Reveal
+                  key={menu?._id}
+                  output={
+                    isEven ? [0, 10, 20, 30, 40] : [0, -10, -20, -30, -40]
+                  }
+                  isHorizontal
+                >
+                  <MenuItemLayout
+                    menu={menu}
+                    handleMenuModalOpen={handleMenuModalOpen}
+                    isLastItem={Number(menuItems?.length - 1) === Number(index)}
+                    isLoading={isLoading}
+                    isFetching={isFetching}
+                  />
+                </Reveal>
+              );
+            })}
             {hasMore && (
               <Stack
                 justifyContent="center"
