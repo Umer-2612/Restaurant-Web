@@ -10,11 +10,13 @@ import { PropTypes } from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 import classsicCurries from 'assets/images/classic_curries.jpg';
+import Reveal from 'components/animation/Reveal';
 import MenuItemModal from 'pages/menu/components/MenuItemModal';
 import { useGetCategoriesQuery } from 'store/apis/categories';
 
-const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
+const MenuItemLayout = ({ menu, handleMenuModalOpen, index }) => {
   const navigate = useNavigate();
+  const animationDelay = index * 100;
   return (
     <Grid item size={{ xs: 12, sm: 6, md: 4 }}>
       <Stack
@@ -29,58 +31,60 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
         }}
         onClick={() => navigate(`/menu?category=${menu._id}`)}
       >
-        <Box
-          sx={{
-            'position': 'absolute',
-            'top': 0,
-            'left': 0,
-            'right': 0,
-            'bottom': 0,
-            'backgroundColor': 'rgba(0, 0, 0, 0.2)',
-            '&: hover': {
-              backgroundColor: 'rgba(0, 0, 0, 0)',
-            },
-            'zIndex': 1,
-          }}
-        />
-        <img
-          src={menu?.imagePath ? menu?.imagePath : classsicCurries}
-          // src={classsicCurries}
-          alt={menu?.name}
-          style={{
-            width: '100%',
-            maxHeight: '180px',
-            objectFit: 'cover',
-            transition: 'transform 0.5s ease',
-          }}
-          className="menu-image"
-        />
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '1rem',
-            left: '1rem',
-            right: '1rem',
-            bottom: '1rem',
-            border: '3px solid white',
-            // zIndex: 3,
-          }}
-        />
-        <Stack
-          sx={{
-            textAlign: 'center',
-            position: 'absolute',
-            top: '50%',
-            left: 0,
-            width: '100%',
-            transform: 'translateY(-50%)',
-            // zIndex: 4,
-          }}
-        >
-          <Typography variant="subtitle1" sx={{ color: '#fff' }}>
-            {menu?.name}
-          </Typography>
-        </Stack>
+        <Reveal delay={animationDelay}>
+          <Box
+            sx={{
+              'position': 'absolute',
+              'top': 0,
+              'left': 0,
+              'right': 0,
+              'bottom': 0,
+              'backgroundColor': 'rgba(0, 0, 0, 0.2)',
+              '&: hover': {
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+              },
+              'zIndex': 1,
+            }}
+          />
+          <img
+            src={menu?.imagePath ? menu?.imagePath : classsicCurries}
+            // src={classsicCurries}
+            alt={menu?.name}
+            style={{
+              width: '100%',
+              maxHeight: '180px',
+              objectFit: 'cover',
+              transition: 'transform 0.5s ease',
+            }}
+            className="menu-image"
+          />
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '1rem',
+              left: '1rem',
+              right: '1rem',
+              bottom: '1rem',
+              border: '3px solid white',
+              // zIndex: 3,
+            }}
+          />
+          <Stack
+            sx={{
+              textAlign: 'center',
+              position: 'absolute',
+              top: '50%',
+              left: 0,
+              width: '100%',
+              transform: 'translateY(-50%)',
+              // zIndex: 4,
+            }}
+          >
+            <Typography variant="subtitle1" sx={{ color: '#fff' }}>
+              {menu?.name}
+            </Typography>
+          </Stack>
+        </Reveal>
       </Stack>
     </Grid>
   );
@@ -89,6 +93,7 @@ const MenuItemLayout = ({ menu, handleMenuModalOpen }) => {
 MenuItemLayout.propTypes = {
   menu: PropTypes.object.isRequired,
   handleMenuModalOpen: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 const StarFoods = () => {
@@ -134,35 +139,43 @@ const StarFoods = () => {
   return (
     <Container>
       <Stack gap={4} alignItems="center">
-        <Typography variant="h4" fontWeight="bold">
-          Our Most Popular{' '}
-          <Typography
-            variant="h4"
-            fontWeight="bold"
-            component="span"
-            color="primary"
-          >
-            Delicious Food
+        <Reveal>
+          {' '}
+          <Typography variant="h4" fontWeight="bold">
+            Our Most Popular{' '}
+            <Typography
+              variant="h4"
+              fontWeight="bold"
+              component="span"
+              color="primary"
+            >
+              Delicious Food
+            </Typography>
           </Typography>
-        </Typography>
+        </Reveal>
+
         <Grid container spacing={5}>
           {modifiedData?.map((menu, index) => (
             <MenuItemLayout
               key={index}
               menu={menu}
+              index={index}
               handleMenuModalOpen={handleMenuModalOpen}
             />
           ))}
         </Grid>
-        <Stack direction="row" justifyContent="center" width="100%">
-          <Button
-            sx={{ borderRadius: 50, px: 4 }}
-            onClick={() => navigate('/menu')}
-            variant="outlined"
-          >
-            View More
-          </Button>
-        </Stack>
+
+        <Reveal delay={300}>
+          <Stack direction="row" justifyContent="center" width="100%">
+            <Button
+              sx={{ borderRadius: 50, px: 4 }}
+              onClick={() => navigate('/menu')}
+              variant="outlined"
+            >
+              View More
+            </Button>
+          </Stack>
+        </Reveal>
       </Stack>
       <MenuItemModal
         menuProps={menuProps}

@@ -10,6 +10,8 @@ import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import faqs from 'assets/images/faqs.jpg';
+import Reveal from 'components/animation/Reveal';
 import { Banner, BannerText } from 'components/common/Banner';
 import { LIGHT } from 'store/theme/colors';
 
@@ -70,8 +72,10 @@ const Faqs = () => {
 
   return (
     <>
-      <Banner>
-        <BannerText>Faqs</BannerText>
+      <Banner image={faqs}>
+        <BannerText>
+          <Reveal>Faqs</Reveal>
+        </BannerText>
       </Banner>
       <Container>
         <Stack gap={4}>
@@ -81,61 +85,68 @@ const Faqs = () => {
               sx={{
                 color: LIGHT.primary.main,
                 fontWeight: 'bold',
-                fontSize: '32px',
+                fontSize: { xs: '24px', sm: '28px', md: '32px' }, // Responsive font size
               }}
             >
-              FAQs
+              <Reveal>FAQs</Reveal>
             </Typography>
           </Box>
         </Stack>
 
         <Grid container spacing={2} sx={{ mt: 1, mb: 8 }}>
           <Grid item xs={12}>
-            {faqsData.map((faq, index) => (
-              <Accordion
-                key={index}
-                expanded={expanded === index}
-                onChange={handleChange(index)}
-                sx={{
-                  'borderRadius': '0px',
-                  'boxShadow': 'none',
-                  'backgroundColor': 'transparent',
-                  'borderBottom': `1px solid ${LIGHT.grey[300]}`,
-                  'mt': index > 0 ? 1 : 0,
-                  '&::before': {
-                    display: 'none',
-                  },
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={
-                    <ExpandMoreIcon sx={{ color: LIGHT.grey[500] }} />
-                  }
-                  aria-controls={`panel${index + 1}-content`}
-                  id={`panel${index + 1}-header`}
+            <Reveal>
+              {faqsData.map((faq, index) => (
+                <Accordion
+                  key={index}
+                  expanded={expanded === index}
+                  onChange={handleChange(index)}
                   sx={{
-                    '&:hover .MuiTypography-root': {
-                      color: LIGHT.primary.main,
+                    'borderRadius': '0px',
+                    'boxShadow': 'none',
+                    'backgroundColor': 'transparent',
+                    'borderBottom': `1px solid ${LIGHT.grey[300]}`,
+                    'mt': index > 0 ? 1 : 0,
+                    '&::before': {
+                      display: 'none',
                     },
                   }}
                 >
-                  <Typography
+                  <AccordionSummary
+                    expandIcon={
+                      <ExpandMoreIcon sx={{ color: LIGHT.grey[500] }} />
+                    }
+                    aria-controls={`panel${index + 1}-content`}
+                    id={`panel${index + 1}-header`}
                     sx={{
-                      color: LIGHT.text.primary,
-                      fontWeight: 'bold',
-                      fontSize: '1.4rem',
+                      '&:hover .MuiTypography-root': {
+                        color: LIGHT.primary.main,
+                      },
                     }}
                   >
-                    {faq.question}
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography sx={{ color: LIGHT.text.secondary }}>
-                    {faq.answer}
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            ))}
+                    <Typography
+                      sx={{
+                        color: LIGHT.text.primary,
+                        fontWeight: 'bold',
+                        fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.4rem' }, // Responsive font size
+                      }}
+                    >
+                      {faq.question}
+                    </Typography>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Typography
+                      sx={{
+                        color: LIGHT.text.secondary,
+                        fontSize: { xs: '0.9rem', sm: '1rem', md: '1.1rem' }, // Responsive font size
+                      }}
+                    >
+                      {faq.answer}
+                    </Typography>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </Reveal>
           </Grid>
         </Grid>
       </Container>
