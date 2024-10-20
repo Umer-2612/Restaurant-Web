@@ -175,15 +175,8 @@ const Menu = () => {
           )}
           <Stack width="100%">
             {menuItems?.map((menu, index) => {
-              const isEven = index % 2 === 0;
               return (
-                <Reveal
-                  key={menu?._id}
-                  output={
-                    isEven ? [0, 10, 20, 30, 40] : [0, -10, -20, -30, -40]
-                  }
-                  isHorizontal
-                >
+                <Reveal key={menu?._id} output={[0, 10, 20, 30, 40]}>
                   <MenuItemLayout
                     menu={menu}
                     handleMenuModalOpen={handleMenuModalOpen}
