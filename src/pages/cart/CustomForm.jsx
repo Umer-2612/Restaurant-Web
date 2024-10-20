@@ -59,7 +59,6 @@ const CustomForm = ({ control, isLoading = false }) => {
             label="Phone no*"
             name="phoneNo"
             fullWidth
-            isPhoneNumber
             customInputStyles={TEXT_FIELD_SX}
           />
         </Grid2>
