@@ -74,13 +74,6 @@ const ContactUs = () => {
             }}
           >
             <Typography
-              variant="bh3"
-              sx={{ color: 'text.primary' }}
-              textAlign={'left'}
-            >
-              <Reveal>CONTACT US</Reveal>
-            </Typography>
-            <Typography
               variant="body1"
               sx={{ color: 'text.primary', mt: 2 }}
               textAlign={'left'}

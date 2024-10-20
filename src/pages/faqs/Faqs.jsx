@@ -4,13 +4,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import faqs from 'assets/images/faqs.jpg';
 import Reveal from 'components/animation/Reveal';
 import { Banner, BannerText } from 'components/common/Banner';
 import { LIGHT } from 'store/theme/colors';
@@ -72,27 +69,12 @@ const Faqs = () => {
 
   return (
     <>
-      <Banner image={faqs}>
+      <Banner>
         <BannerText>
           <Reveal>Faqs</Reveal>
         </BannerText>
       </Banner>
       <Container>
-        <Stack gap={4}>
-          <Box sx={{ textAlign: 'center' }} p={4}>
-            <Typography
-              variant="h4"
-              sx={{
-                color: LIGHT.primary.main,
-                fontWeight: 'bold',
-                fontSize: { xs: '24px', sm: '28px', md: '32px' }, // Responsive font size
-              }}
-            >
-              <Reveal>FAQs</Reveal>
-            </Typography>
-          </Box>
-        </Stack>
-
         <Grid container spacing={2} sx={{ mt: 1, mb: 8 }}>
           <Grid item xs={12}>
             <Reveal>

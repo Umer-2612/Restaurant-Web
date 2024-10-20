@@ -85,15 +85,6 @@ const Reservation = () => {
             }}
           >
             <Typography
-              variant="bh3"
-              sx={{
-                textAlign: 'left',
-              }}
-            >
-              <Reveal>RESERVATION</Reveal>
-            </Typography>
-
-            <Typography
               variant="body1"
               sx={{
                 mt: 2,

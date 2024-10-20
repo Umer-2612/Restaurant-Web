@@ -149,8 +149,8 @@ const Footer = () => {
                 <RHFButton
                   variant={'contained'}
                   title="Book Your Event"
-                  onClick={() => navigate('/reservation')}
                   size="medium"
+                  onClick={() => navigate('/contact-us')}
                 />
                 <Typography variant="subtitle2" fontWeight={600}>
                   Make a Reservation
@@ -158,7 +158,7 @@ const Footer = () => {
                 <RHFButton
                   variant={'contained'}
                   title="Book Online"
-                  onClick={() => navigate('/menu')}
+                  onClick={() => navigate('/reservation')}
                   size="medium"
                 />
               </Stack>
