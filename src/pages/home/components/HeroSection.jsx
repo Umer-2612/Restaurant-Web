@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
 import ButterChickenImg from 'assets/images/butter-chicken.jpg';
+import Reveal from 'components/animation/Reveal';
 import { pxToRem } from 'store/theme/typography';
 
 const HeroSection = () => {
@@ -53,26 +54,28 @@ const HeroSection = () => {
       >
         <Stack gap={{ xs: 3, sm: 5, md: 10 }}>
           {/* Hero Title */}
-          <Typography
-            component="h1"
-            variant="h1"
-            textAlign="center"
-            sx={{
-              fontSize: { xs: pxToRem(24), sm: pxToRem(50), md: pxToRem(72) },
-              lineHeight: 1,
-            }}
-          >
-            Relish The Flavours Of{' '}
+          <Reveal>
             <Typography
-              component="span"
-              fontSize="inherit"
+              component="h1"
               variant="h1"
-              sx={{ color: (theme) => theme.palette.subColor.main }}
+              textAlign="center"
+              sx={{
+                fontSize: { xs: pxToRem(24), sm: pxToRem(50), md: pxToRem(72) },
+                lineHeight: 1,
+              }}
             >
-              India
-            </Typography>{' '}
-            With Us!
-          </Typography>
+              Relish The Flavours Of{' '}
+              <Typography
+                component="span"
+                fontSize="inherit"
+                variant="h1"
+                sx={{ color: (theme) => theme.palette.subColor.main }}
+              >
+                India
+              </Typography>{' '}
+              With Us!
+            </Typography>
+          </Reveal>
 
           {/* Content Area */}
           <Stack alignItems={{ xs: 'center', md: 'end' }} width="100%">
@@ -81,44 +84,47 @@ const HeroSection = () => {
               sx={{ width: { xs: '95%', sm: '90%', md: 500 }, gap: 2 }}
             >
               {/* Description Text */}
-              <Typography
-                variant="subtitle2"
-                textAlign="justify"
-                sx={{
-                  fontSize: {
-                    xs: pxToRem(14),
-                    sm: pxToRem(16),
-                    md: pxToRem(18),
-                  },
-                  lineHeight: {
-                    xs: pxToRem(20),
-                    sm: pxToRem(24),
-                    md: pxToRem(27),
-                  },
-                }}
-              >
-                Bring the lover of your life here and romanticize your date with
-                our lip-smacking foods. Book your table now in advance to get
-                rid of any hassle or order online.
-              </Typography>
-
-              {/* Buttons Section */}
-              <Stack direction="row" gap={1}>
-                <Button variant="contained" onClick={() => navigate('/menu')}>
-                  Order Online
-                </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => navigate('/reservation')}
+              <Reveal>
+                <Typography
+                  variant="subtitle2"
+                  textAlign="justify"
                   sx={{
-                    backgroundColor: 'white',
-                    color: (theme) => theme.palette.text.primary,
+                    fontSize: {
+                      xs: pxToRem(14),
+                      sm: pxToRem(16),
+                      md: pxToRem(18),
+                    },
+                    lineHeight: {
+                      xs: pxToRem(20),
+                      sm: pxToRem(24),
+                      md: pxToRem(27),
+                    },
                   }}
                 >
-                  Reserve a Table
-                </Button>
-              </Stack>
+                  Bring the lover of your life here and romanticize your date
+                  with our lip-smacking foods. Book your table now in advance to
+                  get rid of any hassle or order online.
+                </Typography>
+              </Reveal>
+              {/* Buttons Section */}
+              <Reveal delay={300}>
+                <Stack direction="row" gap={1}>
+                  <Button variant="contained" onClick={() => navigate('/menu')}>
+                    Order Online
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => navigate('/reservation')}
+                    sx={{
+                      backgroundColor: 'white',
+                      color: (theme) => theme.palette.text.primary,
+                    }}
+                  >
+                    Reserve a Table
+                  </Button>
+                </Stack>
+              </Reveal>
             </Stack>
           </Stack>
         </Stack>

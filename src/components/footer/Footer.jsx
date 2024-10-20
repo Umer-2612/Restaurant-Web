@@ -10,6 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
+import Reveal from 'components/animation/Reveal';
 import RHFButton from 'components/button/RHFButton';
 import { QUERIES, TABS } from 'utils/commonData';
 
@@ -40,126 +41,145 @@ const Footer = () => {
               gap={2}
               alignItems={{ xs: 'center', md: 'flex-start' }}
             >
-              <img
-                src={PTFullLogo}
-                alt="Punjabi Touch logo"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  aspectRatio: '789 / 241',
-                }}
-                aria-label="Punjabi Touch Logo"
-              />
-              <Typography
-                variant="body4"
-                color="text.secondary"
-                textAlign={{ xs: 'center', md: 'left' }}
-              >
-                We serve more than 100 varieties of Punjabi Indian cuisine that
-                will satiate your taste buds and keep you closer to the
-                tradition and food.
-              </Typography>
+              <Reveal>
+                <img
+                  src={PTFullLogo}
+                  alt="Punjabi Touch logo"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    aspectRatio: '789 / 241',
+                  }}
+                  aria-label="Punjabi Touch Logo"
+                />
+              </Reveal>
+              <Reveal>
+                <Typography
+                  variant="body4"
+                  color="text.secondary"
+                  textAlign={{ xs: 'center', md: 'left' }}
+                >
+                  We serve more than 100 varieties of Punjabi Indian cuisine
+                  that will satiate your taste buds and keep you closer to the
+                  tradition and food.
+                </Typography>
+              </Reveal>
             </Stack>
 
             {/* Quick Links */}
             <Stack>
-              <Typography
-                variant="subtitle2"
-                fontWeight={600}
-                color="text.primary"
-                mb={1}
-              >
-                Quick Links
-              </Typography>
+              <Reveal>
+                <Typography
+                  variant="subtitle2"
+                  fontWeight={600}
+                  color="text.primary"
+                  mb={1}
+                >
+                  Quick Links
+                </Typography>
+              </Reveal>
+
               <List>
                 {TABS?.map((tab) => (
-                  <ListItem key={tab?.title} disablePadding>
-                    <Link
-                      to={tab?.path}
-                      style={{
-                        color: 'inherit',
-                        textDecoration: 'none',
-                      }}
-                    >
-                      <ListItemText
-                        primary={tab?.title}
-                        sx={{
-                          color: (theme) => theme.palette.text.secondary,
+                  <Reveal key={tab?.title}>
+                    <ListItem key={tab?.title} disablePadding>
+                      <Link
+                        to={tab?.path}
+                        style={{
+                          color: 'inherit',
+                          textDecoration: 'none',
                         }}
-                      />
-                    </Link>
-                  </ListItem>
+                      >
+                        <ListItemText
+                          primary={tab?.title}
+                          sx={{
+                            color: (theme) => theme.palette.text.secondary,
+                          }}
+                        />
+                      </Link>
+                    </ListItem>
+                  </Reveal>
                 ))}
               </List>
             </Stack>
 
             {/* Queries */}
             <Stack>
-              <Typography
-                variant="subtitle2"
-                fontWeight={600}
-                color="text.primary"
-                mb={1}
-              >
-                Queries
-              </Typography>
+              <Reveal>
+                <Typography
+                  variant="subtitle2"
+                  fontWeight={600}
+                  color="text.primary"
+                  mb={1}
+                >
+                  Queries
+                </Typography>
+              </Reveal>
+
               <List>
                 {QUERIES?.map((tab) => (
-                  <ListItem key={tab?.title} disablePadding>
-                    <Link
-                      to={tab?.path}
-                      style={{
-                        color: 'inherit',
-                        textDecoration: 'none',
-                      }}
-                    >
-                      <ListItemText
-                        primary={tab?.title}
-                        sx={{
-                          color: (theme) => theme.palette.text.secondary,
+                  <Reveal key={tab?.title}>
+                    <ListItem key={tab?.title} disablePadding>
+                      <Link
+                        to={tab?.path}
+                        style={{
+                          color: 'inherit',
+                          textDecoration: 'none',
                         }}
-                      />
-                    </Link>
-                  </ListItem>
+                      >
+                        <ListItemText
+                          primary={tab?.title}
+                          sx={{
+                            color: (theme) => theme.palette.text.secondary,
+                          }}
+                        />
+                      </Link>
+                    </ListItem>
+                  </Reveal>
                 ))}
               </List>
             </Stack>
 
             {/* CTA Buttons */}
-            <Stack gap={2} color="text.primary">
-              <Typography variant="subtitle2" fontWeight={600}>
-                Catering Booking
-              </Typography>
-              <RHFButton
-                variant={'contained'}
-                title="Book Your Event"
-                onClick={() => navigate('/reservation')}
-                size="medium"
-              />
-              <Typography variant="subtitle2" fontWeight={600}>
-                Make a Reservation
-              </Typography>
-              <RHFButton
-                variant={'contained'}
-                title="Book Online"
-                onClick={() => navigate('/menu')}
-                size="medium"
-              />
-            </Stack>
+            <Reveal>
+              <Stack gap={2} color="text.primary">
+                <Typography variant="subtitle2" fontWeight={600}>
+                  Catering Booking
+                </Typography>
+                <RHFButton
+                  variant={'contained'}
+                  title="Book Your Event"
+                  size="medium"
+                  onClick={() => navigate('/contact-us')}
+                />
+                <Typography variant="subtitle2" fontWeight={600}>
+                  Make a Reservation
+                </Typography>
+                <RHFButton
+                  variant={'contained'}
+                  title="Book Online"
+                  onClick={() => navigate('/reservation')}
+                  size="medium"
+                />
+              </Stack>
+            </Reveal>
             {/* Google Map */}
+
             <Stack width="100%">
-              <iframe
-                loading="lazy"
-                title="Punjabi Touch Indian Restaurant"
-                style={{
-                  width: '100%',
-                  height: '300px',
-                  borderRadius: '8px',
-                  border: 'none',
-                }}
-                src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=T2/356%20Middle%20Rd,%20Greenbank%20QLD%204124,%20Australia+(Punjabi%20Touch%20Indian%20Restaurant)&amp;t=k&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                allowFullScreen
-              ></iframe>
+              <Reveal>
+                <iframe
+                  loading="lazy"
+                  title="Punjabi Touch Indian Restaurant"
+                  style={{
+                    width: '100%',
+                    height: '300px',
+                    borderRadius: '8px',
+                    border: 'none',
+                  }}
+                  src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=T2/356%20Middle%20Rd,%20Greenbank%20QLD%204124,%20Australia+(Punjabi%20Touch%20Indian%20Restaurant)&amp;t=k&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                  allowFullScreen
+                ></iframe>
+              </Reveal>
             </Stack>
           </Stack>
           <Stack
@@ -169,10 +189,12 @@ const Footer = () => {
             direction="row"
             justifyContent="center"
           >
-            <Typography variant="body5" color="text.primary">
-              PUNJABI TOUCH INDIAN MULTI CUISINE RESTAURANT 2024 © ALL RIGHTS
-              RESERVED
-            </Typography>
+            <Reveal>
+              <Typography variant="body5" color="text.primary">
+                PUNJABI TOUCH INDIAN MULTI CUISINE RESTAURANT 2024 © ALL RIGHTS
+                RESERVED
+              </Typography>
+            </Reveal>
           </Stack>
         </Stack>
       </Grid>

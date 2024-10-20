@@ -5,6 +5,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Container, Box, Typography, IconButton } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
+
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Carousel styles
 import './TestimonialsCarousel.css'; // Additional custom styles if necessary
 // import BackArrowIcon from './BackArrowIcon.svg';
@@ -114,7 +115,7 @@ const TestimonialsCarousel = () => {
           )
         }
       >
-        {testimonials.map((testimonial) => (
+        {testimonials?.map((testimonial) => (
           <Box
             key={testimonial.id}
             sx={{
@@ -142,7 +143,9 @@ const TestimonialsCarousel = () => {
             >
               “ {testimonial.text} ”
             </Typography>
+
             {/* Customer Name */}
+
             <Typography
               variant="subtitle1"
               sx={{

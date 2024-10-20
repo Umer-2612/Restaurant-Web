@@ -5,12 +5,12 @@ export const useToast = () => {
     if (type === 'success') {
       toast.success(message, {
         position: 'top-right',
-        duration: 1500,
+        duration: 3000,
       });
     } else if (type === 'error') {
       toast.error(message, {
         position: 'top-right',
-        duration: 1500,
+        duration: 3000,
       });
     }
   };
