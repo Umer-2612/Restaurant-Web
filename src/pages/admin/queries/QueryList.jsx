@@ -90,7 +90,7 @@ const QueryList = () => {
       formatter: ({ row }) => {
         return (
           <Typography variant="body1">
-            {dayjs(row?.createdAt).format('ddd, MMM DD - hh:mm A')}
+            {dayjs(row?.createdAt).format('ddd, MMM DD')}
           </Typography>
         );
       },
