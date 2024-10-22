@@ -94,31 +94,54 @@ const Cart = () => {
   );
 
   const handleCheckout = async (formData) => {
-    const stripe = await stripePromise;
+    console.log({ formData });
+    if (formData?.isPOD) {
+      const payload = {
+        user: {
+          firstName: formData?.firstName,
+          lastName: formData?.lastName,
+          phoneNo: formData?.phoneNo,
+          email: formData?.email,
+        },
+        items: cartItems.map((item) => ({
+          menuId: item?.menuId,
+          name: item?.name,
+          price: item?.price,
+          quantity: item?.quantity,
+          imagePath: item?.imagePath,
+        })),
+        totalPrice: totalPrice,
+        isPOD: formData?.isPOD,
+      };
+      const { data: session } = await createCheckoutSession(payload);
+      console.log({ session });
+    } else {
+      const stripe = await stripePromise;
 
-    const payload = {
-      user: {
-        firstName: formData?.firstName,
-        lastName: formData?.lastName,
-        phoneNo: formData?.phoneNo,
-        email: formData?.email,
-      },
-      items: cartItems.map((item) => ({
-        menuId: item?.menuId,
-        name: item?.name,
-        price: item?.price,
-        quantity: item?.quantity,
-        imagePath: item?.imagePath,
-      })),
-      totalPrice: totalPrice,
-    };
+      const payload = {
+        user: {
+          firstName: formData?.firstName,
+          lastName: formData?.lastName,
+          phoneNo: formData?.phoneNo,
+          email: formData?.email,
+        },
+        items: cartItems.map((item) => ({
+          menuId: item?.menuId,
+          name: item?.name,
+          price: item?.price,
+          quantity: item?.quantity,
+          imagePath: item?.imagePath,
+        })),
+        totalPrice: totalPrice,
+      };
 
-    const { data: session } = await createCheckoutSession(payload);
-    await stripe.redirectToCheckout({ sessionId: session?.sessionId });
+      const { data: session } = await createCheckoutSession(payload);
+      await stripe.redirectToCheckout({ sessionId: session?.sessionId });
+    }
   };
 
   // Initialize form handling with validation
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(CUSTOM_FORM_VALIDATION),
   });
@@ -289,13 +312,28 @@ const Cart = () => {
                     </Box>
                   </Stack>
                 </Stack>
-                <RHFButton
-                  isLoading={isLoading}
-                  type="submit"
-                  onClick={handleSubmit}
-                  title={'Proceed To Payment'}
-                  variant={'contained'}
-                />
+                <Stack direction="row" gap={2}>
+                  <RHFButton
+                    fullWidth
+                    isLoading={isLoading}
+                    type="submit"
+                    onClick={() => {
+                      setValue('isPOD', true);
+                    }}
+                    title={'Pay on Delivery'}
+                    variant={'outlined'}
+                  />
+                  <RHFButton
+                    fullWidth
+                    isLoading={isLoading}
+                    type="submit"
+                    onClick={() => {
+                      setValue('isPOD', false);
+                    }}
+                    title={'Proceed To Payment'}
+                    variant={'contained'}
+                  />
+                </Stack>
               </Stack>
             </Grid>
           </Grid>
