@@ -9,7 +9,15 @@ export const checkoutApi = createApiInstance.injectEndpoints({
         body: { cartItems },
       }),
     }),
+    createCodOrder: builder.mutation({
+      query: (payload) => ({
+        url: '/stripe/create-cod-order',
+        method: 'POST',
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useCreateCheckoutSessionMutation } = checkoutApi;
+export const { useCreateCheckoutSessionMutation, useCreateCodOrderMutation } =
+  checkoutApi;

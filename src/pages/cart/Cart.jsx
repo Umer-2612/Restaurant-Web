@@ -26,7 +26,10 @@ import CustomForm from './CustomForm';
 
 import EmptyCartImage from 'assets/images/barbecue.svg';
 import RHFButton from 'components/button/RHFButton';
-import { useCreateCheckoutSessionMutation } from 'store/apis/checkoutApi';
+import {
+  useCreateCheckoutSessionMutation,
+  useCreateCodOrderMutation,
+} from 'store/apis/checkoutApi';
 import { cartSelector, modifyCartDetails } from 'store/slices/cart';
 import { validationSchema } from 'utils/validation';
 
@@ -44,6 +47,9 @@ const Cart = () => {
   const navigate = useNavigate();
   const [createCheckoutSession, { isLoading }] =
     useCreateCheckoutSessionMutation();
+  const [createCodOrder, { isLoading: isCODLoading }] =
+    useCreateCodOrderMutation();
+
   const dispatch = useDispatch();
   const cartItems = useSelector(cartSelector) || [];
   const [searchParams] = useSearchParams();
@@ -113,8 +119,10 @@ const Cart = () => {
         totalPrice: totalPrice,
         isPOD: formData?.isPOD,
       };
-      const { data: session } = await createCheckoutSession(payload);
-      console.log({ session });
+      const { data } = await createCodOrder(payload);
+      if (data) {
+        navigate(`/orderStatus?status=success&orderId=${data.orderId}`);
+      }
     } else {
       const stripe = await stripePromise;
 
@@ -141,6 +149,7 @@ const Cart = () => {
   };
 
   // Initialize form handling with validation
+
   const { control, handleSubmit, setValue } = useForm({
     mode: 'onTouched',
     resolver: yupResolver(CUSTOM_FORM_VALIDATION),
@@ -315,7 +324,7 @@ const Cart = () => {
                 <Stack direction="row" gap={2}>
                   <RHFButton
                     fullWidth
-                    isLoading={isLoading}
+                    isLoading={isCODLoading}
                     type="submit"
                     onClick={() => {
                       setValue('isPOD', true);
