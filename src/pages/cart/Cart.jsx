@@ -121,7 +121,7 @@ const Cart = () => {
       };
       const { data } = await createCodOrder(payload);
       if (data) {
-        navigate(`/orderStatus?status=success&orderId=${data.orderId}`);
+        navigate(`/orderStatus?status=success&orderId=${data?.data?._id}`);
       }
     } else {
       const stripe = await stripePromise;
