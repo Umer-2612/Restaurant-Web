@@ -29,11 +29,10 @@ const OrderList = () => {
         isNaN(Number(viewParams.get('page'))) || viewParams.get('page') <= 0
           ? 1
           : viewParams.get('page'),
-      perPage:
-        isNaN(Number(viewParams.get('perPage'))) ||
-        viewParams.get('perPage') <= 0
+      limit:
+        isNaN(Number(viewParams.get('limit'))) || viewParams.get('limit') <= 0
           ? 20
-          : viewParams.get('perPage'),
+          : viewParams.get('limit'),
     },
     {
       refetchOnMountOrArgChange: true,

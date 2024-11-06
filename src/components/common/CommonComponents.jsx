@@ -342,13 +342,13 @@ export const CustomPagination = ({
       ? 1
       : searchParams.get('page');
   const perPage =
-    isNaN(Number(searchParams.get('perPage'))) ||
-    searchParams.get('perPage') <= 0
+    isNaN(Number(searchParams.get('limit'))) || searchParams.get('limit') <= 0
       ? 20
-      : searchParams.get('perPage');
+      : searchParams.get('limit');
+
   const handleChangeRowsPerPage = React.useCallback(
     (newRowsPerPage) => {
-      searchParams.set('perPage', newRowsPerPage);
+      searchParams.set('limit', newRowsPerPage);
       searchParams.set('page', 1);
 
       setSearchParams(searchParams, { replace: true });

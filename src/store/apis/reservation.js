@@ -1,10 +1,12 @@
 import { createApiInstance } from './createApiInstance';
 
+import { queryParamsBuilder } from 'utils/commonFunctions';
+
 const reservationApi = createApiInstance.injectEndpoints({
   endpoints: (build) => ({
     getAllReservation: build.query({
       providesTags: ['Reservation'],
-      query: (query) => '/reservation',
+      query: (query) => `/reservation${queryParamsBuilder(query)}`,
     }),
 
     putPostReservation: build.mutation({

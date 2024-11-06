@@ -43,7 +43,6 @@ const Reservation = () => {
   const onSubmit = async (data) => {
     try {
       const response = await reservation(data);
-      console.log(response?.error?.data?.message);
       if (response?.data) {
         showToast(response?.data?.message, 'success');
         reset();
