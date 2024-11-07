@@ -213,6 +213,9 @@ const Reservation = () => {
                   name="phoneNo"
                   fullWidth
                   onKeyPress={fnPressNumberKeyWithHyphen}
+                  inputProps={{
+                    maxLength: 10,
+                  }}
                 />
               </Reveal>
             </Grid>
@@ -252,6 +255,7 @@ const Reservation = () => {
                   name="reservationDate"
                   date={dayjs()} // Set the current date
                   control={control}
+                  isShowTime={true}
                   dateHandler={(date) => {
                     handleChangeDate(date);
                   }}

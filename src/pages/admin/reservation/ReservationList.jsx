@@ -74,7 +74,7 @@ const ReservationList = () => {
       formatter: ({ row }) => {
         return (
           <Typography variant="body1">
-            {dayjs(row?.publishedOn).format('ddd, MMM DD')}
+            {dayjs(row?.reservationDate).format('ddd, MMM DD,hh:mm A')}
           </Typography>
         );
       },
