@@ -86,7 +86,7 @@ const CartDetailsModal = ({ menuProps, handleMenuModalClose }) => {
       <body>
           <div class="receipt-container">
               <div class="logo">
-                  <img src="logo.png" alt="Restaurant Logo">
+                  <img src="https://res.cloudinary.com/domcmqnwn/image/upload/v1729418279/Production-Restaurant-Menu/Punjabi-Touch-01-01-e1698190288737_dwd6hu.png" alt="Restaurant Logo">
               </div>
               <div class="restaurant-name">Punjabi Touch Indian Restaurant</div>
               <div class="details">

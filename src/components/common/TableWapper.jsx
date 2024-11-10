@@ -141,15 +141,15 @@ function TableWrapper({
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
+
   const page =
     isNaN(Number(searchParams.get('page'))) || searchParams.get('page') <= 0
       ? 1
       : searchParams.get('page');
   const perPage =
-    isNaN(Number(searchParams.get('perPage'))) ||
-    searchParams.get('perPage') <= 0
+    isNaN(Number(searchParams.get('limit'))) || searchParams.get('limit') <= 0
       ? 20
-      : searchParams.get('perPage');
+      : searchParams.get('limit');
 
   const [success, setIsSuccess] = useState(isSuccess);
 
@@ -162,11 +162,11 @@ function TableWrapper({
       setSearchParams(searchParams, { replace: true });
     }
     if (
-      searchParams.get('perPage') &&
-      (searchParams.get('perPage') <= 0 ||
-        isNaN(Number(searchParams.get('perPage'))))
+      searchParams.get('limit') &&
+      (searchParams.get('limit') <= 0 ||
+        isNaN(Number(searchParams.get('limit'))))
     ) {
-      searchParams.set('perPage', '20');
+      searchParams.set('limit', '20');
       setSearchParams(searchParams, { replace: true });
     }
   }, [location, searchParams, setSearchParams]);

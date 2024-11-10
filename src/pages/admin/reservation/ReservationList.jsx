@@ -28,11 +28,10 @@ const ReservationList = () => {
         isNaN(Number(viewParams.get('page'))) || viewParams.get('page') <= 0
           ? 1
           : viewParams.get('page'),
-      perPage:
-        isNaN(Number(viewParams.get('perPage'))) ||
-        viewParams.get('perPage') <= 0
+      limit:
+        isNaN(Number(viewParams.get('limit'))) || viewParams.get('limit') <= 0
           ? 20
-          : viewParams.get('perPage'),
+          : viewParams.get('limit'),
     },
     {
       refetchOnMountOrArgChange: true,
@@ -75,18 +74,7 @@ const ReservationList = () => {
       formatter: ({ row }) => {
         return (
           <Typography variant="body1">
-            {dayjs(row?.publishedOn).format('ddd, MMM DD - hh:mm A')}
-          </Typography>
-        );
-      },
-    },
-    {
-      id: 'reservationDate',
-      title: 'Reservation Date',
-      formatter: ({ row }) => {
-        return (
-          <Typography variant="body1">
-            {dayjs(row?.publishedOn).format('ddd, MMM DD - hh:mm A')}
+            {dayjs(row?.reservationDate).format('ddd, MMM DD,hh:mm A')}
           </Typography>
         );
       },
@@ -95,7 +83,6 @@ const ReservationList = () => {
       id: 'action',
       title: 'Actions',
       formatter: ({ row }) => {
-        console.log('::row', row);
         if (row?.status === 'Rejected') {
           return (
             <>

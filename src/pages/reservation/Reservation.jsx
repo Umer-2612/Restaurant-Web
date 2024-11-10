@@ -43,7 +43,6 @@ const Reservation = () => {
   const onSubmit = async (data) => {
     try {
       const response = await reservation(data);
-      console.log(response?.error?.data?.message);
       if (response?.data) {
         showToast(response?.data?.message, 'success');
         reset();
@@ -214,6 +213,9 @@ const Reservation = () => {
                   name="phoneNo"
                   fullWidth
                   onKeyPress={fnPressNumberKeyWithHyphen}
+                  inputProps={{
+                    maxLength: 10,
+                  }}
                 />
               </Reveal>
             </Grid>
@@ -253,6 +255,7 @@ const Reservation = () => {
                   name="reservationDate"
                   date={dayjs()} // Set the current date
                   control={control}
+                  isShowTime={true}
                   dateHandler={(date) => {
                     handleChangeDate(date);
                   }}
