@@ -10,6 +10,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import ThemeLoader from './theme-loader/ThemeLoader.jsx';
 
+import { SocketProvider } from 'context/SocketContext.jsx';
 import { store } from 'store/index.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -17,21 +18,23 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <ThemeLoader>
       <BrowserRouter>
-        <Suspense
-          fallback={
-            <Stack
-              width="100%"
-              height="100vh"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <CircularProgress />
-            </Stack>
-          }
-        >
-          <Toaster />
-          <App />
-        </Suspense>
+        <SocketProvider>
+          <Suspense
+            fallback={
+              <Stack
+                width="100%"
+                height="100vh"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <CircularProgress />
+              </Stack>
+            }
+          >
+            <Toaster />
+            <App />
+          </Suspense>
+        </SocketProvider>
       </BrowserRouter>
     </ThemeLoader>
   </Provider>
