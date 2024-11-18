@@ -33,7 +33,6 @@ const QueryList = () => {
     },
     {
       refetchOnMountOrArgChange: true,
-      pollingInterval: 300000,
     }
   );
 

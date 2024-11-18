@@ -35,7 +35,6 @@ const ReservationList = () => {
     },
     {
       refetchOnMountOrArgChange: true,
-      pollingInterval: 300000,
     }
   );
 

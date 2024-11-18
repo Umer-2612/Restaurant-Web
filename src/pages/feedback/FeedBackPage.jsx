@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -11,12 +11,23 @@ import {
   Stack,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+
+import { modifyCartDetails } from 'store/slices/cart';
 
 const FeedbackPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const status = searchParams.get('status');
+
+  useEffect(() => {
+    if (status === 'success') {
+      localStorage.clear('menuDetails');
+      dispatch(modifyCartDetails([]));
+    }
+  });
   // const orderId = searchParams.get('orderId');
   return (
     <Box
