@@ -3,8 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { io } from 'socket.io-client';
 
-import config from '../config';
-
 import { getCookie } from 'utils/commonFunctions';
 import {
   SocketContext,
@@ -21,12 +19,14 @@ export const SocketProvider = ({ children }) => {
   const initSocketConnection = useCallback(() => {
     // if (user?.info?.company?._id) {
     const socketClient = io(
-      `${
-        import.meta.env.VITE_ENV === 'development'
-          ? `localhost:${import.meta.env.VITE_SOCKET_PORT}/`
-          : config.baseUrl
-      }`,
+      import.meta.env.VITE_ENV === 'development'
+        ? `http://localhost:${import.meta.env.VITE_SOCKET_PORT}/` // Development URL
+        : 'wss://www.punjabitouchindianrestaurant.com.au', // Production URL
       {
+        path:
+          import.meta.env.VITE_ENV === 'development'
+            ? '/socket.io/'
+            : '/socket.io/', // Path remains the same
         transports: ['websocket'],
         reconnection: false,
         auth: {
