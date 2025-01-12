@@ -47,16 +47,13 @@ export async function sendToPrinter(receiptData) {
     const formattedReceiptData = formatReceiptData(receiptData);
     console.log({ formattedReceiptData });
     // Send the print data to the printer via HTTP POST
-    const response = await fetch(
-      `https://8167-2405-201-200c-49b6-44de-a033-3b3f-f280.ngrok-free.app:${printerPort}/print`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain', // Content type for raw printer data
-        },
-        body: formattedReceiptData, // Send the formatted receipt data as body
-      }
-    );
+    const response = await fetch(`https://${printerIp}:${printerPort}/print`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain', // Content type for raw printer data
+      },
+      body: formattedReceiptData, // Send the formatted receipt data as body
+    });
 
     if (response.ok) {
       console.log('Receipt printed successfully');
