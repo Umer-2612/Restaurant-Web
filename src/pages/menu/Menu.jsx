@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import MenuFilter from './components/MenuFilter';
@@ -18,7 +18,8 @@ import {
 } from 'components/common/CommonComponents';
 import { useGetCategoriesQuery } from 'store/apis/categories';
 import { useGetMenusQuery } from 'store/apis/menu';
-import { cartSelector } from 'store/slices/cart';
+import { cartSelector, modifyCartDetails } from 'store/slices/cart';
+import useRestaurantStatus from 'store/slices/useRestaurantStatus';
 
 const Menu = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,11 +29,13 @@ const Menu = () => {
   });
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  // Append new data on infinite scroll
+  const [showClosedMessage, setShowClosedMessage] = useState(false);
   const [menuItems, setMenuItems] = useState([]);
   const [isCategoryChanged, setIsCategoryChanged] = useState(false);
   const storedMenuDetails = useSelector(cartSelector);
   const containerRef = useRef();
+  const { isOpen } = useRestaurantStatus();
+  const dispatch = useDispatch();
 
   const handleMenuModalOpen = ({ menu }) => {
     setMenuProps({ menuDetails: menu, isMenuOpen: true });
@@ -65,6 +68,13 @@ const Menu = () => {
       id: category._id,
       name: category.name,
     })) || [];
+
+  useEffect(() => {
+    if (!isOpen) {
+      setShowClosedMessage(true);
+      dispatch(modifyCartDetails([]));
+    }
+  }, [isOpen, dispatch]);
 
   useEffect(() => {
     if (data?.paginationData?.total === menuItems?.length) {
@@ -164,43 +174,69 @@ const Menu = () => {
   }
 
   return (
-    <Container sx={{ mt: 5 }}>
-      <Stack alignItems="center" ref={containerRef}>
-        <Grid container size={{ xs: 12, sm: 11, md: 10 }} spacing={3}>
-          {categories?.length > 0 && (
-            <MenuFilter
-              categories={categories}
-              onCategoryChange={handleCategoryChange}
-            />
-          )}
-          <Stack width="100%">
-            {menuItems?.map((menu, index) => {
-              return (
-                <Reveal key={menu?._id} output={[0, 10, 20, 30, 40]}>
-                  <MenuItemLayout
-                    menu={menu}
-                    handleMenuModalOpen={handleMenuModalOpen}
-                    isLastItem={Number(menuItems?.length - 1) === Number(index)}
-                    isLoading={isLoading}
-                    isFetching={isFetching}
-                  />
-                </Reveal>
-              );
-            })}
-            {hasMore && (
-              <Stack
-                justifyContent="center"
-                alignItems="center"
-                direction="row"
-                gap={2}
-                p={2}
-              >
-                <CircularProgress size={24} />
-                <Typography variant="subtitle2">Loading</Typography>
-              </Stack>
-            )}
+    <Container maxWidth="xl">
+      <Stack spacing={3} py={3}>
+        <Stack>
+          <Typography variant="h4" fontWeight={600}>
+            Our Menu
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Explore our wide range of delicious menu items
+          </Typography>
+        </Stack>
+
+        {(!isOpen || showClosedMessage) && (
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              backgroundColor: 'warning.light',
+              py: 2,
+              px: 3,
+              borderRadius: 2,
+            }}
+          >
+            <Typography color="warning.dark" align="center" fontWeight={500}>
+              Restaurant is currently closed. Please check back durin business
+              hours.
+            </Typography>
           </Stack>
-        </Grid>
+        )}
+
+        <MenuFilter
+          categories={categories}
+          onCategoryChange={handleCategoryChange}
+          isLoading={isCategoryLoading}
+        />
+        <Stack width="100%">
+          {menuItems?.map((menu, index) => {
+            return (
+              <Reveal key={menu?._id} output={[0, 10, 20, 30, 40]}>
+                <MenuItemLayout
+                  menu={menu}
+                  handleMenuModalOpen={handleMenuModalOpen}
+                  isLastItem={Number(menuItems?.length - 1) === Number(index)}
+                  isLoading={isLoading}
+                  isFetching={isFetching}
+                  showClosedMessage={setShowClosedMessage}
+                />
+              </Reveal>
+            );
+          })}
+          {hasMore && (
+            <Stack
+              justifyContent="center"
+              alignItems="center"
+              direction="row"
+              gap={2}
+              p={2}
+            >
+              <CircularProgress size={24} />
+              <Typography variant="subtitle2">Loading</Typography>
+            </Stack>
+          )}
+        </Stack>
         <MenuItemModal
           menuProps={menuProps}
           setMenuProps={setMenuProps}

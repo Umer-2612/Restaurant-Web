@@ -18,6 +18,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import PTFullLogo from './../../../src/assets/brand-image/punjabi-touch-cropped.png';
 
 import { cartSelector } from 'store/slices/cart';
+import useRestaurantStatus from 'store/slices/useRestaurantStatus';
 import { NAV_TABS as TABS } from 'utils/commonData';
 
 // Logo component for reuse
@@ -159,7 +160,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const cartDetails = useSelector(cartSelector);
-
+  const { checkIfOpen } = useRestaurantStatus();
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const activeMenu = location.pathname;
@@ -170,6 +171,14 @@ const Navbar = () => {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleCartClick = () => {
+    const isOpen = checkIfOpen();
+    if (!isOpen) {
+      return;
+    }
+    navigate('/cart');
   };
 
   const handleClick = useCallback(() => {
@@ -238,12 +247,19 @@ const Navbar = () => {
             {/* User avatar */}
             <Box sx={{ flexGrow: 0 }}>
               <IconButton
-                color="primary"
-                onClick={() => {
-                  navigate('/cart');
+                color={checkIfOpen() ? 'primary' : 'default'}
+                onClick={handleCartClick}
+                disabled={!checkIfOpen()}
+                sx={{
+                  '&.Mui-disabled': {
+                    opacity: 0.5,
+                  },
                 }}
               >
-                <Badge badgeContent={cartDetails?.length || 0} color="primary">
+                <Badge
+                  badgeContent={checkIfOpen() ? cartDetails?.length || 0 : 0}
+                  color="primary"
+                >
                   <ShoppingBagOutlinedIcon />
                 </Badge>
               </IconButton>
