@@ -176,15 +176,6 @@ const Menu = () => {
   return (
     <Container maxWidth="xl">
       <Stack spacing={3} py={3}>
-        <Stack>
-          <Typography variant="h4" fontWeight={600}>
-            Our Menu
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Explore our wide range of delicious menu items
-          </Typography>
-        </Stack>
-
         {(!isOpen || showClosedMessage) && (
           <Stack
             direction="row"
@@ -198,7 +189,7 @@ const Menu = () => {
             }}
           >
             <Typography color="warning.dark" align="center" fontWeight={500}>
-              Restaurant is currently closed. Please check back durin business
+              Restaurant is currently closed. Please check back during business
               hours.
             </Typography>
           </Stack>

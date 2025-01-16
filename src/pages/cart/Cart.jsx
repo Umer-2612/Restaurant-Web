@@ -185,8 +185,8 @@ const Cart = () => {
               }}
             >
               <Typography color="warning.dark" align="center" fontWeight={500}>
-                Restaurant is currently closed. Please check back durin business
-                hours.
+                Restaurant is currently closed. Please check back during
+                business hours.
               </Typography>
             </Stack>
           )}
