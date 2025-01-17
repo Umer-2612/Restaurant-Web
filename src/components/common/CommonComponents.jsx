@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { modifyCartDetails } from 'store/slices/cart';
+import useRestaurantStatus from 'store/slices/useRestaurantStatus';
 
 export const RenderMenuSkeleton = () => {
   return (
@@ -65,23 +66,24 @@ export const RenderMenuSkeleton = () => {
 export const MenuItemLayout = ({
   menu,
   handleMenuModalOpen,
-  // updateCartDetails,
   isLastItem = false,
   isLoading,
   isFetching,
+  showClosedMessage,
 }) => {
   const dispatch = useDispatch();
+  const { checkIfOpen } = useRestaurantStatus();
   const menuDetails = menu;
   const [cartDetails, setCartDetails] = useState({
     menuId: menuDetails?._id || null,
     quantity: 0,
     name: menuDetails?.itemName,
     price: menuDetails?.itemPrice,
-    // itemImagePath: menuDetails?.itemImagePath,
     categoryName: menuDetails?.category?.name,
     imagePath:
       'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg',
   });
+  const cartDisabled = false;
 
   useEffect(() => {
     if (menuDetails) {
@@ -91,7 +93,6 @@ export const MenuItemLayout = ({
           quantity: 0,
           name: menuDetails?.itemName,
           price: menuDetails?.itemPrice,
-          // itemImagePath: menuDetails?.itemImagePath,
           categoryName: menuDetails?.category?.name,
           imagePath:
             'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg',
@@ -245,7 +246,6 @@ export const MenuItemLayout = ({
               {menu?.cartDetails?.quantity ? (
                 <>
                   <IconButton
-                    // onClick={() => handleMenuModalOpen({ menu })}
                     onClick={() =>
                       updateCartDetails({
                         increaseQuantity: false,
@@ -266,7 +266,6 @@ export const MenuItemLayout = ({
                     {menu?.cartDetails?.quantity}
                   </Typography>
                   <IconButton
-                    // onClick={() => handleMenuModalOpen({ menu })}
                     onClick={() =>
                       updateCartDetails({
                         increaseQuantity: true,
@@ -290,23 +289,32 @@ export const MenuItemLayout = ({
               ) : (
                 <Button
                   fullWidth
-                  // onClick={() => handleMenuModalOpen({ menu })}
                   onClick={() =>
                     updateCartDetails({
                       increaseQuantity: true,
                     })
                   }
                   sx={{
-                    height: 38,
-                    borderRadius: 3,
-                    px: 4,
-                    bgcolor: (theme) => theme.palette.common.white,
+                    'height': 38,
+                    'borderRadius': 3,
+                    'px': 4,
+                    'bgcolor': (theme) => theme.palette.common.white,
+                    '&.Mui-disabled': {
+                      bgcolor: (theme) =>
+                        theme.palette.action.disabledBackground,
+                      color: (theme) => theme.palette.action.disabled,
+                    },
                   }}
+                  disabled={!checkIfOpen() || cartDisabled}
                   variant="text"
                 >
                   <Typography
                     variant="subtitle2"
-                    color="success.main"
+                    color={
+                      checkIfOpen() && !cartDisabled
+                        ? 'success.main'
+                        : 'text.disabled'
+                    }
                     fontWeight={600}
                   >
                     ADD
@@ -324,11 +332,10 @@ export const MenuItemLayout = ({
 MenuItemLayout.propTypes = {
   menu: PropTypes.object,
   handleMenuModalOpen: PropTypes.func,
-  cartDetails: PropTypes.object,
-  updateCartDetails: PropTypes.func,
   isLastItem: PropTypes.bool,
   isLoading: PropTypes.bool,
   isFetching: PropTypes.bool,
+  showClosedMessage: PropTypes.func,
 };
 
 export const CustomPagination = ({
