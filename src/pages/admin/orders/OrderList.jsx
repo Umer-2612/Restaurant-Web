@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import PrintIcon from '@mui/icons-material/Print';
 import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
+import { Chip, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -108,6 +109,30 @@ const OrderList = () => {
                   font-weight: bold;
                   font-size: 1.2em;
               }
+              .customer-details {
+                  border: 1px solid #ddd;
+                  padding: 15px;
+                  margin: 15px 0;
+                  border-radius: 5px;
+                  background-color: #f9f9f9;
+              }
+              .customer-details h3 {
+                  margin: 0 0 10px 0;
+                  color: #333;
+                  font-size: 1.1em;
+              }
+              .customer-info {
+                  display: grid;
+                  grid-template-columns: auto auto;
+                  gap: 8px;
+              }
+              .customer-info p {
+                  margin: 5px 0;
+              }
+              .customer-info .label {
+                  font-weight: bold;
+                  color: #666;
+              }
           </style>
       </head>
       <body>
@@ -120,6 +145,17 @@ const OrderList = () => {
                   <p>Receipt ID: ${cart?._id}</p>
                   <p>Date: ${cart?.createdAt ? dayjs(cart?.createdAt).format('MMM DD YYYY - hh:mm A') : '-'}</p>
               </div>
+              
+              <div class="customer-details">
+                  <h3>Customer Information</h3>
+                  <div class="customer-info">
+                      <p><span class="label">Name:</span></p>
+                      <p>${cart?.customerDetails?.firstName} ${cart?.customerDetails?.lastName}</p>
+                      <p><span class="label">Contact:</span></p>
+                      <p>${cart?.customerDetails?.phoneNo || 'N/A'}</p>
+                  </div>
+              </div>
+
               <table>
                   <thead>
                       <tr>
@@ -211,6 +247,41 @@ const OrderList = () => {
           <Typography variant="body1">
             {dayjs(row?.createdAt).format('ddd, MMM DD - hh:mm A')}
           </Typography>
+        );
+      },
+    },
+    {
+      id: 'orderStatus',
+      title: 'Status',
+      formatter: ({ row }) => {
+        const isPOD = row?.status === 'POD';
+
+        const statusChip = (
+          <Chip
+            label={
+              <Stack
+                flexDirection="row"
+                alignItems="center"
+                gap={1}
+                color={isPOD ? '#F59E0B' : '#23C55E'}
+              >
+                <Typography variant="subtitle2">{row?.status}</Typography>
+              </Stack>
+            }
+            sx={{
+              backgroundColor: isPOD ? '#FEF3C7' : '#DCFCE7',
+              cursor: 'pointer',
+              borderRadius: 2,
+            }}
+          />
+        );
+
+        return isPOD ? (
+          <Tooltip title="Payment on Delivery" arrow>
+            {statusChip}
+          </Tooltip>
+        ) : (
+          statusChip
         );
       },
     },
