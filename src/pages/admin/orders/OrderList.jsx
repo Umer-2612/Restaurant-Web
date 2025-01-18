@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import PrintIcon from '@mui/icons-material/Print';
 import VisibilityOutlined from '@mui/icons-material/VisibilityOutlined';
+import { Chip, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -211,6 +212,39 @@ const OrderList = () => {
           <Typography variant="body1">
             {dayjs(row?.createdAt).format('ddd, MMM DD - hh:mm A')}
           </Typography>
+        );
+      },
+    },
+    {
+      id: 'orderStatus',
+      title: 'Status',
+      formatter: ({ row }) => {
+        const statusChip = (
+          <Chip
+            label={
+              <Stack
+                flexDirection="row"
+                alignItems="center"
+                gap={1}
+                color="#23C55E"
+              >
+                <Typography variant="subtitle2">{row?.status}</Typography>
+              </Stack>
+            }
+            sx={{
+              backgroundColor: '#FEEAEA',
+              cursor: 'pointer',
+              borderRadius: 2,
+            }}
+          />
+        );
+
+        return row?.status === 'POD' ? (
+          <Tooltip title="Payment on Delivery" arrow>
+            {statusChip}
+          </Tooltip>
+        ) : (
+          statusChip
         );
       },
     },
