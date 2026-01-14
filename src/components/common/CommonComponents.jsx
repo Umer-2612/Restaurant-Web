@@ -14,6 +14,7 @@ import Select from '@mui/material/Select';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
@@ -75,6 +76,7 @@ export const MenuItemLayout = ({
 }) => {
   const dispatch = useDispatch();
   const { checkIfOpen } = useRestaurantStatus();
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
   const menuDetails = menu;
   const isVariantItem =
     Array.isArray(variantOptions) && variantOptions?.length > 0;
@@ -246,12 +248,11 @@ export const MenuItemLayout = ({
   return (
     <Stack
       overflow="hidden"
-      height="100%"
       sx={{
         borderBottom: (theme) =>
           isLastItem ? 'none' : `1px solid ${theme.palette.other.border}`,
+        flexDirection: { xs: 'column', sm: 'row' },
       }}
-      direction="row"
       alignItems="center"
       width="100%"
       py={2}
@@ -309,6 +310,7 @@ export const MenuItemLayout = ({
                 minWidth: 160,
                 backgroundColor: (theme) => theme.palette.other.bgColor,
                 borderRadius: 2,
+                width: isMobile ? '100%' : 'auto',
               }}
             >
               {variantOptions?.map((option) => (
@@ -323,8 +325,8 @@ export const MenuItemLayout = ({
       <Stack
         position="relative"
         sx={{
-          height: 160,
-          width: 156,
+          height: isMobile ? 200 : 160,
+          width: isMobile ? '100%' : 156,
           borderRadius: 3,
         }}
       >
@@ -350,14 +352,18 @@ export const MenuItemLayout = ({
             direction="row"
             justifyContent="space-between"
             alignItems="center"
-            position="absolute"
-            bottom={menu?.itemImagePath ? 0 : '50%'}
-            left="50%"
-            sx={{
-              transform: menu?.itemImagePath
-                ? 'translate(-50%, 0%)'
-                : 'translate(-50%, 50%)',
-            }}
+            position={isMobile ? 'static' : 'absolute'}
+            bottom={isMobile ? 'auto' : menu?.itemImagePath ? 0 : '50%'}
+            left={isMobile ? 'auto' : '50%'}
+            sx={
+              isMobile
+                ? { mt: 1 }
+                : {
+                    transform: menu?.itemImagePath
+                      ? 'translate(-50%, 0%)'
+                      : 'translate(-50%, 50%)',
+                  }
+            }
           >
             <Stack
               direction="row"
