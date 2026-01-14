@@ -10,32 +10,13 @@
     "lint:prettier:fix": "prettier -c --write \"src/**/*.{css,scss,json,html}\" --end-of-line auto",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "npm run lint --fix --max-warnings=0",
-    "preview": "vite preview",
-    "prepare": "husky install"
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "npm run lint:fix",
-      "npm run lint",
-      "git add"
-    ],
-    "src/**/*.{css,scss,html}": [
-      "npm run lint:prettier:fix",
-      "npm run lint:prettier",
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run test"
-    }
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -67,6 +48,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",

@@ -21,6 +21,16 @@ import { useGetMenusQuery } from 'store/apis/menu';
 import { cartSelector, modifyCartDetails } from 'store/slices/cart';
 import useRestaurantStatus from 'store/slices/useRestaurantStatus';
 
+const CLASSIC_CURRY_CATEGORY_ID = '67096a46c45927fe078dbfca';
+
+const parseClassicVariant = (itemName = '') => {
+  const parts = itemName.split('-');
+  const label =
+    parts[1]?.trim() || itemName.replace(/classic curry/i, '').trim();
+  const key = label?.toLowerCase().replace(/\s+/g, '-') || 'default';
+  return { key, label };
+};
+
 const Menu = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [menuProps, setMenuProps] = useState({
@@ -77,35 +87,107 @@ const Menu = () => {
   }, [isOpen, dispatch]);
 
   useEffect(() => {
-    if (data?.paginationData?.total === menuItems?.length) {
-      setHasMore(false);
-    }
-  }, [data?.paginationData?.total, menuItems?.length]);
+    if (!isSuccess) return;
 
-  useEffect(() => {
-    if (isSuccess) {
-      const modifiedData = data?.data?.map((menu) => {
-        const itemIndex = storedMenuDetails.findIndex(
-          (cartData) => cartData?.menuId === menu?._id
-        );
+    const storedMenuMap = new Map(
+      (storedMenuDetails || []).map((item) => [item?.menuId, item])
+    );
 
-        return itemIndex >= 0
-          ? { ...menu, cartDetails: storedMenuDetails[itemIndex] }
-          : menu;
-      });
-      if (page === 1) {
-        setMenuItems(modifiedData || []);
-      } else if (data?.paginationData?.total === menuItems?.length) {
-        setHasMore(false);
+    const classicItems = [];
+    const otherItems = [];
+
+    data?.data?.forEach((menu) => {
+      const matchedCart = storedMenuMap.get(menu?._id);
+
+      const withCartDetails = matchedCart
+        ? { ...menu, cartDetails: matchedCart }
+        : menu;
+
+      const isClassicCurry =
+        (menu?.category?._id === CLASSIC_CURRY_CATEGORY_ID ||
+          menu?.category === CLASSIC_CURRY_CATEGORY_ID) &&
+        menu?.itemName?.toLowerCase().startsWith('classic curry');
+
+      if (isClassicCurry) {
+        classicItems.push(withCartDetails);
       } else {
-        setMenuItems((prevItems) => {
-          const newItems = modifiedData.filter(
-            (item) =>
-              !prevItems.some((existingItem) => existingItem._id === item._id)
-          );
-          return [...prevItems, ...newItems];
-        });
+        otherItems.push(withCartDetails);
       }
+    });
+
+    let modifiedData = [...otherItems];
+    const classicCount = classicItems.length;
+    const adjustedTotal =
+      (data?.paginationData?.total || 0) -
+      classicCount +
+      (classicCount ? 1 : 0);
+
+    if (classicItems.length > 0) {
+      const variantOptions = classicItems.map((item) => {
+        const { key, label } = parseClassicVariant(item?.itemName);
+        return {
+          key,
+          label,
+          price: item?.itemPrice,
+          menuId: item?._id,
+          itemImagePath: item?.itemImagePath,
+          // itemDescription: item?.itemDescription,
+          cartDetails: storedMenuMap.get(item?._id),
+        };
+      });
+
+      const selectedVariantFromCart =
+        variantOptions.find((option) => option?.cartDetails?.quantity > 0) ||
+        variantOptions[0];
+
+      const classicDisplayItem = {
+        _id: 'classic-curry-group',
+        itemName: 'Classic Curry',
+        itemDescription:
+          selectedVariantFromCart?.itemDescription ||
+          classicItems[0]?.itemDescription,
+        itemImagePath:
+          selectedVariantFromCart?.itemImagePath ||
+          classicItems[0]?.itemImagePath,
+        category: classicItems[0]?.category,
+        variantOptions,
+        variantDefaultKey: selectedVariantFromCart?.key,
+        variantGroupKey: 'classic-curry-group',
+        cartDetails: selectedVariantFromCart?.cartDetails
+          ? {
+              ...selectedVariantFromCart.cartDetails,
+              variantKey: selectedVariantFromCart.key,
+              variantLabel: selectedVariantFromCart.label,
+              menuId: selectedVariantFromCart.menuId,
+              cartItemId: selectedVariantFromCart.menuId,
+              variantGroupKey: 'classic-curry-group',
+            }
+          : {
+              menuId: selectedVariantFromCart?.menuId,
+              cartItemId: selectedVariantFromCart?.menuId,
+              quantity: 0,
+              variantKey: selectedVariantFromCart?.key,
+              variantLabel: selectedVariantFromCart?.label,
+              variantGroupKey: 'classic-curry-group',
+            },
+      };
+
+      modifiedData = [classicDisplayItem, ...modifiedData];
+    }
+
+    if (page === 1) {
+      setMenuItems(modifiedData || []);
+      setHasMore((modifiedData?.length || 0) < adjustedTotal);
+    } else {
+      setMenuItems((prevItems) => {
+        const newItems = modifiedData.filter(
+          (item) =>
+            !prevItems.some((existingItem) => existingItem._id === item._id)
+        );
+        const combined = [...prevItems, ...newItems];
+        setHasMore((combined?.length || 0) < adjustedTotal);
+        return combined;
+      });
     }
   }, [
     data?.data,
@@ -206,6 +288,8 @@ const Menu = () => {
               <Reveal key={menu?._id} output={[0, 10, 20, 30, 40]}>
                 <MenuItemLayout
                   menu={menu}
+                  variantOptions={menu?.variantOptions}
+                  variantGroupKey={menu?.variantGroupKey}
                   handleMenuModalOpen={handleMenuModalOpen}
                   isLastItem={Number(menuItems?.length - 1) === Number(index)}
                   isLoading={isLoading}

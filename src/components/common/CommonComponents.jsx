@@ -70,10 +70,15 @@ export const MenuItemLayout = ({
   isLoading,
   isFetching,
   showClosedMessage,
+  variantOptions,
+  variantGroupKey,
 }) => {
   const dispatch = useDispatch();
   const { checkIfOpen } = useRestaurantStatus();
   const menuDetails = menu;
+  const isVariantItem =
+    Array.isArray(variantOptions) && variantOptions?.length > 0;
+  const [selectedVariant, setSelectedVariant] = useState(null);
   const [cartDetails, setCartDetails] = useState({
     menuId: menuDetails?._id || null,
     quantity: 0,
@@ -82,63 +87,160 @@ export const MenuItemLayout = ({
     categoryName: menuDetails?.category?.name,
     imagePath:
       'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg',
+    variantGroupKey: variantGroupKey,
   });
   const cartDisabled = false;
+  const displayPrice = isVariantItem
+    ? selectedVariant?.price
+    : menu?.itemPrice;
 
   useEffect(() => {
-    if (menuDetails) {
-      setCartDetails(
-        menuDetails?.cartDetails || {
-          menuId: menuDetails._id,
-          quantity: 0,
-          name: menuDetails?.itemName,
-          price: menuDetails?.itemPrice,
-          categoryName: menuDetails?.category?.name,
-          imagePath:
-            'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg',
-        }
-      );
+    if (!menuDetails) return;
+
+    const fallbackImage =
+      'https://res.cloudinary.com/domcmqnwn/image/upload/v1728669118/restaurant-menu/u8ry5ckxouqnlgjmykuz.jpg';
+
+    const defaultVariant =
+      isVariantItem && variantOptions?.length > 0
+        ? variantOptions?.find(
+            (option) =>
+              option?.key === menuDetails?.cartDetails?.variantKey ||
+              option?.key === menuDetails?.variantDefaultKey
+          ) || variantOptions[0]
+        : null;
+
+    const baseCartDetails = menuDetails?.cartDetails || {};
+
+    const updatedCartDetails = {
+      ...baseCartDetails,
+      menuId: isVariantItem ? defaultVariant?.menuId : menuDetails._id,
+      quantity: baseCartDetails?.quantity || 0,
+      name: isVariantItem
+        ? `${menuDetails?.itemName} - ${defaultVariant?.label}`
+        : menuDetails?.itemName,
+      price: isVariantItem ? defaultVariant?.price : menuDetails?.itemPrice,
+      variantKey: isVariantItem ? defaultVariant?.key : undefined,
+      variantLabel: isVariantItem ? defaultVariant?.label : undefined,
+      cartItemId: isVariantItem
+        ? defaultVariant?.menuId
+        : baseCartDetails?.cartItemId,
+      categoryName: menuDetails?.category?.name,
+      imagePath:
+        menuDetails?.itemImagePath ||
+        baseCartDetails?.imagePath ||
+        fallbackImage,
+      variantGroupKey: isVariantItem ? variantGroupKey : undefined,
+    };
+
+    if (isVariantItem && defaultVariant) {
+      setSelectedVariant(defaultVariant);
     }
-  }, [menuDetails]);
 
-  const updateCartDetails = ({ increaseQuantity }) => {
-    console.log('in', increaseQuantity);
-    let newQuantity = 0;
-    setCartDetails((prevDetails) => {
-      newQuantity = increaseQuantity
-        ? prevDetails.quantity + 1
-        : Math.max(0, prevDetails?.quantity - 1);
+    setCartDetails(updatedCartDetails);
+  }, [isVariantItem, menuDetails, variantOptions]);
 
-      return {
-        ...prevDetails,
-        quantity: newQuantity,
-      };
-    });
-    handleAddToCart({ ...cartDetails, quantity: newQuantity });
+  const resolveVariant = (variantKey) => {
+    if (!isVariantItem) return null;
+    return (
+      variantOptions?.find((option) => option?.key === variantKey) ||
+      variantOptions?.[0] ||
+      selectedVariant
+    );
   };
 
-  const handleAddToCart = (cartDetails) => {
+  const buildUpdatedCart = (prevDetails, { quantity, variantKey } = {}) => {
+    const variant = isVariantItem ? resolveVariant(variantKey) : null;
+    const nextQuantity =
+      quantity !== undefined ? quantity : prevDetails?.quantity || 0;
+    const cartItemId = isVariantItem
+      ? variant?.menuId
+      : prevDetails?.cartItemId || menuDetails?._id;
+
+    return {
+      ...prevDetails,
+      menuId: isVariantItem ? variant?.menuId : menuDetails?._id,
+      cartItemId,
+      quantity: nextQuantity,
+      variantKey: isVariantItem ? variant?.key : undefined,
+      variantLabel: isVariantItem ? variant?.label : undefined,
+      name: isVariantItem
+        ? `${menuDetails?.itemName} - ${variant?.label}`
+        : menuDetails?.itemName,
+      price: isVariantItem ? variant?.price : menuDetails?.itemPrice,
+      categoryName: menuDetails?.category?.name,
+      variantGroupKey: isVariantItem ? variantGroupKey : undefined,
+    };
+  };
+
+  const persistCart = (nextCartDetails) => {
     const storedMenuDetails =
       JSON.parse(localStorage.getItem('menuDetails')) || [];
 
-    const itemIndex = storedMenuDetails.findIndex(
-      (menu) => menu?.menuId === cartDetails?.menuId
+    const variantMenuIds = isVariantItem
+      ? variantOptions?.map((option) => option?.menuId)
+      : [];
+
+    const sanitizedMenuDetails =
+      isVariantItem && variantGroupKey
+        ? storedMenuDetails.filter(
+            (menuItem) =>
+              menuItem?.variantGroupKey !== variantGroupKey &&
+              !variantMenuIds.includes(menuItem?.menuId)
+          )
+        : storedMenuDetails;
+
+    const targetKey = nextCartDetails?.cartItemId || nextCartDetails?.menuId;
+    const itemIndex = sanitizedMenuDetails.findIndex(
+      (menuItem) =>
+        (menuItem?.cartItemId || menuItem?.menuId) === targetKey
     );
 
     if (itemIndex >= 0) {
-      if (cartDetails?.quantity > 0) {
-        storedMenuDetails[itemIndex] = cartDetails;
+      if (nextCartDetails?.quantity > 0) {
+        sanitizedMenuDetails[itemIndex] = nextCartDetails;
       } else {
-        storedMenuDetails[itemIndex] =
-          storedMenuDetails[storedMenuDetails?.length - 1];
-        storedMenuDetails.pop();
+        sanitizedMenuDetails.splice(itemIndex, 1);
       }
-    } else {
-      storedMenuDetails.push(cartDetails);
+    } else if (nextCartDetails?.quantity > 0) {
+      sanitizedMenuDetails.push(nextCartDetails);
     }
 
-    localStorage.setItem('menuDetails', JSON.stringify(storedMenuDetails));
-    dispatch(modifyCartDetails(storedMenuDetails));
+    localStorage.setItem(
+      'menuDetails',
+      JSON.stringify(sanitizedMenuDetails)
+    );
+    dispatch(modifyCartDetails(sanitizedMenuDetails));
+  };
+
+  const updateCartDetails = ({ increaseQuantity }) => {
+    setCartDetails((prevDetails) => {
+      const newQuantity = increaseQuantity
+        ? (prevDetails?.quantity || 0) + 1
+        : Math.max(0, (prevDetails?.quantity || 0) - 1);
+
+      const updatedCart = buildUpdatedCart(prevDetails, {
+        quantity: newQuantity,
+        variantKey: prevDetails?.variantKey,
+      });
+      persistCart(updatedCart);
+      return updatedCart;
+    });
+  };
+
+  const handleVariantChange = (variantKey) => {
+    if (!isVariantItem) return;
+    const selected = resolveVariant(variantKey);
+    setSelectedVariant(selected);
+    setCartDetails((prevDetails) => {
+      const updatedCart = buildUpdatedCart(prevDetails, {
+        quantity: prevDetails?.quantity || 0,
+        variantKey: selected?.key,
+      });
+      if (updatedCart.quantity > 0) {
+        persistCart(updatedCart);
+      }
+      return updatedCart;
+    });
   };
 
   return (
@@ -180,7 +282,10 @@ export const MenuItemLayout = ({
             <Skeleton variant="text" width="40%" height={24} />
           ) : (
             <Typography variant="body1" color="text.primary" fontWeight="bold">
-              ${menu?.itemPrice}
+              $
+              {displayPrice !== undefined
+                ? Number(displayPrice || 0).toFixed(2)
+                : '0.00'}
             </Typography>
           )}
         </Stack>
@@ -190,6 +295,29 @@ export const MenuItemLayout = ({
           <Typography variant="body2" color="text.secondary">
             {menu?.itemDescription}
           </Typography>
+        )}
+        {isVariantItem && !isLoading && (
+          <Stack direction="row" alignItems="center" gap={1}>
+            <Typography variant="body2" color="text.secondary">
+              Select meat/veg:
+            </Typography>
+            <Select
+              size="small"
+              value={selectedVariant?.key || variantOptions?.[0]?.key || ''}
+              onChange={(event) => handleVariantChange(event.target.value)}
+              sx={{
+                minWidth: 160,
+                backgroundColor: (theme) => theme.palette.other.bgColor,
+                borderRadius: 2,
+              }}
+            >
+              {variantOptions?.map((option) => (
+                <MenuItem key={option?.key} value={option?.key}>
+                  {option?.label} - ${Number(option?.price || 0).toFixed(2)}
+                </MenuItem>
+              ))}
+            </Select>
+          </Stack>
         )}
       </Stack>
       <Stack
@@ -243,7 +371,7 @@ export const MenuItemLayout = ({
                   'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px',
               }}
             >
-              {menu?.cartDetails?.quantity ? (
+              {cartDetails?.quantity ? (
                 <>
                   <IconButton
                     onClick={() =>
@@ -263,7 +391,7 @@ export const MenuItemLayout = ({
                     color="success.main"
                     fontWeight={600}
                   >
-                    {menu?.cartDetails?.quantity}
+                    {cartDetails?.quantity}
                   </Typography>
                   <IconButton
                     onClick={() =>
@@ -336,6 +464,8 @@ MenuItemLayout.propTypes = {
   isLoading: PropTypes.bool,
   isFetching: PropTypes.bool,
   showClosedMessage: PropTypes.func,
+  variantOptions: PropTypes.array,
+  variantGroupKey: PropTypes.string,
 };
 
 export const CustomPagination = ({

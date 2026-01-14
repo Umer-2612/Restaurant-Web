@@ -75,17 +75,16 @@ const Cart = () => {
     dispatch(modifyCartDetails(storedCartItems));
   }, [dispatch]);
 
-  const updateQuantity = (menuId, increment) => {
+  const updateQuantity = (cartKey, increment) => {
     const updatedItems = cartItems
       .map((item) => {
-        if (item?.menuId === menuId) {
-          const newQuantity = increment ? item.quantity + 1 : item.quantity - 1;
-          if (newQuantity === 0) {
-            return null;
-          }
-          return { ...item, quantity: newQuantity };
+        const itemKey = item?.cartItemId || item?.menuId;
+        if (itemKey !== cartKey) return item;
+        const newQuantity = increment ? item.quantity + 1 : item.quantity - 1;
+        if (newQuantity <= 0) {
+          return null;
         }
-        return item;
+        return { ...item, quantity: newQuantity };
       })
       .filter((item) => item !== null);
 
@@ -279,8 +278,10 @@ const Cart = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {cartItems.map((item) => (
-                              <TableRow key={item?.menuId}>
+                            {cartItems.map((item) => {
+                              const itemKey = item?.cartItemId || item?.menuId;
+                              return (
+                                <TableRow key={itemKey}>
                                 <TableCell component="th" scope="row">
                                   {item?.name}
                                 </TableCell>
@@ -294,7 +295,7 @@ const Cart = () => {
                                   >
                                     <IconButton
                                       onClick={() =>
-                                        updateQuantity(item?.menuId, false)
+                                        updateQuantity(itemKey, false)
                                       }
                                     >
                                       <RemoveIcon
@@ -313,7 +314,7 @@ const Cart = () => {
                                     </Typography>
                                     <IconButton
                                       onClick={() =>
-                                        updateQuantity(item?.menuId, true)
+                                        updateQuantity(itemKey, true)
                                       }
                                     >
                                       <AddIcon
@@ -331,8 +332,9 @@ const Cart = () => {
                                 <TableCell align="right">
                                   ${(item?.price * item?.quantity).toFixed(2)}
                                 </TableCell>
-                              </TableRow>
-                            ))}
+                                </TableRow>
+                              );
+                            })}
                           </TableBody>
                         </Table>
                       </TableContainer>
