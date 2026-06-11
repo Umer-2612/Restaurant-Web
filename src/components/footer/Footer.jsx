@@ -158,7 +158,7 @@ const Footer = () => {
                 <RHFButton
                   variant={'contained'}
                   title="Book Online"
-                  onClick={() => navigate('/reservation')}
+                  onClick={() => navigate('https://punjabi-touch-indian-restaurant-greenbank.nextorder.com/booking')}
                   size="medium"
                 />
               </Stack>

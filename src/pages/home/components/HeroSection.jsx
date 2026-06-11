@@ -109,13 +109,13 @@ const HeroSection = () => {
               {/* Buttons Section */}
               <Reveal delay={300}>
                 <Stack direction="row" gap={1}>
-                  <Button variant="contained" onClick={() => navigate('/menu')}>
+                  <Button variant="contained" onClick={() => navigate('https://punjabi-touch-indian-restaurant-greenbank.nextorder.com')}>
                     Order Online
                   </Button>
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={() => navigate('/reservation')}
+                    onClick={() => navigate('https://punjabi-touch-indian-restaurant-greenbank.nextorder.com/booking')}
                     sx={{
                       backgroundColor: 'white',
                       color: (theme) => theme.palette.text.primary,
