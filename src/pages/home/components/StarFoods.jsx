@@ -169,7 +169,7 @@ const StarFoods = () => {
           <Stack direction="row" justifyContent="center" width="100%">
             <Button
               sx={{ borderRadius: 50, px: 4 }}
-              onClick={() => navigate('https://punjabi-touch-indian-restaurant-greenbank.nextorder.com/')}
+              onClick={() => window.location.href = 'https://punjabi-touch-indian-restaurant-greenbank.nextorder.com/'}
               variant="outlined"
             >
               View More
