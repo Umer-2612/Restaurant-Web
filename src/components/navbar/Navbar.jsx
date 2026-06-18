@@ -71,7 +71,13 @@ const MenuTabs = ({ navigate, activeMenu = '' }) => (
             color: (theme) => theme.palette.primary.main,
           },
         }}
-        onClick={() => navigate(tab?.path)}
+        onClick={() => {
+          if (tab?.path.startsWith('http')) {
+            window.location.href = tab.path;
+          } else {
+            navigate(tab.path);
+          }
+        }}
       >
         {tab?.title}
       </Typography>
@@ -125,7 +131,11 @@ const MobileMenu = ({
           onClick={() => {
             handleCloseNavMenu();
             setTimeout(() => {
-              navigate(tab?.path);
+              if (tab?.path.startsWith('http')) {
+                window.location.href = tab.path;
+              } else {
+                navigate(tab.path);
+              }
             }, 50);
           }}
         >
